@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Democrisis</title>
+        <style>
+            :root {
+                font-family: "Space Mono", "Segoe UI", system-ui, sans-serif;
+                color: #111;
+                background: #fff;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            @font-face {
+                font-family: "Pixelify";
+                src: url("fonts/PixelifySans-Regular.ttf") format("truetype");
+                font-weight: 400;
+                font-style: normal;
+            }
+
+            body {
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-start;
+                padding: 0;
+                background-image: url("politicians/slovakistan.png");
+                background-size: cover;
+                background-position: center;
+                position: relative;
+            }
+
+            #game {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: min(1100px, 100%);
+                margin: 0;
+                padding: 4vw 0 0;
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-end;
+                background: rgba(255, 255, 255, 0.75);
+            }
+
+            .locale-switch {
+                position: absolute;
+                top: 1rem;
+                left: 1rem;
+                display: flex;
+                gap: 0.35rem;
+                padding: 0.25rem 0.6rem;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.9);
+                font-size: 0.65rem;
+                letter-spacing: 0.25em;
+                text-transform: uppercase;
+                z-index: 2;
+            }
+
+            .locale-switch button {
+                border: none;
+                background: none;
+                font: inherit;
+                padding: 0.35rem 0.6rem;
+                cursor: pointer;
+                border-radius: 999px;
+                transition:
+                    color 0.2s ease,
+                    background 0.2s ease;
+            }
+
+            .locale-switch button.is-active {
+                background: rgba(0, 0, 0, 0.08);
+                font-weight: 600;
+            }
+
+            .locale-switch button:hover {
+                background: rgba(0, 0, 0, 0.1);
+            }
+
+            .democrisis-banner {
+                position: absolute;
+                top: 1rem;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 0.35rem 1.25rem;
+                border-radius: 999px;
+                background: linear-gradient(120deg, #e63946, #f94144);
+                color: #fff;
+                font-size: 0.8rem;
+                letter-spacing: 0.25em;
+                text-transform: uppercase;
+                z-index: 2;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+            }
+
+            .democrisis-meter {
+                margin-top: 0.35rem;
+                width: 220px;
+                height: 12px;
+                border-radius: 4px;
+                border: 2px solid rgba(255, 255, 255, 0.7);
+                overflow: hidden;
+                background: rgba(0, 0, 0, 0.08);
+                image-rendering: pixelated;
+            }
+
+            .democrisis-meter .pixel-fill {
+                height: 100%;
+                width: 0;
+                background-image:
+                    repeating-linear-gradient(
+                        45deg,
+                        rgba(255, 255, 255, 0.2) 0 6px,
+                        rgba(255, 255, 255, 0.2) 6px 12px
+                    ),
+                    linear-gradient(90deg, #e63946, #ffb703);
+                background-size:
+                    6px 6px,
+                    100% 100%;
+                transition: width 0.2s ease;
+            }
+
+            .scene {
+                width: 100%;
+                display: flex;
+                gap: clamp(2rem, 4vw, 4rem);
+                align-items: flex-end;
+            }
+
+            .portrait-block {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 0.25rem;
+            }
+
+            .politician-name {
+                font-family: "Pixelify", "Space Mono", monospace;
+                font-size: clamp(0.85rem, 1.5vw, 1.2rem);
+                letter-spacing: 0.25em;
+                text-transform: uppercase;
+                color: #111;
+                text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+            }
+
+            #politician-image {
+                width: clamp(180px, 22vw, 320px);
+                height: auto;
+                object-fit: cover;
+                align-self: flex-start;
+            }
+
+            .content {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .pitch {
+                font-size: clamp(1.2rem, 2.3vw, 1.9rem);
+                line-height: 1.5;
+                margin: 0;
+            }
+
+            #options {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .choice {
+                width: 100%;
+                background: none;
+                border: none;
+                padding: 0;
+                font: inherit;
+                text-align: left;
+                cursor: pointer;
+                font-size: 1.4rem;
+                letter-spacing: 0.02em;
+                border-bottom: 1px solid #111;
+                padding-bottom: 0.3rem;
+            }
+
+            .choice:hover:enabled {
+                color: #0055ff;
+            }
+
+            .choice:disabled {
+                cursor: not-allowed;
+                opacity: 0.5;
+            }
+
+            .controls {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 0.85rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+            }
+
+            #next-button {
+                border: none;
+                background: none;
+                font: inherit;
+                letter-spacing: 0.12em;
+                cursor: pointer;
+                color: inherit;
+                font-weight: 600;
+            }
+
+            #next-button:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+            }
+
+            .feedback {
+                margin: 0;
+                font-size: 0.95rem;
+                min-height: 1.2rem;
+            }
+
+            @media (max-width: 768px) {
+                .scene {
+                    flex-direction: column;
+                    text-align: center;
+                }
+
+                .controls {
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+
+                #next-button {
+                    letter-spacing: 0.08em;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="locale-switch" role="group" aria-label="Vyber jazyk">
+            <button type="button" data-lang="sk" class="is-active">SK</button>
+            <button type="button" data-lang="en">EN</button>
+            <button type="button" data-lang="cz">CZ</button>
+        </div>
+        <div class="democrisis-banner" id="democrisis-banner">
+            Democrisis: <strong id="democrisis-percent">0%</strong>
+            <div class="democrisis-meter" aria-hidden="true">
+                <div class="pixel-fill" id="democrisis-progress"></div>
+            </div>
+        </div>
+        <main id="game">
+            <div class="scene" id="scene">
+                <div class="portrait-block">
+                    <div class="politician-name" id="politician-name"></div>
+                    <img
+                        id="politician-image"
+                        src=""
+                        alt="Politician portrait"
+                    />
+                </div>
+                <div class="content">
+                    <p class="pitch" id="politician-dialog"></p>
+                    <div id="options"></div>
+                    <div class="controls">
+                        <button id="next-button" disabled>
+                            Next politician
+                        </button>
+                    </div>
+                    <p class="feedback" id="feedback" aria-live="polite"></p>
+                </div>
+            </div>
+        </main>
+
+        <script>
+            const scenes = [
+                {
+                    name: "Bla-bla-bla-nar",
+                    image: "politicians/blablablanar.png",
+                    translations: {
+                        en: {
+                            pitch: "The media are lying to people and causing chaos. The state must take control of the media to protect citizens.",
+                            options: [
+                                {
+                                    text: "Protect independent media and ensure transparency.",
+                                    reaction:
+                                        "Independent journalists continue investigating those in power.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Put media under state control.",
+                                    reaction:
+                                        "Only government-approved information reaches the public.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Support public broadcasting but keep it independent.",
+                                    reaction:
+                                        "Public media remains a watchdog, not a mouthpiece.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Shut down hostile media outlets.",
+                                    reaction:
+                                        "Critical voices disappear from the public space.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Média lžou a způsobují chaos. Stát musí převzít kontrolu nad médii, aby ochránil občany.",
+                            options: [
+                                {
+                                    text: "Ochraň nezávislá média.",
+                                    reaction: "Novináři dál kontrolují moc.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Dej média pod kontrolu státu.",
+                                    reaction:
+                                        "K lidem se dostanou jen schválené informace.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Podporuj veřejnoprávní média, ale nezávislá.",
+                                    reaction: "Média zůstávají kontrolou moci.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zavři nepřátelská média.",
+                                    reaction: "Kritické hlasy zmizí.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Médiá klamú ľudí a spôsobujú chaos. Štát musí prevziať kontrolu nad médiami.",
+                            options: [
+                                {
+                                    text: "Chráň nezávislé médiá.",
+                                    reaction: "Novinári kontrolujú moc.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Daj médiá pod kontrolu štátu.",
+                                    reaction:
+                                        "K ľuďom sa dostanú len schválené informácie.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Podpor verejnoprávne médiá, ale nech sú nezávislé.",
+                                    reaction: "Médiá zostávajú kontrolou moci.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zavri nepriateľské médiá.",
+                                    reaction: "Kritické hlasy zmiznú.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    name: "Cucaj Pršťok",
+                    image: "politicians/cucaj-prstok.png",
+                    translations: {
+                        en: {
+                            pitch: "Culture must serve the state. Too many opinions create confusion.",
+                            options: [
+                                {
+                                    text: "Keep culture independent and diverse.",
+                                    reaction:
+                                        "Artists continue expressing different views.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Put culture under one state authority.",
+                                    reaction:
+                                        "Only approved culture is supported.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Let communities decide cultural funding.",
+                                    reaction:
+                                        "Different communities keep their voices.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Cancel projects that criticize the government.",
+                                    reaction:
+                                        "Artists begin to censor themselves.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Kultura musí sloužit státu. Příliš mnoho názorů vytváří zmatek.",
+                            options: [
+                                {
+                                    text: "Nech kulturu nezávislou.",
+                                    reaction: "Umělci mohou svobodně tvořit.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Dej kulturu pod jeden státní úřad.",
+                                    reaction:
+                                        "Podporu dostane jen schválená kultura.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "O kultuře ať rozhodují komunity.",
+                                    reaction: "Různé skupiny mají hlas.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zruš projekty kritizující vládu.",
+                                    reaction: "Umělci se začnou bát kritiky.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Kultúra musí slúžiť štátu. Príliš veľa názorov vytvára chaos.",
+                            options: [
+                                {
+                                    text: "Nech je kultúra nezávislá.",
+                                    reaction: "Umelci môžu slobodne tvoriť.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Daj kultúru pod jeden štátny úrad.",
+                                    reaction:
+                                        "Podporu dostane len schválená kultúra.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "O kultúre nech rozhodujú komunity.",
+                                    reaction: "Komunity majú hlas.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zruš projekty kritizujúce vládu.",
+                                    reaction: "Umelci sa začnú báť kritiky.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    name: "Andrej Granko",
+                    image: "politicians/granko.png",
+                    translations: {
+                        en: {
+                            pitch: "Parliament is too slow. We should rule by emergency decrees.",
+                            options: [
+                                {
+                                    text: "Keep parliament decision-making.",
+                                    reaction: "Laws are discussed and checked.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Rule by decree.",
+                                    reaction:
+                                        "Power concentrates in a few hands.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Allow emergency powers but with limits.",
+                                    reaction:
+                                        "Emergency powers are controlled.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Suspend parliament.",
+                                    reaction:
+                                        "No one checks the government anymore.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Parlament je pomalý. Měli bychom vládnout pomocí dekretů.",
+                            options: [
+                                {
+                                    text: "Zachovej parlament.",
+                                    reaction: "Zákony se kontrolují.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Vládnout dekrety.",
+                                    reaction: "Moc se soustředí.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Nouzové pravomoci s kontrolou.",
+                                    reaction: "Pravomoci jsou omezené.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Pozastav parlament.",
+                                    reaction: "Vládu nikdo nekontroluje.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Parlament je pomalý. Mali by sme vládnuť dekrétmi.",
+                            options: [
+                                {
+                                    text: "Zachovaj parlament.",
+                                    reaction: "Zákony sa kontrolujú.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Vládnuť dekrétmi.",
+                                    reaction: "Moc sa sústreďuje.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Núdzové právomoci s kontrolou.",
+                                    reaction: "Právomoci sú obmedzené.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zruš parlament.",
+                                    reaction: "Vládu nikto nekontroluje.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    name: "Robert Kalibrňák",
+                    image: "politicians/kalic.png",
+                    translations: {
+                        en: {
+                            pitch: "We should change election rules to make the country more stable.",
+                            options: [
+                                {
+                                    text: "Keep fair election rules.",
+                                    reaction: "Elections remain fair.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Change rules to weaken opposition.",
+                                    reaction: "Elections become unfair.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Let experts review election laws.",
+                                    reaction: "People trust elections.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Redraw districts to favor the ruling party.",
+                                    reaction: "The system favors one side.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Musíme změnit volební pravidla, aby byla země stabilní.",
+                            options: [
+                                {
+                                    text: "Zachovat férové volby.",
+                                    reaction: "Volby jsou spravedlivé.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Změnit pravidla proti opozici.",
+                                    reaction: "Volby nejsou férové.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Nechat zákony posoudit odborníky.",
+                                    reaction: "Lidé důvěřují volbám.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Překreslit obvody pro vládu.",
+                                    reaction: "Systém zvýhodňuje vládu.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Musíme zmeniť volebné pravidlá, aby bola krajina stabilná.",
+                            options: [
+                                {
+                                    text: "Zachovať férové voľby.",
+                                    reaction: "Voľby sú spravodlivé.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zmeniť pravidlá proti opozícii.",
+                                    reaction: "Voľby nie sú férové.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Nechať zákony posúdiť odborníkmi.",
+                                    reaction: "Ľudia veria voľbám.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Prekresliť obvody pre vládu.",
+                                    reaction: "Systém zvýhodňuje vládu.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                    },
+                },
+            ];
+
+            const copyMap = {
+                sk: {
+                    politicianLabel: "Politik",
+                    ofText: "z",
+                    next: "Ďalší politik",
+                    seeTally: "Pozri výsledok",
+                    playAgain: "Hraj znova",
+                    summaryLabel: "Konečný výsledok:",
+                    summaryHigh:
+                        "Agora stále hučí debatou. Demokracia dnes vyhráva.",
+                    summaryLow:
+                        "Rada potrebuje viac spojencov. Pozývaj viac občanov k stolu.",
+                },
+                en: {
+                    politicianLabel: "Politician",
+                    ofText: "of",
+                    next: "Next politician",
+                    seeTally: "See the tally",
+                    playAgain: "Play again",
+                    summaryLabel: "Final tally:",
+                    summaryHigh:
+                        "The agora still hums with debate. Democracy is winning tonight.",
+                    summaryLow:
+                        "The council needs more allies. Keep inviting citizens to the table.",
+                },
+                cz: {
+                    politicianLabel: "Politik",
+                    ofText: "z",
+                    next: "Další politik",
+                    seeTally: "Podívej se na výsledek",
+                    playAgain: "Hrát znovu",
+                    summaryLabel: "Konečný součet:",
+                    summaryHigh:
+                        "Agora stále bzučí debatou. Demokracie dnes vítězí.",
+                    summaryLow:
+                        "Radě chybí spojenci. Pozvi více občanů ke stolu.",
+                },
+            };
+
+            let currentLang = "sk";
+            let currentIndex = 0;
+            let score = 0;
+            let answered = false;
+            let gameOver = false;
+            let selectedOptionBaseIdx = null;
+
+            const imageEl = document.getElementById("politician-image");
+            const dialogEl = document.getElementById("politician-dialog");
+            const nameEl = document.getElementById("politician-name");
+            const optionsEl = document.getElementById("options");
+            const feedbackEl = document.getElementById("feedback");
+            const nextButton = document.getElementById("next-button");
+            const localeButtons = document.querySelectorAll(
+                ".locale-switch button",
+            );
+            const democrisisPercentEl =
+                document.getElementById("democrisis-percent");
+            const democrisisProgressEl = document.getElementById(
+                "democrisis-progress",
+            );
+
+            let democrisisPercent = 0;
+            let currentOptionOrder = [];
+
+            localeButtons.forEach((button) => {
+                button.addEventListener("click", () =>
+                    setLanguage(button.dataset.lang),
+                );
+            });
+
+            function updateDemocrisisMeter() {
+                democrisisPercentEl.textContent = `${democrisisPercent}%`;
+                democrisisProgressEl.style.width = `${democrisisPercent}%`;
+            }
+
+            function increaseDemocrisis(amount = 5) {
+                democrisisPercent = Math.min(100, democrisisPercent + amount);
+                updateDemocrisisMeter();
+                if (democrisisPercent >= 100 && !gameOver) {
+                    showSummary();
+                }
+            }
+
+            function getCopy() {
+                return copyMap[currentLang] || copyMap.en;
+            }
+
+            function getSceneText(scene) {
+                return scene.translations[currentLang] || scene.translations.en;
+            }
+
+            function updateLocaleButtons() {
+                localeButtons.forEach((button) =>
+                    button.classList.toggle(
+                        "is-active",
+                        button.dataset.lang === currentLang,
+                    ),
+                );
+            }
+
+            function setLanguage(lang) {
+                if (!copyMap[lang] || currentLang === lang) return;
+                currentLang = lang;
+                updateLocaleButtons();
+                if (gameOver) {
+                    showSummary();
+                } else {
+                    refreshLocalizedScene();
+                }
+            }
+
+            function updateNextButtonText() {
+                const copy = getCopy();
+                if (gameOver) {
+                    nextButton.textContent = copy.playAgain;
+                } else {
+                    nextButton.textContent = copy.next;
+                }
+            }
+
+            function shuffleIndices(length) {
+                const array = [...Array(length).keys()];
+                for (let i = array.length - 1; i > 0; i -= 1) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            function refreshLocalizedScene() {
+                const scene = scenes[currentIndex];
+                const localized = getSceneText(scene);
+                dialogEl.textContent = localized.pitch;
+                currentOptionOrder.forEach((baseIdx, idx) => {
+                    const button = optionsEl.children[idx];
+                    if (button) {
+                        button.textContent =
+                            localized.options[baseIdx]?.text || "";
+                    }
+                });
+                if (answered && selectedOptionBaseIdx !== null) {
+                    const chosen =
+                        localized.options[selectedOptionBaseIdx] || {};
+                    feedbackEl.textContent = chosen.reaction || "";
+                } else {
+                    feedbackEl.textContent = "";
+                }
+                updateNextButtonText();
+            }
+
+            function loadScene() {
+                const scene = scenes[currentIndex];
+                const localized = getSceneText(scene);
+                imageEl.src = scene.image;
+                imageEl.alt = scene.name;
+                if (nameEl) {
+                    nameEl.textContent = scene.name;
+                }
+                dialogEl.textContent = localized.pitch;
+                optionsEl.innerHTML = "";
+                currentOptionOrder = shuffleIndices(localized.options.length);
+                currentOptionOrder.forEach((baseIdx) => {
+                    const option = localized.options[baseIdx];
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "choice";
+                    button.textContent = option?.text || "";
+                    button.disabled = false;
+                    button.addEventListener("click", () =>
+                        selectOption(option, baseIdx),
+                    );
+                    optionsEl.appendChild(button);
+                });
+                answered = false;
+                selectedOptionBaseIdx = null;
+                nextButton.disabled = true;
+                feedbackEl.textContent = "";
+                gameOver = false;
+                updateNextButtonText();
+            }
+
+            function moveToNextScene() {
+                currentIndex = (currentIndex + 1) % scenes.length;
+                loadScene();
+            }
+
+            function selectOption(option, baseIdx) {
+                if (answered) return;
+                answered = true;
+                selectedOptionBaseIdx = baseIdx;
+                score += option.score;
+                if (option.score < 0) {
+                    increaseDemocrisis(Math.abs(option.score));
+                }
+                if (!gameOver) {
+                    feedbackEl.textContent = option.reaction;
+                }
+                nextButton.disabled = false;
+                Array.from(optionsEl.children).forEach(
+                    (button) => (button.disabled = true),
+                );
+                updateNextButtonText();
+            }
+
+            nextButton.addEventListener("click", () => {
+                if (gameOver) {
+                    resetGame();
+                    return;
+                }
+                if (!answered) return;
+                if (democrisisPercent >= 100) {
+                    showSummary();
+                    return;
+                }
+                moveToNextScene();
+            });
+
+            function showSummary() {
+                if (democrisisPercent < 100) {
+                    return;
+                }
+                const copy = getCopy();
+                const results = document.createElement("div");
+                results.innerHTML = `
+          <strong>${copy.summaryLabel}</strong> ${score} civic points.
+          <br />
+          ${score >= scenes.length * 8 ? copy.summaryHigh : copy.summaryLow}
+        `;
+                feedbackEl.textContent = "";
+                feedbackEl.appendChild(results);
+                gameOver = true;
+                nextButton.disabled = false;
+                updateNextButtonText();
+            }
+
+            function resetGame() {
+                currentIndex = 0;
+                score = 0;
+                answered = false;
+                gameOver = false;
+                selectedOptionBaseIdx = null;
+                democrisisPercent = 0;
+                updateDemocrisisMeter();
+                loadScene();
+            }
+
+            updateLocaleButtons();
+            updateDemocrisisMeter();
+            loadScene();
+        </script>
+    </body>
+</html>
