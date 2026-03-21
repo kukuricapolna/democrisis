@@ -89,42 +89,81 @@
                 top: 1rem;
                 left: 50%;
                 transform: translateX(-50%);
-                padding: 0.35rem 1.25rem;
-                border-radius: 999px;
-                background: linear-gradient(120deg, #e63946, #f94144);
-                color: #fff;
+                padding: 0.4rem 1.4rem;
+                border-radius: 6px;
+                background:
+                    repeating-linear-gradient(
+                        0deg,
+                        rgba(255, 255, 255, 0.08),
+                        rgba(255, 255, 255, 0.08) 4px,
+                        transparent 4px,
+                        transparent 8px
+                    ),
+                    #020202;
+                color: #f8f32b;
                 font-size: 0.8rem;
-                letter-spacing: 0.25em;
+                letter-spacing: 0.35em;
                 text-transform: uppercase;
                 z-index: 2;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+                border: 3px solid #f72585;
+                box-shadow: 5px 5px 0 #050505;
+                text-shadow:
+                    0 1px 0 rgba(255, 255, 255, 0.6),
+                    0 -1px 0 rgba(0, 0, 0, 0.8);
+            }
+
+            .democrisis-banner::after {
+                content: "";
+                position: absolute;
+                inset: 3px;
+                border: 2px dashed rgba(248, 243, 43, 0.5);
+                border-radius: 2px;
+                pointer-events: none;
             }
 
             .democrisis-meter {
                 margin-top: 0.35rem;
                 width: 220px;
-                height: 12px;
-                border-radius: 4px;
-                border: 2px solid rgba(255, 255, 255, 0.7);
+                height: 24px;
+                border: 3px solid #111;
+                border-radius: 2px;
+                background:
+                    linear-gradient(180deg, #121212 0%, #050505 100%),
+                    repeating-linear-gradient(90deg, #0d0d0d 0 8px, #1c1c1c 8px 16px);
+                box-shadow: 4px 4px 0 #050505;
+                position: relative;
                 overflow: hidden;
-                background: rgba(0, 0, 0, 0.08);
                 image-rendering: pixelated;
+            }
+
+            .democrisis-meter::after {
+                content: "";
+                position: absolute;
+                inset: 3px;
+                border: 2px solid rgba(255, 255, 255, 0.15);
+                pointer-events: none;
             }
 
             .democrisis-meter .pixel-fill {
                 height: 100%;
                 width: 0;
+                border-right: 2px solid #050505;
                 background-image:
                     repeating-linear-gradient(
-                        45deg,
-                        rgba(255, 255, 255, 0.2) 0 6px,
-                        rgba(255, 255, 255, 0.2) 6px 12px
+                        0deg,
+                        rgba(255, 255, 255, 0.3) 0 6px,
+                        transparent 6px 12px
                     ),
-                    linear-gradient(90deg, #e63946, #ffb703);
-                background-size:
-                    6px 6px,
-                    100% 100%;
-                transition: width 0.2s ease;
+                    repeating-linear-gradient(
+                        90deg,
+                        rgba(255, 255, 255, 0.3) 0 6px,
+                        transparent 6px 12px
+                    ),
+                    linear-gradient(90deg, #fb8b24 0%, #f72585 55%, #4cc9f0 100%);
+                background-size: 6px 6px, 6px 6px, 100% 100%;
+                transition: width 0.25s steps(10);
+                image-rendering: pixelated;
+                box-shadow: inset -4px -4px 0 rgba(255, 255, 255, 0.15);
             }
 
             .scene {
