@@ -1,0 +1,14 @@
+{
+  "name": "democrisis-server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Minimal Express backend for storing Democrat leadboard runs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "pg": "^8.11.1",
+    "dotenv": "^16.4.6"
+  }
+}

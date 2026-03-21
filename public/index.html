@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Democrisis</title>
+        <link rel="icon" type="image/png" href="favicon.png" sizes="32x32" />
         <style>
             :root {
                 font-family: "Space Mono", "Segoe UI", system-ui, sans-serif;
@@ -110,6 +111,10 @@
                 text-shadow:
                     0 1px 0 rgba(255, 255, 255, 0.6),
                     0 -1px 0 rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                justify-content: center;
             }
 
             .democrisis-banner::after {
@@ -119,6 +124,36 @@
                 border: 2px dashed rgba(248, 243, 43, 0.5);
                 border-radius: 2px;
                 pointer-events: none;
+            }
+
+            .democrisis-banner__title {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+                white-space: nowrap;
+                font-family: "Pixelify", "Space Mono", monospace;
+            }
+
+            .democrisis-banner__title strong {
+                font-family: inherit;
+            }
+
+            .leaderboard-toggle {
+                border: 3px solid #4cc9f0;
+                background: #040404;
+                color: #f8f32b;
+                font-family: "Pixelify", "Space Mono", monospace;
+                font-size: 0.7rem;
+                letter-spacing: 0.25em;
+                padding: 0.4rem 0.9rem;
+                border-radius: 4px;
+                cursor: pointer;
+                text-transform: uppercase;
+                box-shadow: 0 4px 0 #050505;
+            }
+
+            .leaderboard-toggle:hover {
+                transform: translateY(-1px);
             }
 
             .democrisis-meter {
@@ -164,6 +199,115 @@
                 transition: width 0.25s steps(10);
                 image-rendering: pixelated;
                 box-shadow: inset -4px -4px 0 rgba(255, 255, 255, 0.15);
+            }
+
+            #game.is-hidden {
+                display: none;
+            }
+
+            #leaderboard-page {
+                position: absolute;
+                top: 2rem;
+                left: 50%;
+                transform: translateX(-50%);
+                width: min(960px, calc(100% - 3rem));
+                max-height: calc(100vh - 4rem);
+                padding: clamp(1.5rem, 3vw, 2.5rem);
+                border: 4px solid #f72585;
+                border-radius: 8px;
+                background: #020202;
+                color: #f8f32b;
+                font-family: "Pixelify", "Space Mono", monospace;
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                box-shadow: 10px 10px 0 #050505;
+                overflow-y: auto;
+            }
+
+            #leaderboard-page.is-visible {
+                display: flex;
+            }
+
+            #leaderboard-page h2 {
+                margin: 0;
+                font-size: clamp(1.5rem, 3vw, 2.1rem);
+                letter-spacing: 0.6em;
+            }
+
+            #leaderboard-last-run {
+                margin: 0;
+                font-size: 1rem;
+                letter-spacing: 0.3em;
+            }
+
+            #leaderboard-summary {
+                margin: 0;
+                font-size: 0.8rem;
+                letter-spacing: 0.4em;
+                color: rgba(248, 243, 43, 0.8);
+            }
+
+            #leaderboard-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 0.4rem;
+            }
+
+            #leaderboard-list li {
+                display: grid;
+                grid-template-columns: 2rem 1fr auto;
+                gap: 0.75rem;
+                padding: 0.5rem 0.8rem;
+                border: 2px solid rgba(248, 243, 43, 0.4);
+                border-radius: 4px;
+                background:
+                    repeating-linear-gradient(
+                        90deg,
+                        rgba(255, 255, 255, 0.1),
+                        rgba(255, 255, 255, 0.1) 5px,
+                        transparent 5px,
+                        transparent 10px
+                    ),
+                    #101010;
+                font-size: 0.9rem;
+                letter-spacing: 0.3em;
+            }
+
+            #leaderboard-list li span {
+                display: inline-block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            #leaderboard-list .name {
+                justify-self: start;
+            }
+
+            #leaderboard-list .time {
+                justify-self: end;
+            }
+
+            #leaderboard-play-again {
+                font-family: inherit;
+                text-transform: uppercase;
+                letter-spacing: 0.4em;
+                padding: 0.6rem 1.25rem;
+                border: 3px solid #4cc9f0;
+                background: #020202;
+                color: #f8f32b;
+                cursor: pointer;
+                filter: drop-shadow(0 4px 0 #050505);
+            }
+
+            #leaderboard-play-again:hover {
+                background: #0b0b0b;
             }
 
             .scene {
@@ -293,10 +437,15 @@
             <button type="button" data-lang="cz">CZ</button>
         </div>
         <div class="democrisis-banner" id="democrisis-banner">
-            Democrisis: <strong id="democrisis-percent">0%</strong>
+            <span class="democrisis-banner__title">
+                Democrisis: <strong id="democrisis-percent">0%</strong>
+            </span>
             <div class="democrisis-meter" aria-hidden="true">
                 <div class="pixel-fill" id="democrisis-progress"></div>
             </div>
+            <button id="leaderboard-toggle" class="leaderboard-toggle" type="button">
+                Leaderboards
+            </button>
         </div>
         <main id="game">
             <div class="scene" id="scene">
@@ -320,6 +469,20 @@
                 </div>
             </div>
         </main>
+
+        <section
+            id="leaderboard-page"
+            aria-live="polite"
+            aria-label="Leaderboard"
+        >
+            <h2>Leaderboard</h2>
+            <p id="leaderboard-last-run">Complete a run to enter the halls.</p>
+            <p id="leaderboard-summary">Reach 100% to make your mark.</p>
+            <ul id="leaderboard-list"></ul>
+            <button id="leaderboard-play-again" type="button">
+                Play again
+            </button>
+        </section>
 
         <script>
             const scenes = [
@@ -709,6 +872,9 @@
             let answered = false;
             let gameOver = false;
             let selectedOptionBaseIdx = null;
+            let runStartTime = Date.now();
+            const LEADERBOARD_STORAGE_KEY = "democrisisLeaderboard";
+            let leaderboardEntries = [];
 
             const imageEl = document.getElementById("politician-image");
             const dialogEl = document.getElementById("politician-dialog");
@@ -724,6 +890,25 @@
             const democrisisProgressEl = document.getElementById(
                 "democrisis-progress",
             );
+
+            const gameEl = document.getElementById("game");
+            const leaderboardPageEl = document.getElementById("leaderboard-page");
+            const leaderboardListEl = document.getElementById("leaderboard-list");
+            const leaderboardLastRunEl = document.getElementById(
+                "leaderboard-last-run",
+            );
+            const leaderboardSummaryEl = document.getElementById(
+                "leaderboard-summary",
+            );
+            const leaderboardPlayAgainButton = document.getElementById(
+                "leaderboard-play-again",
+            );
+            const leaderboardToggleButton = document.getElementById(
+                "leaderboard-toggle",
+            );
+            const DEFAULT_LAST_RUN_TEXT = "Complete a run to enter the halls.";
+            const DEFAULT_SUMMARY_TEXT = "Reach 100% to make your mark.";
+            const LEADERBOARD_API_URL = "/api/leaderboard";
 
             let democrisisPercent = 0;
             let currentOptionOrder = [];
@@ -882,37 +1067,243 @@
             });
 
             function showSummary() {
-                if (democrisisPercent < 100) {
+                if (democrisisPercent < 100 || gameOver) {
                     return;
                 }
+                gameOver = true;
                 const copy = getCopy();
+                const summaryText =
+                    score >= scenes.length * 8 ? copy.summaryHigh : copy.summaryLow;
                 const results = document.createElement("div");
                 results.innerHTML = `
           <strong>${copy.summaryLabel}</strong> ${score} civic points.
           <br />
-          ${score >= scenes.length * 8 ? copy.summaryHigh : copy.summaryLow}
+          ${summaryText}
         `;
                 feedbackEl.textContent = "";
                 feedbackEl.appendChild(results);
-                gameOver = true;
                 nextButton.disabled = false;
                 updateNextButtonText();
+                const elapsedMs = Date.now() - runStartTime;
+                promptForLeaderboardEntry(elapsedMs, summaryText);
             }
 
             function resetGame() {
+                showGameView();
                 currentIndex = 0;
                 score = 0;
                 answered = false;
                 gameOver = false;
                 selectedOptionBaseIdx = null;
                 democrisisPercent = 0;
+                runStartTime = Date.now();
                 updateDemocrisisMeter();
                 loadScene();
             }
 
+            function formatDuration(ms) {
+                const totalSeconds = Math.floor(ms / 1000);
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                const centiseconds = Math.floor((ms % 1000) / 10);
+                const paddedSeconds = seconds.toString().padStart(2, "0");
+                const paddedCenti = centiseconds.toString().padStart(2, "0");
+                return `${minutes}:${paddedSeconds}.${paddedCenti}`;
+            }
+
+            function renderLeaderboard() {
+                if (!leaderboardListEl) {
+                    return;
+                }
+                leaderboardListEl.innerHTML = "";
+                if (!leaderboardEntries.length) {
+                    const placeholder = document.createElement("li");
+                    placeholder.innerHTML =
+                        '<span>—</span><span class="name">No runs yet</span><span class="time">—</span>';
+                    leaderboardListEl.appendChild(placeholder);
+                    return;
+                }
+                leaderboardEntries.forEach((entry, index) => {
+                    const li = document.createElement("li");
+                    const rank = document.createElement("span");
+                    rank.textContent = `${(index + 1).toString().padStart(2, "0")}`;
+                    const nameSpan = document.createElement("span");
+                    nameSpan.className = "name";
+                    nameSpan.textContent = entry.name;
+                    const timeSpan = document.createElement("span");
+                    timeSpan.className = "time";
+                    timeSpan.textContent = formatDuration(entry.time);
+                    li.append(rank, nameSpan, timeSpan);
+                    leaderboardListEl.appendChild(li);
+                });
+            }
+
+            async function fetchLeaderboardFromServer() {
+                if (
+                    typeof window === "undefined" ||
+                    typeof window.fetch !== "function"
+                ) {
+                    return null;
+                }
+                const response = await fetch(LEADERBOARD_API_URL);
+                if (!response.ok) {
+                    throw new Error(`Leaderboard GET responded with ${response.status}`);
+                }
+                const payload = await response.json();
+                if (!Array.isArray(payload.entries)) {
+                    throw new Error("Leaderboard response missing entries array");
+                }
+                return payload.entries
+                    .map((entry) => ({
+                        name: entry.username || "Anonymous",
+                        time: entry.time ? new Date(entry.time).getTime() : 0,
+                    }))
+                    .sort((a, b) => a.time - b.time)
+                    .slice(0, 10);
+            }
+
+            async function loadLeaderboardEntries() {
+                if (typeof window === "undefined") {
+                    leaderboardEntries = [];
+                    renderLeaderboard();
+                    return;
+                }
+                try {
+                    const serverEntries = await fetchLeaderboardFromServer();
+                    if (serverEntries?.length) {
+                        leaderboardEntries = serverEntries;
+                        saveLeaderboardEntries();
+                        renderLeaderboard();
+                        return;
+                    }
+                } catch (error) {
+                    // eslint-disable-next-line no-console
+                    console.warn("Failed to load leaderboard from server", error);
+                }
+                if (!window.localStorage) {
+                    leaderboardEntries = [];
+                    renderLeaderboard();
+                    return;
+                }
+                try {
+                    const stored = localStorage.getItem(LEADERBOARD_STORAGE_KEY);
+                    leaderboardEntries = stored ? JSON.parse(stored) : [];
+                } catch (error) {
+                    // eslint-disable-next-line no-console
+                    console.warn("Failed to read leaderboard", error);
+                    leaderboardEntries = [];
+                }
+                leaderboardEntries.sort((a, b) => a.time - b.time);
+                leaderboardEntries = leaderboardEntries.slice(0, 10);
+                renderLeaderboard();
+            }
+
+            function saveLeaderboardEntries() {
+                if (typeof window === "undefined" || !window.localStorage) {
+                    return;
+                }
+                localStorage.setItem(
+                    LEADERBOARD_STORAGE_KEY,
+                    JSON.stringify(leaderboardEntries),
+                );
+            }
+
+            function addLeaderboardEntry(name, elapsedMs) {
+                leaderboardEntries.push({ name, time: elapsedMs });
+                leaderboardEntries.sort((a, b) => a.time - b.time);
+                leaderboardEntries = leaderboardEntries.slice(0, 10);
+                saveLeaderboardEntries();
+                renderLeaderboard();
+            }
+
+            async function submitLeaderboardEntryToServer(name, elapsedMs) {
+                if (
+                    typeof window === "undefined" ||
+                    typeof window.fetch !== "function"
+                ) {
+                    return;
+                }
+                try {
+                    const response = await fetch(LEADERBOARD_API_URL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            username: name,
+                            elapsedMs,
+                        }),
+                    });
+                    if (!response.ok) {
+                        throw new Error(`Leaderboard API responded with ${response.status}`);
+                    }
+                } catch (error) {
+                    // eslint-disable-next-line no-console
+                    console.warn("Leaderboard sync failed", error);
+                }
+            }
+
+            function showLeaderboardView(options = {}) {
+                const {
+                    preserveLast = true,
+                    lastRunText = DEFAULT_LAST_RUN_TEXT,
+                    summaryText = DEFAULT_SUMMARY_TEXT,
+                } = options;
+                if (!preserveLast) {
+                    if (leaderboardLastRunEl) {
+                        leaderboardLastRunEl.textContent = lastRunText;
+                    }
+                    if (leaderboardSummaryEl) {
+                        leaderboardSummaryEl.textContent = summaryText;
+                    }
+                }
+                loadLeaderboardEntries();
+                gameEl?.classList.add("is-hidden");
+                leaderboardPageEl?.classList.add("is-visible");
+            }
+
+            function showGameView() {
+                leaderboardPageEl?.classList.remove("is-visible");
+                gameEl?.classList.remove("is-hidden");
+            }
+
+            function promptForLeaderboardEntry(elapsedMs, summaryText) {
+                let username = "Anonymous";
+                if (
+                    typeof window !== "undefined" &&
+                    typeof window.prompt === "function"
+                ) {
+                    const supplied = window.prompt(
+                        "Enter your username for the leaderboard",
+                        "Player",
+                    );
+                    if (supplied !== null) {
+                        const trimmed = supplied.trim();
+                        if (trimmed) {
+                            username = trimmed;
+                        }
+                    }
+                }
+                addLeaderboardEntry(username, elapsedMs);
+                if (leaderboardLastRunEl) {
+                    leaderboardLastRunEl.textContent = `Run time: ${formatDuration(
+                        elapsedMs,
+                    )}`;
+                }
+                if (leaderboardSummaryEl) {
+                    leaderboardSummaryEl.textContent = summaryText;
+                }
+                void submitLeaderboardEntryToServer(username, elapsedMs);
+                showLeaderboardView();
+            }
+
+            loadLeaderboardEntries();
+            leaderboardPlayAgainButton?.addEventListener("click", resetGame);
+            leaderboardToggleButton?.addEventListener("click", () =>
+                showLeaderboardView({ preserveLast: false }),
+            );
             updateLocaleButtons();
-            updateDemocrisisMeter();
-            loadScene();
+            resetGame();
         </script>
     </body>
 </html>
