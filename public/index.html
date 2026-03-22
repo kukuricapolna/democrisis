@@ -541,7 +541,6 @@
                 line-height: 1.4;
                 margin: 0;
             }
-
             #options {
                 display: flex;
                 flex-direction: column;
@@ -807,7 +806,7 @@
                     />
                 </div>
                 <div class="content">
-                    <p class="pitch" id="politician-dialog"></p>
+                <p class="pitch" id="politician-dialog"></p>
                     <div id="options"></div>
                     <div class="controls">
                         <button id="next-button" disabled>
@@ -1394,9 +1393,9 @@
                                     score: 10,
                                 },
                                 {
-                                    text: "Automate courts and remove juries.",
+                                    text: "Automate courts and let algorithms produce rulings.",
                                     reaction:
-                                        "Justice runs on cold code and no empathy.",
+                                        "Justice runs on cold code with no humanity.",
                                     score: -5,
                                 },
                             ],
@@ -1423,7 +1422,7 @@
                                     score: 10,
                                 },
                                 {
-                                    text: "Automatizuj soudy a zruš poroty.",
+                                    text: "Automatizuj soudy a nech algoritmy vytvářet rozhodnutí.",
                                     reaction:
                                         "Spravedlnost běží na kódu bez empatie.",
                                     score: -5,
@@ -1452,7 +1451,7 @@
                                     score: 10,
                                 },
                                 {
-                                    text: "Automatizuj súdy a zruš poroty.",
+                                    text: "Automatizuj súdy a nech algoritmy pripravujú rozhodnutia.",
                                     reaction:
                                         "Spravodlivosť beží na studenom kóde bez empatie.",
                                     score: -5,
@@ -1596,6 +1595,169 @@
                 },
             };
 
+            const statementPool = {
+                "Bla-bla-bla-nar": {
+                    en: [
+                        "Slovak journalists deserve protection from anyone trying to silence Bratislava's newsrooms.",
+                        "The National Council should broadcast debates live so citizens in Košice can follow.",
+                        "Public media from Žilina to Prešov must stay free of party scripts.",
+                        "Campaigns across Slovakia need truth, not state-approved spin.",
+                    ],
+                    cz: [
+                        "Slovenští novináři si zaslouží ochranu před těmi, kdo chtějí umlčet bratislavská studia.",
+                        "Národní rada by měla vysílat své debaty živě, aby občané v Košicích věděli, co se děje.",
+                        "Veřejnoprávní média od Žiliny po Prešov musí zůstat mimo stranické scénáře.",
+                        "Kampaně na Slovensku potřebují pravdu, ne státní propagandu.",
+                    ],
+                    sk: [
+                        "Slovenskí novinári majú právo na ochranu pred tým, kto chce umlčať bratislavské redakcie.",
+                        "Národná rada by mala vysielať svoje debaty naživo, aby ľudia v Košiciach vedeli, čo sa deje.",
+                        "Verejnoprávne médiá od Žiliny po Prešov musia zostať mimo stranických scénarov.",
+                        "Na Slovensku potrebujeme v kampaniach pravdu, nie štátne spinovanie.",
+                    ],
+                },
+                "Cucaj Pršťok": {
+                    en: [
+                        "Slovakia's folk songs breathe best when creators can experiment without fear.",
+                        "Festivals in Bratislava, Trnava, and rural towns need independent curators.",
+                        "Artists keep our communities safe by showing different perspectives.",
+                        "Cultural funding should reflect the many voices of Slovak regions.",
+                    ],
+                    cz: [
+                        "Slovenské lidové písně dýchají nejlépe, když tvůrci mohou experimentovat bez strachu.",
+                        "Festivaly v Bratislavě, Trnavě i venkovských obcích potřebují nezávislé kurátory.",
+                        "Umělci udržují naše komunity bezpečné tím, že ukazují různé pohledy.",
+                        "Podpora kultury by měla odpovídat mnoha hlasům slovenských regionů.",
+                    ],
+                    sk: [
+                        "Slovenské ľudové piesne najlepšie dýchajú, keď tvorcovia môžu experimentovať bez strachu.",
+                        "Festivaly v Bratislave, Trnave aj v dedinách potrebujú nezávislých kurátorov.",
+                        "Umenie udržiava naše komunity bezpečné tým, že ukazuje rôzne pohľady.",
+                        "Podpora kultúry musí zodpovedať mnohým hlasom slovenských regiónov.",
+                    ],
+                },
+                "Andrej Granko": {
+                    en: [
+                        "Bratislava's Národná rada thrives when deputies listen to people from Humenné to Dunajská Streda.",
+                        "Emergency decrees without debate risk leaving citizens in Prešov behind.",
+                        "Strong committee work keeps Slovakia's laws balanced.",
+                        "Transparency in the parliament builds trust across Slovakia.",
+                    ],
+                    cz: [
+                        "Bratislavská Národná rada prospívá, když poslanci naslouchají lidem z Humenného až po Dunajskou Stredu.",
+                        "Nouzové dekrety bez diskuze mohou nechat občany v Prešově opomenuté.",
+                        "Silné výbory udržují slovenské zákony vyvážené.",
+                        "Transparentnost v parlamentu buduje důvěru po celém Slovensku.",
+                    ],
+                    sk: [
+                        "Národná rada v Bratislave prosperuje, keď poslanci počúvajú ľudí z Humenného až po Dunajskú Stredu.",
+                        "Núdzové dekréty bez diskusie môžu nechať občanov v Prešove v úzadí.",
+                        "Silné výbory zabezpečujú vyváženosť slovenských zákonov.",
+                        "Transparentnosť v parlamente buduje dôveru v celej krajine.",
+                    ],
+                },
+                "Robert Kalibrňák": {
+                    en: [
+                        "Transparent election rules keep Bratislava and Banská Bystrica united.",
+                        "Any tinkering with districts would shake faith from Žilina to Košice.",
+                        "Our Electoral Commission must stay independent so every vote counts.",
+                        "When every municipality trusts the count, Slovakia's democracy stays strong.",
+                    ],
+                    cz: [
+                        "Transparentní volební pravidla drží Bratislavu i Banskou Bystricu pohromadě.",
+                        "Jakákoli změna obvodů by otřásla důvěrou od Žiliny po Košice.",
+                        "Volební komise musí zůstat nezávislá, aby každý hlas měl váhu.",
+                        "Když obce věří sčítání, slovenská demokracie zůstává silná.",
+                    ],
+                    sk: [
+                        "Transparentné volebné pravidlá držia Bratislavu aj Banskú Bystricu pokope.",
+                        "Zmeny obvodov by otriasli dôverou od Žiliny po Košice.",
+                        "Naša volebná komisia musí zostať nezávislá, aby každý hlas mal váhu.",
+                        "Keď obce dôverujú sčítaniu, slovenská demokracia zostáva silná.",
+                    ],
+                },
+                Pelle: {
+                    en: [
+                        "Slovak families deserve media literacy programs, not constant surveillance.",
+                        "Mentors in villages can show children how to treat each other with respect.",
+                        "Morality grows through community support, not censorship.",
+                        "Protecting privacy keeps Bratislava's neighborhoods trusting one another.",
+                    ],
+                    cz: [
+                        "Slovenské rodiny si zaslouží mediální gramotnost, ne neustálé sledování.",
+                        "Mentři v obcích mohou dětem ukázat, jak se navzájem respektovat.",
+                        "Morálka roste díky podpoře komunity, ne kvůli cenzuře.",
+                        "Ochrana soukromí udržuje důvěru v bratislavských čtvrtích.",
+                    ],
+                    sk: [
+                        "Slovenské rodiny potrebujú mediálnu gramotnosť, nie neustále sledovanie.",
+                        "Mentori v dedinách dokážu deťom ukázať, ako si prejavovať úctu.",
+                        "Morálka rastie vďaka podpore komunity, nie cenzúre.",
+                        "Ochrana súkromia udržiava dôveru v bratislavských štvrťach.",
+                    ],
+                },
+                Reporterka: {
+                    en: [
+                        "Citizens across Slovakia trust reporters who can investigate without fear.",
+                        "We must explain every decision to people in Nitra and Humenné.",
+                        "Shielding whistleblowers keeps corruption from hiding in Bratislava.",
+                        "An independent council funded by citizens keeps the narrative honest.",
+                    ],
+                    cz: [
+                        "Občané po celém Slovensku důvěřují novinářům, kteří mohou vyšetřovat bez strachu.",
+                        "Musíme vysvětlovat rozhodnutí lidem v Nitře i Humenném.",
+                        "Ochrana oznamovatelů brání korupci, aby se neschovala v Bratislavě.",
+                        "Nezávislá rada financovaná občany udrží příběh pravdivý.",
+                    ],
+                    sk: [
+                        "Občania po celom Slovensku dôverujú reportérom, ktorí môžu vyšetrovať bez strachu.",
+                        "Rozhodnutia musíme vysvetľovať ľuďom v Nitre i Humennom.",
+                        "Ochrana oznamovateľov zabráni korupcii schovať sa v Bratislave.",
+                        "Nezávislá rada financovaná občanmi udrží príbeh pravdivý.",
+                    ],
+                },
+                Robo: {
+                    en: [
+                        "Slovak courts need smart tools, but judges must keep the final word.",
+                        "Algorithms can highlight delays in Bratislava's criminal process.",
+                        "Automation should help, not replace, public trust in the bench.",
+                        "Every decision affecting citizens needs a human review.",
+                    ],
+                    cz: [
+                        "Slovenské soudy potřebují chytré nástroje, ale rozhodnutí musí zůstat u soudců.",
+                        "Algoritmy mohou odhalit zpoždění v bratislavském trestním řízení.",
+                        "Automatizace má pomáhat, ne nahrazovat důvěru lidí v lavici.",
+                        "Každé rozhodnutí ovlivňující občany potřebuje lidskou kontrolu.",
+                    ],
+                    sk: [
+                        "Slovenské súdy potrebujú chytré nástroje, rozhodnutie však musí ostať u sudcu.",
+                        "Algoritmy môžu odhaliť prieťahy v bratislavskom trestnom konaní.",
+                        "Automatizácia má pomáhať, nie nahrádzať dôveru v súdnu lavicu.",
+                        "Každé rozhodnutie ovplyvňujúce občanov potrebuje ľudskú kontrolu.",
+                    ],
+                },
+                Tuniak: {
+                    en: [
+                        "Slovak exporters need fair agreements, not walls.",
+                        "Protecting workers in Košice means investing in retraining.",
+                        "Scientists along the Danube help communities adapt to rising waters.",
+                        "Opening markets while safeguarding wages keeps families secure.",
+                    ],
+                    cz: [
+                        "Slovenský export potřebuje férové dohody, ne izolaci.",
+                        "Ochrana dělníků v Košicích znamená investice do rekvalifikací.",
+                        "Vědci podél Dunaje pomáhají přizpůsobit se stoupající vodě.",
+                        "Otevřené trhy se zajištěnými mzdami udrží rodiny v bezpečí.",
+                    ],
+                    sk: [
+                        "Slovenský export potrebuje férové dohody, nie izoláciu.",
+                        "Ochrana pracovníkov v Košiciach znamená investíciu do rekvalifikácie.",
+                        "Vedci pozdĺž Dunaja pomáhajú prispôsobiť sa stúpajúcej vode.",
+                        "Otvorené trhy s ochranou platov udržia rodiny v bezpečí.",
+                    ],
+                },
+            };
+
             let currentLang = "sk";
             let currentIndex = 0;
             let score = 0;
@@ -1660,6 +1822,7 @@
             let democrisisPercent = 0;
             let popularityPercent = INITIAL_POPULARITY_PERCENT;
             let currentOptionOrder = [];
+            let currentStatementIndex = 0;
 
             localeButtons.forEach((button) => {
                 button.addEventListener("click", () => {
@@ -1713,6 +1876,33 @@
                 updatePopularityMeter();
             }
 
+            function getStatementList(scene) {
+                const pool = statementPool[scene.name];
+                if (!pool) {
+                    return [];
+                }
+                return pool[currentLang] || pool.en || [];
+            }
+
+            function setStatementIndexForScene(scene) {
+                const statements = getStatementList(scene);
+                if (!statements.length) {
+                    currentStatementIndex = 0;
+                    return;
+                }
+                currentStatementIndex = Math.floor(Math.random() * statements.length);
+            }
+
+            function getStatementText(scene) {
+                const statements = getStatementList(scene);
+                if (!statements.length) {
+                    const localized = getSceneText(scene);
+                    return localized.pitch;
+                }
+                const index = Math.min(currentStatementIndex, statements.length - 1);
+                return statements[index];
+            }
+
             function decreasePopularity(amount = 5) {
                 popularityPercent = Math.max(0, popularityPercent - amount);
                 updatePopularityMeter();
@@ -1763,8 +1953,8 @@
 
             function refreshLocalizedScene() {
                 const scene = scenes[currentIndex];
-                const localized = getSceneText(scene);
-                dialogEl.textContent = localized.pitch;
+                const statementText = getStatementText(scene);
+                dialogEl.textContent = statementText;
                 currentOptionOrder.forEach((baseIdx, idx) => {
                     const button = optionsEl.children[idx];
                     if (button) {
@@ -1784,13 +1974,14 @@
 
             function loadScene() {
                 const scene = scenes[currentIndex];
+                setStatementIndexForScene(scene);
                 const localized = getSceneText(scene);
                 imageEl.src = scene.image;
                 imageEl.alt = scene.name;
                 if (nameEl) {
                     nameEl.textContent = scene.name;
                 }
-                dialogEl.textContent = localized.pitch;
+                dialogEl.textContent = getStatementText(scene);
                 optionsEl.innerHTML = "";
                 currentOptionOrder = shuffleIndices(localized.options.length);
                 currentOptionOrder.forEach((baseIdx) => {
