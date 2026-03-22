@@ -139,10 +139,11 @@
                     0 1px 0 rgba(255, 255, 255, 0.6),
                     0 -1px 0 rgba(0, 0, 0, 0.8);
                 display: flex;
-                align-items: center;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: flex-start;
                 gap: 0.6rem;
-                justify-content: center;
-                width: max-content;
+                width: min(1100px, 100%);
                 max-width: 90vw;
             }
 
@@ -165,6 +166,31 @@
 
             .democrisis-banner__title strong {
                 font-family: inherit;
+            }
+
+            .democrisis-banner__info {
+                display: flex;
+                flex-direction: column;
+                gap: 0.35rem;
+                flex: 1;
+                min-width: 0;
+            }
+
+            .democrisis-banner__titles {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: baseline;
+                gap: 0.75rem;
+                justify-content: center;
+            }
+
+            .popularity-banner__title {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+                font-size: 0.8rem;
+                letter-spacing: 0.25em;
+                text-transform: uppercase;
             }
 
             .leaderboard-toggle {
@@ -235,6 +261,70 @@
                         #fb8b24 0%,
                         #f72585 55%,
                         #4cc9f0 100%
+                    );
+                background-size:
+                    6px 6px,
+                    6px 6px,
+                    100% 100%;
+                transition: width 0.25s steps(10);
+                image-rendering: pixelated;
+                box-shadow: inset -4px -4px 0 rgba(255, 255, 255, 0.15);
+            }
+
+            .banner-meters {
+                display: flex;
+                flex-direction: column;
+                gap: 0.35rem;
+            }
+
+            .popularity-meter {
+                margin-top: 0;
+                width: min(220px, 90vw);
+                max-width: 260px;
+                height: 24px;
+                border: 3px solid #111;
+                border-radius: 2px;
+                background:
+                    linear-gradient(180deg, #121212 0%, #050505 100%),
+                    repeating-linear-gradient(
+                        90deg,
+                        #0d0d0d 0 8px,
+                        #1c1c1c 8px 16px
+                    );
+                box-shadow: 4px 4px 0 #050505;
+                position: relative;
+                overflow: hidden;
+                image-rendering: pixelated;
+            }
+
+            .popularity-meter::after {
+                content: "";
+                position: absolute;
+                inset: 3px;
+                border: 2px solid rgba(255, 255, 255, 0.15);
+                pointer-events: none;
+            }
+
+            .popularity-meter .pixel-fill {
+                height: 100%;
+                width: 0;
+                border-right: 2px solid #050505;
+                background-image:
+                    repeating-linear-gradient(
+                        0deg,
+                        rgba(255, 255, 255, 0.3) 0 6px,
+                        transparent 6px 12px
+                    ),
+                    repeating-linear-gradient(
+                        90deg,
+                        rgba(255, 255, 255, 0.3) 0 6px,
+                        transparent 6px 12px
+                    ),
+                    linear-gradient(
+                        90deg,
+                        #4cc9f0 0%,
+                        #22c55e 55%,
+                        #a855f7 100%
                     );
                 background-size:
                     6px 6px,
@@ -629,10 +719,29 @@
                     font-size: 0.7rem;
                 }
 
+                .democrisis-banner__info {
+                    width: 100%;
+                    align-items: center;
+                }
+
+                .democrisis-banner__titles {
+                    flex-direction: column;
+                }
+
+                .banner-meters {
+                    width: 100%;
+                    align-items: center;
+                }
+
                 .leaderboard-toggle {
                     font-size: 0.6rem;
                     padding: 0.3rem 0.6rem;
                     min-height: 32px;
+                }
+
+                .popularity-meter {
+                    width: min(150px, calc(100vw - 3rem));
+                    height: 20px;
                 }
             }
 
@@ -660,11 +769,24 @@
             <button type="button" data-lang="cz">CZ</button>
         </div>
         <div class="democrisis-banner" id="democrisis-banner">
-            <span class="democrisis-banner__title">
-                Democrisis: <strong id="democrisis-percent">0%</strong>
-            </span>
-            <div class="democrisis-meter" aria-hidden="true">
-                <div class="pixel-fill" id="democrisis-progress"></div>
+            <div class="democrisis-banner__info">
+                <div class="democrisis-banner__titles">
+                    <span class="democrisis-banner__title">
+                        Democrisis: <strong id="democrisis-percent">0%</strong>
+                    </span>
+                    <span class="popularity-banner__title">
+                        <span id="popularity-label-text">Popularita:</span>
+                        <strong id="popularity-percent">35%</strong>
+                    </span>
+                </div>
+                <div class="banner-meters">
+                    <div class="democrisis-meter" aria-hidden="true">
+                        <div class="pixel-fill" id="democrisis-progress"></div>
+                    </div>
+                    <div class="popularity-meter" aria-hidden="true">
+                        <div class="pixel-fill" id="popularity-progress"></div>
+                    </div>
+                </div>
             </div>
             <button
                 id="leaderboard-toggle"
@@ -1444,6 +1566,7 @@
                         "Agora stále hučí debatou. Demokracia dnes vyhráva.",
                     summaryLow:
                         "Rada potrebuje viac spojencov. Pozývaj viac občanov k stolu.",
+                    popularityLabel: "Popularita:",
                 },
                 en: {
                     politicianLabel: "Politician",
@@ -1456,6 +1579,7 @@
                         "The agora still hums with debate. Democracy is winning tonight.",
                     summaryLow:
                         "The council needs more allies. Keep inviting citizens to the table.",
+                    popularityLabel: "Popularity:",
                 },
                 cz: {
                     politicianLabel: "Politik",
@@ -1468,6 +1592,7 @@
                         "Agora stále bzučí debatou. Demokracie dnes vítězí.",
                     summaryLow:
                         "Radě chybí spojenci. Pozvi více občanů ke stolu.",
+                    popularityLabel: "Popularita:",
                 },
             };
 
@@ -1496,6 +1621,15 @@
             const democrisisProgressEl = document.getElementById(
                 "democrisis-progress",
             );
+            const popularityPercentEl = document.getElementById(
+                "popularity-percent",
+            );
+            const popularityProgressEl = document.getElementById(
+                "popularity-progress",
+            );
+            const popularityLabelTextEl = document.getElementById(
+                "popularity-label-text",
+            );
 
             const gameEl = document.getElementById("game");
             const leaderboardPageEl =
@@ -1521,8 +1655,10 @@
             const DEFAULT_LAST_RUN_TEXT = "Complete a run to enter the halls.";
             const DEFAULT_SUMMARY_TEXT = "Reach 100% to make your mark.";
             const LEADERBOARD_API_URL = "/api/leaderboard";
+            const INITIAL_POPULARITY_PERCENT = 35;
 
             let democrisisPercent = 0;
+            let popularityPercent = INITIAL_POPULARITY_PERCENT;
             let currentOptionOrder = [];
 
             localeButtons.forEach((button) => {
@@ -1555,6 +1691,33 @@
                 return copyMap[currentLang] || copyMap.en;
             }
 
+            function updatePopularityLabelText() {
+                if (!popularityLabelTextEl) {
+                    return;
+                }
+                const copy = getCopy();
+                popularityLabelTextEl.textContent = copy.popularityLabel;
+            }
+
+            function updatePopularityMeter() {
+                if (popularityPercentEl) {
+                    popularityPercentEl.textContent = `${popularityPercent}%`;
+                }
+                if (popularityProgressEl) {
+                    popularityProgressEl.style.width = `${popularityPercent}%`;
+                }
+            }
+
+            function increasePopularity(amount = 5) {
+                popularityPercent = Math.min(100, popularityPercent + amount);
+                updatePopularityMeter();
+            }
+
+            function decreasePopularity(amount = 5) {
+                popularityPercent = Math.max(0, popularityPercent - amount);
+                updatePopularityMeter();
+            }
+
             function getSceneText(scene) {
                 return scene.translations[currentLang] || scene.translations.en;
             }
@@ -1572,6 +1735,7 @@
                 if (!copyMap[lang] || currentLang === lang) return;
                 currentLang = lang;
                 updateLocaleButtons();
+                updatePopularityLabelText();
                 if (gameOver) {
                     showSummary();
                 } else {
@@ -1660,8 +1824,12 @@
                 answered = true;
                 selectedOptionBaseIdx = baseIdx;
                 score += option.score;
-                if (option.score < 0) {
-                    increaseDemocrisis(Math.abs(option.score));
+                if (option.score > 0) {
+                    increasePopularity(option.score);
+                } else if (option.score < 0) {
+                    const penalty = Math.abs(option.score);
+                    increaseDemocrisis(penalty);
+                    decreasePopularity(penalty);
                 }
                 if (!gameOver) {
                     feedbackEl.textContent = option.reaction;
@@ -1739,8 +1907,11 @@
                 gameOver = false;
                 selectedOptionBaseIdx = null;
                 democrisisPercent = 0;
+                popularityPercent = INITIAL_POPULARITY_PERCENT;
                 runStartTime = Date.now();
                 updateDemocrisisMeter();
+                updatePopularityMeter();
+                updatePopularityLabelText();
                 loadScene();
                 leaderboardEntryForm.classList.remove("is-active");
             }
