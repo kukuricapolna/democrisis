@@ -2,18 +2,33 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+        />
         <title>Democrisis</title>
         <link rel="icon" type="image/png" href="favicon.png" sizes="32x32" />
+        <link rel="manifest" href="manifest.json" />
+        <meta name="theme-color" content="#f72585" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="black-translucent"
+        />
         <style>
             :root {
                 font-family: "Space Mono", "Segoe UI", system-ui, sans-serif;
                 color: #111;
                 background: #fff;
+                --safe-top: env(safe-area-inset-top, 0px);
+                --safe-bottom: env(safe-area-inset-bottom, 0px);
+                --safe-left: env(safe-area-inset-left, 0px);
+                --safe-right: env(safe-area-inset-right, 0px);
             }
 
             * {
                 box-sizing: border-box;
+                -webkit-tap-highlight-color: transparent;
             }
 
             @font-face {
@@ -26,6 +41,7 @@
             body {
                 margin: 0;
                 min-height: 100vh;
+                min-height: 100dvh;
                 display: flex;
                 justify-content: flex-start;
                 align-items: flex-start;
@@ -34,6 +50,8 @@
                 background-size: cover;
                 background-position: center;
                 position: relative;
+                overflow-x: hidden;
+                overscroll-behavior: none;
             }
 
             #game {
@@ -43,16 +61,19 @@
                 width: min(1100px, 100%);
                 margin: 0;
                 padding: 4vw 0 0;
+                padding-bottom: var(--safe-bottom);
                 display: flex;
                 justify-content: flex-start;
                 align-items: flex-end;
                 background: rgba(255, 255, 255, 0.75);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
             }
 
             .locale-switch {
                 position: absolute;
-                top: 1rem;
-                left: 1rem;
+                top: calc(1rem + var(--safe-top));
+                left: calc(1rem + var(--safe-left));
                 display: flex;
                 gap: 0.35rem;
                 padding: 0.25rem 0.6rem;
@@ -62,6 +83,7 @@
                 letter-spacing: 0.25em;
                 text-transform: uppercase;
                 z-index: 2;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             }
 
             .locale-switch button {
@@ -74,6 +96,11 @@
                 transition:
                     color 0.2s ease,
                     background 0.2s ease;
+                min-width: 36px;
+                min-height: 36px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .locale-switch button.is-active {
@@ -81,13 +108,13 @@
                 font-weight: 600;
             }
 
-            .locale-switch button:hover {
-                background: rgba(0, 0, 0, 0.1);
+            .locale-switch button:active {
+                background: rgba(0, 0, 0, 0.15);
             }
 
             .democrisis-banner {
                 position: absolute;
-                top: 1rem;
+                top: calc(1rem + var(--safe-top));
                 left: 50%;
                 transform: translateX(-50%);
                 padding: 0.4rem 1.4rem;
@@ -115,6 +142,8 @@
                 align-items: center;
                 gap: 0.6rem;
                 justify-content: center;
+                width: max-content;
+                max-width: 90vw;
             }
 
             .democrisis-banner::after {
@@ -150,21 +179,28 @@
                 cursor: pointer;
                 text-transform: uppercase;
                 box-shadow: 0 4px 0 #050505;
+                min-height: 40px;
             }
 
-            .leaderboard-toggle:hover {
-                transform: translateY(-1px);
+            .leaderboard-toggle:active {
+                transform: translateY(2px);
+                box-shadow: 0 2px 0 #050505;
             }
 
             .democrisis-meter {
                 margin-top: 0.35rem;
-                width: 220px;
+                width: min(220px, 90vw);
+                max-width: 260px;
                 height: 24px;
                 border: 3px solid #111;
                 border-radius: 2px;
                 background:
                     linear-gradient(180deg, #121212 0%, #050505 100%),
-                    repeating-linear-gradient(90deg, #0d0d0d 0 8px, #1c1c1c 8px 16px);
+                    repeating-linear-gradient(
+                        90deg,
+                        #0d0d0d 0 8px,
+                        #1c1c1c 8px 16px
+                    );
                 box-shadow: 4px 4px 0 #050505;
                 position: relative;
                 overflow: hidden;
@@ -194,8 +230,16 @@
                         rgba(255, 255, 255, 0.3) 0 6px,
                         transparent 6px 12px
                     ),
-                    linear-gradient(90deg, #fb8b24 0%, #f72585 55%, #4cc9f0 100%);
-                background-size: 6px 6px, 6px 6px, 100% 100%;
+                    linear-gradient(
+                        90deg,
+                        #fb8b24 0%,
+                        #f72585 55%,
+                        #4cc9f0 100%
+                    );
+                background-size:
+                    6px 6px,
+                    6px 6px,
+                    100% 100%;
                 transition: width 0.25s steps(10);
                 image-rendering: pixelated;
                 box-shadow: inset -4px -4px 0 rgba(255, 255, 255, 0.15);
@@ -206,15 +250,15 @@
             }
 
             #leaderboard-page {
-                position: absolute;
-                top: 2rem;
-                left: 50%;
-                transform: translateX(-50%);
-                width: min(960px, calc(100% - 3rem));
-                max-height: calc(100vh - 4rem);
-                padding: clamp(1.5rem, 3vw, 2.5rem);
-                border: 4px solid #f72585;
-                border-radius: 8px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                padding: clamp(1rem, 5vw, 2.5rem);
+                padding-top: calc(1rem + var(--safe-top));
+                padding-bottom: calc(1rem + var(--safe-bottom));
+                border-radius: 0;
                 background: #020202;
                 color: #f8f32b;
                 font-family: "Pixelify", "Space Mono", monospace;
@@ -222,8 +266,9 @@
                 flex-direction: column;
                 align-items: center;
                 gap: 1rem;
-                box-shadow: 10px 10px 0 #050505;
+                z-index: 100;
                 overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
             }
 
             #leaderboard-page.is-visible {
@@ -234,12 +279,14 @@
                 margin: 0;
                 font-size: clamp(1.5rem, 3vw, 2.1rem);
                 letter-spacing: 0.6em;
+                text-align: center;
             }
 
             #leaderboard-last-run {
                 margin: 0;
                 font-size: 1rem;
                 letter-spacing: 0.3em;
+                text-align: center;
             }
 
             #leaderboard-summary {
@@ -247,6 +294,49 @@
                 font-size: 0.8rem;
                 letter-spacing: 0.4em;
                 color: rgba(248, 243, 43, 0.8);
+                text-align: center;
+            }
+
+            #leaderboard-entry-form {
+                display: none;
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+                max-width: 400px;
+                padding: 1.5rem;
+                border: 2px dashed #f72585;
+                background: #111;
+                margin: 1rem 0;
+            }
+
+            #leaderboard-entry-form.is-active {
+                display: flex;
+            }
+
+            #leaderboard-entry-form label {
+                font-size: 0.8rem;
+                letter-spacing: 0.2em;
+            }
+
+            #leaderboard-entry-form input {
+                background: #000;
+                border: 2px solid #4cc9f0;
+                color: #f8f32b;
+                padding: 0.8rem;
+                font-family: inherit;
+                font-size: 1.2rem;
+                outline: none;
+            }
+
+            #leaderboard-entry-form button {
+                background: #f72585;
+                color: #fff;
+                border: none;
+                padding: 0.8rem;
+                font-family: inherit;
+                text-transform: uppercase;
+                letter-spacing: 0.2em;
+                cursor: pointer;
             }
 
             #leaderboard-list {
@@ -254,6 +344,7 @@
                 margin: 0;
                 padding: 0;
                 width: 100%;
+                max-width: 800px;
                 display: flex;
                 flex-direction: column;
                 gap: 0.4rem;
@@ -263,7 +354,7 @@
                 display: grid;
                 grid-template-columns: 2rem 1fr auto;
                 gap: 0.75rem;
-                padding: 0.5rem 0.8rem;
+                padding: 0.7rem 1rem;
                 border: 2px solid rgba(248, 243, 43, 0.4);
                 border-radius: 4px;
                 background:
@@ -276,7 +367,7 @@
                     ),
                     #101010;
                 font-size: 0.9rem;
-                letter-spacing: 0.3em;
+                letter-spacing: 0.2em;
             }
 
             #leaderboard-list li span {
@@ -298,23 +389,27 @@
                 font-family: inherit;
                 text-transform: uppercase;
                 letter-spacing: 0.4em;
-                padding: 0.6rem 1.25rem;
+                padding: 1rem 2rem;
                 border: 3px solid #4cc9f0;
                 background: #020202;
                 color: #f8f32b;
                 cursor: pointer;
                 filter: drop-shadow(0 4px 0 #050505);
+                margin-top: auto;
+                min-height: 60px;
             }
 
-            #leaderboard-play-again:hover {
-                background: #0b0b0b;
+            #leaderboard-play-again:active {
+                transform: translateY(2px);
+                filter: drop-shadow(0 2px 0 #050505);
             }
 
             .scene {
                 width: 100%;
                 display: flex;
-                gap: clamp(2rem, 4vw, 4rem);
+                gap: clamp(1rem, 4vw, 4rem);
                 align-items: flex-end;
+                padding: 0 1rem;
             }
 
             .portrait-block {
@@ -323,6 +418,7 @@
                 align-items: center;
                 text-align: center;
                 gap: 0.25rem;
+                margin-top: 2rem;
             }
 
             .politician-name {
@@ -337,8 +433,9 @@
             #politician-image {
                 width: clamp(180px, 22vw, 320px);
                 height: auto;
-                object-fit: cover;
-                align-self: flex-start;
+                max-height: 50vh;
+                object-fit: contain;
+                align-self: center;
             }
 
             .content {
@@ -346,11 +443,12 @@
                 display: flex;
                 flex-direction: column;
                 gap: 1.5rem;
+                padding-bottom: 1rem;
             }
 
             .pitch {
                 font-size: clamp(1.2rem, 2.3vw, 1.9rem);
-                line-height: 1.5;
+                line-height: 1.4;
                 margin: 0;
             }
 
@@ -362,20 +460,29 @@
 
             .choice {
                 width: 100%;
-                background: none;
+                background: rgba(255, 255, 255, 0.4);
                 border: none;
-                padding: 0;
+                padding: 0.5rem 0.8rem;
                 font: inherit;
                 text-align: left;
                 cursor: pointer;
-                font-size: 1.4rem;
+                font-size: clamp(1rem, 1.8vw, 1.4rem);
                 letter-spacing: 0.02em;
-                border-bottom: 1px solid #111;
-                padding-bottom: 0.3rem;
+                border-bottom: 2px solid #111;
+                transition:
+                    background 0.2s ease,
+                    transform 0.1s ease;
+                min-height: 44px;
             }
 
             .choice:hover:enabled {
                 color: #0055ff;
+                background: rgba(255, 255, 255, 0.8);
+            }
+
+            .choice:active:enabled {
+                transform: scale(0.98);
+                background: rgba(255, 255, 255, 0.95);
             }
 
             .choice:disabled {
@@ -393,39 +500,155 @@
             }
 
             #next-button {
-                border: none;
-                background: none;
+                border: 3px solid #111;
+                background: #f8f32b;
                 font: inherit;
+                padding: 0.8rem 1.5rem;
                 letter-spacing: 0.12em;
                 cursor: pointer;
-                color: inherit;
-                font-weight: 600;
+                color: #000;
+                font-weight: 700;
+                text-transform: uppercase;
+                box-shadow: 4px 4px 0 #000;
+                min-height: 48px;
+            }
+
+            #next-button:active:enabled {
+                transform: translate(2px, 2px);
+                box-shadow: 2px 2px 0 #000;
             }
 
             #next-button:disabled {
                 opacity: 0.4;
                 cursor: not-allowed;
+                box-shadow: none;
             }
 
             .feedback {
                 margin: 0;
                 font-size: 0.95rem;
                 min-height: 1.2rem;
+                font-style: italic;
+                color: #333;
             }
 
             @media (max-width: 768px) {
+                body {
+                    padding-bottom: 0;
+                    align-items: flex-end;
+                }
+
+                #game {
+                    position: relative;
+                    bottom: 0;
+                    left: 0;
+                    padding: 6rem 1rem calc(1.5rem + var(--safe-bottom));
+                    width: 100%;
+                    border-radius: 0;
+                    min-height: 100dvh;
+                    max-height: none;
+                    overflow-y: auto;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    background: rgba(255, 255, 255, 0.85);
+                }
+
                 .scene {
                     flex-direction: column;
                     text-align: center;
+                    gap: 1rem;
+                    padding: 0;
+                    width: 100%;
+                }
+
+                .portrait-block {
+                    width: 100%;
+                    align-items: center;
+                    margin-top: 0;
+                    flex-shrink: 0;
+                }
+
+                #politician-image {
+                    width: auto;
+                    max-width: 80vw;
+                    height: auto;
+                    max-height: 35vh;
+                    object-fit: contain;
+                    display: block;
+                    margin: 0 auto;
+                }
+
+                .content {
+                    gap: 0.8rem;
+                    align-items: stretch;
+                    width: 100%;
+                }
+
+                #options {
+                    gap: 0.8rem;
+                }
+
+                .choice {
+                    padding: 0.8rem 1rem;
+                    border: 2px solid #111;
+                    border-radius: 8px;
+                    background: rgba(255, 255, 255, 0.9);
+                    text-align: center;
+                    font-size: 1rem;
+                    letter-spacing: 0.05em;
                 }
 
                 .controls {
                     flex-direction: column;
                     gap: 0.5rem;
+                    align-items: stretch;
                 }
 
                 #next-button {
-                    letter-spacing: 0.08em;
+                    width: 100%;
+                    text-align: center;
+                }
+
+                #leaderboard-page {
+                    padding: 1rem;
+                    padding-top: calc(1rem + var(--safe-top));
+                }
+
+                .democrisis-meter {
+                    width: min(150px, calc(100vw - 3rem));
+                    height: 20px;
+                }
+
+                .democrisis-banner {
+                    padding: 0.3rem 0.8rem;
+                    gap: 0.4rem;
+                }
+
+                .democrisis-banner__title {
+                    font-size: 0.7rem;
+                }
+
+                .leaderboard-toggle {
+                    font-size: 0.6rem;
+                    padding: 0.3rem 0.6rem;
+                    min-height: 32px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .pitch {
+                    font-size: 1.1rem;
+                }
+
+                .locale-switch {
+                    top: calc(0.5rem + var(--safe-top));
+                    left: calc(0.5rem + var(--safe-left));
+                }
+
+                .choice {
+                    font-size: 0.95rem;
+                    padding: 0.7rem;
                 }
             }
         </style>
@@ -443,7 +666,11 @@
             <div class="democrisis-meter" aria-hidden="true">
                 <div class="pixel-fill" id="democrisis-progress"></div>
             </div>
-            <button id="leaderboard-toggle" class="leaderboard-toggle" type="button">
+            <button
+                id="leaderboard-toggle"
+                class="leaderboard-toggle"
+                type="button"
+            >
                 Leaderboards
             </button>
         </div>
@@ -478,6 +705,18 @@
             <h2>Leaderboard</h2>
             <p id="leaderboard-last-run">Complete a run to enter the halls.</p>
             <p id="leaderboard-summary">Reach 100% to make your mark.</p>
+
+            <form id="leaderboard-entry-form">
+                <label for="username-input">Enter your name:</label>
+                <input
+                    type="text"
+                    id="username-input"
+                    maxlength="20"
+                    placeholder="Your Name"
+                />
+                <button type="submit">Save Score</button>
+            </form>
+
             <ul id="leaderboard-list"></ul>
             <button id="leaderboard-play-again" type="button">
                 Play again
@@ -825,6 +1064,372 @@
                         },
                     },
                 },
+                {
+                    name: "Pelle",
+                    image: "politicians/pelle.png",
+                    translations: {
+                        en: {
+                            pitch: "Morality is collapsing online; only the state can protect families from indecency.",
+                            options: [
+                                {
+                                    text: "Protect privacy and teach media literacy instead of policing.",
+                                    reaction:
+                                        "Parents breathe easier without constant surveillance.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Deploy morality squads to monitor everyone.",
+                                    reaction:
+                                        "Neighbors spy on neighbors and trust evaporates.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Fund community mentors who model respectful behavior.",
+                                    reaction: "Communities rediscover trust.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Shut down shows that offend sensibilities.",
+                                    reaction:
+                                        "Entertainment becomes grey and fearful.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Morálka se hroutí online; stát musí chránit rodiny před neřestí.",
+                            options: [
+                                {
+                                    text: "Chraň soukromí a uč mediální gramotnost místo sledování.",
+                                    reaction:
+                                        "Rodiče si oddechnou bez neustálého dozoru.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Pošli morální hlídky, co kontrolují každého.",
+                                    reaction:
+                                        "Lidé si začínají nedůvěřovat a strach roste.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Podporuj mentory, co ukazují respekt.",
+                                    reaction: "Komunity znovu důvěřují.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zavři pořady, co urážejí cítění.",
+                                    reaction:
+                                        "Zábava se proměnila v šedou utahovačku.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Morálka sa rúca online; štát musí chrániť rodiny pred nečistotou.",
+                            options: [
+                                {
+                                    text: "Chráň súkromie a uč mediálnu gramotnosť namiesto špehovania.",
+                                    reaction:
+                                        "Rodičia si vydýchnu bez neustáleho dozoru.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Pošli morálne hliadky, čo kontrolujú každého.",
+                                    reaction:
+                                        "Ľudia si prestávajú dôverovať a strach rastie.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Podporuj mentorov, čo ukazujú úctu.",
+                                    reaction:
+                                        "Komunity znova nadobudli dôveru.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zavri relácie, čo urážajú citlivých ľudí.",
+                                    reaction:
+                                        "Zábava se zmenila na sterilnú šedú.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    name: "Reporterka",
+                    image: "politicians/reporterka.png",
+                    translations: {
+                        en: {
+                            pitch: "The narrative is broken; I'll curate headlines to keep citizens calm.",
+                            options: [
+                                {
+                                    text: "Guarantee journalist access and protect whistleblowers.",
+                                    reaction:
+                                        "Investigations continue with public trust.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Fine outlets that publish dissenting views.",
+                                    reaction:
+                                        "Reporters self-censor and rumors spread.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Create an independent press council funded by citizens.",
+                                    reaction:
+                                        "Media feel empowered to reveal corruption.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Only allow state-approved correspondents in parliament.",
+                                    reaction:
+                                        "The public hears only rehearsed slogans.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Narativ je zničen; budu řídit titulky, aby lid uklidnil.",
+                            options: [
+                                {
+                                    text: "Zajisti přístup novinářům a ochranu whistleblowerů.",
+                                    reaction:
+                                        "Vyšetřování pokračují a lidé věří.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Pokutuj redakce za odlišné názory.",
+                                    reaction:
+                                        "Novináři se cenzurují, šíří se fámy.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Vytvoř nezávislou tiskovou radu financovanou občany.",
+                                    reaction: "Média odhalují korupci.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Povol jen státem schválené zpravodajky v parlamentu.",
+                                    reaction:
+                                        "Veřejnost slyší jen nahraný text.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Narativ je zničený; budem riadiť tituly, aby ľuďom bolo pokojnejšie.",
+                            options: [
+                                {
+                                    text: "Zabezpeč prístup novinárom a ochranu oznamovateľov.",
+                                    reaction:
+                                        "Vyšetrenia pokračujú a ľudia dôverujú.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Pokutuj redakcie, čo majú odlišné názory.",
+                                    reaction:
+                                        "Novinári sa autocenzurujú, šíria sa fámy.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Vytvor nezávislú tlačovú radu financovanú občanmi.",
+                                    reaction: "Médiá odhaľujú korupciu.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Povoľ len štátom schválených spravodajcov v parlamente.",
+                                    reaction:
+                                        "Verejnosť počuje len precvičené frázy.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    name: "Robo",
+                    image: "politicians/robo.png",
+                    translations: {
+                        en: {
+                            pitch: "My algorithms can optimize every decision; emotions only slow us down.",
+                            options: [
+                                {
+                                    text: "Use AI to support policymakers with human oversight.",
+                                    reaction:
+                                        "Decisions stay efficient without losing accountability.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Let algorithms replace elected officials.",
+                                    reaction:
+                                        "Voting becomes a checkbox while machines rule.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Invest in retraining citizens for tech jobs.",
+                                    reaction:
+                                        "People feel hopeful about the future.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Automate courts and remove juries.",
+                                    reaction:
+                                        "Justice runs on cold code and no empathy.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Moje algoritmy optimalizují každý krok; emoce jen zpomalují.",
+                            options: [
+                                {
+                                    text: "Použij AI jako podporu pro politiky s lidským dohledem.",
+                                    reaction:
+                                        "Rozhodnutí jsou efektivní a přitom kontrolovaná.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Nech algoritmy vystřídat zvolené úředníky.",
+                                    reaction:
+                                        "Hlasování je jen formalita, stroje vládnou.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Investuj do rekvalifikace na technologie.",
+                                    reaction:
+                                        "Lidé cítí naději a učí se nové dovednosti.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Automatizuj soudy a zruš poroty.",
+                                    reaction:
+                                        "Spravedlnost běží na kódu bez empatie.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Moje algoritmy môžu optimalizovať každý krok; emócie len spomaľujú.",
+                            options: [
+                                {
+                                    text: "Použi AI jako podporu pro politikov s ľudským dohľadom.",
+                                    reaction:
+                                        "Rozhodnutia sú efektívne a kontrolované.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Nechaj algoritmy nahradiť zvolených predstaviteľov.",
+                                    reaction:
+                                        "Hlasovanie je formalita, stroje vládnu.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Investuj do rekvalifikácie na technologické odbory.",
+                                    reaction:
+                                        "Ľudia majú nádej a učia sa nové zručnosti.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Automatizuj súdy a zruš poroty.",
+                                    reaction:
+                                        "Spravodlivosť beží na studenom kóde bez empatie.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    name: "Tuniak",
+                    image: "politicians/tuniak.png",
+                    translations: {
+                        en: {
+                            pitch: "Trade winds shift daily; we should close the borders to keep jobs safe.",
+                            options: [
+                                {
+                                    text: "Negotiate fair trade while protecting workers.",
+                                    reaction:
+                                        "Citizens feel supported and still export goods.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Ban imports to punish rivals.",
+                                    reaction:
+                                        "Shops empty and resentments grow.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Fund coastal research to adapt to rising seas.",
+                                    reaction:
+                                        "Scientists keep communities resilient.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Build walls and blame foreigners for every problem.",
+                                    reaction:
+                                        "Isolationism breeds fear and higher prices.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Obchodní větve se mění; máme zavřít hranice, aby zůstaly práce doma.",
+                            options: [
+                                {
+                                    text: "Vyjednávej férovou výměnu a chraň dělníky.",
+                                    reaction:
+                                        "Občané se cítí podporovaní a export běží.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zakaž dovoz, abychom potrestali soupeře.",
+                                    reaction:
+                                        "Obchody prázdné and napětí roste.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Financuj pobřežní výzkum kvůli stoupajícím mořím.",
+                                    reaction:
+                                        "Vědci pomáhají komunitám přežít.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Postav zdi a obviňuj cizince.",
+                                    reaction: "Izolace roste s cenami.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Obchodné vetry sa menia; máme zatvoriť hranice, aby zostali práce doma.",
+                            options: [
+                                {
+                                    text: "Vyjednávaj férový obchod a chráň pracovníkov.",
+                                    reaction:
+                                        "Občania sa cítia podporovaní a export funguje.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zakáž dovoz, aby sme potrestali súperov.",
+                                    reaction:
+                                        "Obchody sú prázdne a napätie rastie.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Financuj pobrežný výskum pre stúpajúce hladiny.",
+                                    reaction: "Vedci udržujú komunity silné.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Postav múry a obviňuj cudzincov.",
+                                    reaction:
+                                        "Izolácia vedie k strachu a drahším veciam.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                    },
+                },
             ];
 
             const copyMap = {
@@ -873,6 +1478,7 @@
             let gameOver = false;
             let selectedOptionBaseIdx = null;
             let runStartTime = Date.now();
+            let lastElapsedMs = 0;
             const LEADERBOARD_STORAGE_KEY = "democrisisLeaderboard";
             let leaderboardEntries = [];
 
@@ -892,8 +1498,10 @@
             );
 
             const gameEl = document.getElementById("game");
-            const leaderboardPageEl = document.getElementById("leaderboard-page");
-            const leaderboardListEl = document.getElementById("leaderboard-list");
+            const leaderboardPageEl =
+                document.getElementById("leaderboard-page");
+            const leaderboardListEl =
+                document.getElementById("leaderboard-list");
             const leaderboardLastRunEl = document.getElementById(
                 "leaderboard-last-run",
             );
@@ -903,9 +1511,13 @@
             const leaderboardPlayAgainButton = document.getElementById(
                 "leaderboard-play-again",
             );
-            const leaderboardToggleButton = document.getElementById(
-                "leaderboard-toggle",
+            const leaderboardToggleButton =
+                document.getElementById("leaderboard-toggle");
+            const leaderboardEntryForm = document.getElementById(
+                "leaderboard-entry-form",
             );
+            const usernameInput = document.getElementById("username-input");
+
             const DEFAULT_LAST_RUN_TEXT = "Complete a run to enter the halls.";
             const DEFAULT_SUMMARY_TEXT = "Reach 100% to make your mark.";
             const LEADERBOARD_API_URL = "/api/leaderboard";
@@ -914,10 +1526,17 @@
             let currentOptionOrder = [];
 
             localeButtons.forEach((button) => {
-                button.addEventListener("click", () =>
-                    setLanguage(button.dataset.lang),
-                );
+                button.addEventListener("click", () => {
+                    vibrate(10);
+                    setLanguage(button.dataset.lang);
+                });
             });
+
+            function vibrate(ms) {
+                if (navigator.vibrate) {
+                    navigator.vibrate(ms);
+                }
+            }
 
             function updateDemocrisisMeter() {
                 democrisisPercentEl.textContent = `${democrisisPercent}%`;
@@ -1017,9 +1636,10 @@
                     button.className = "choice";
                     button.textContent = option?.text || "";
                     button.disabled = false;
-                    button.addEventListener("click", () =>
-                        selectOption(option, baseIdx),
-                    );
+                    button.addEventListener("click", () => {
+                        vibrate(20);
+                        selectOption(option, baseIdx);
+                    });
                     optionsEl.appendChild(button);
                 });
                 answered = false;
@@ -1054,6 +1674,7 @@
             }
 
             nextButton.addEventListener("click", () => {
+                vibrate(10);
                 if (gameOver) {
                     resetGame();
                     return;
@@ -1073,20 +1694,42 @@
                 gameOver = true;
                 const copy = getCopy();
                 const summaryText =
-                    score >= scenes.length * 8 ? copy.summaryHigh : copy.summaryLow;
+                    score >= scenes.length * 8
+                        ? copy.summaryHigh
+                        : copy.summaryLow;
                 const results = document.createElement("div");
                 results.innerHTML = `
-          <strong>${copy.summaryLabel}</strong> ${score} civic points.
-          <br />
-          ${summaryText}
-        `;
+                    <strong>${copy.summaryLabel}</strong> ${score} civic points.
+                    <br />
+                    ${summaryText}
+                `;
                 feedbackEl.textContent = "";
                 feedbackEl.appendChild(results);
                 nextButton.disabled = false;
                 updateNextButtonText();
-                const elapsedMs = Date.now() - runStartTime;
-                promptForLeaderboardEntry(elapsedMs, summaryText);
+                lastElapsedMs = Date.now() - runStartTime;
+
+                // Show entry form
+                if (leaderboardLastRunEl) {
+                    leaderboardLastRunEl.textContent = `Run time: ${formatDuration(lastElapsedMs)}`;
+                }
+                if (leaderboardSummaryEl) {
+                    leaderboardSummaryEl.textContent = summaryText;
+                }
+
+                showLeaderboardView({ preserveLast: true });
+                leaderboardEntryForm.classList.add("is-active");
+                usernameInput.focus();
             }
+
+            leaderboardEntryForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                vibrate(15);
+                const name = usernameInput.value.trim() || "Anonymous";
+                addLeaderboardEntry(name, lastElapsedMs);
+                void submitLeaderboardEntryToServer(name, lastElapsedMs);
+                leaderboardEntryForm.classList.remove("is-active");
+            });
 
             function resetGame() {
                 showGameView();
@@ -1099,6 +1742,7 @@
                 runStartTime = Date.now();
                 updateDemocrisisMeter();
                 loadScene();
+                leaderboardEntryForm.classList.remove("is-active");
             }
 
             function formatDuration(ms) {
@@ -1145,21 +1789,30 @@
                 ) {
                     return null;
                 }
-                const response = await fetch(LEADERBOARD_API_URL);
-                if (!response.ok) {
-                    throw new Error(`Leaderboard GET responded with ${response.status}`);
+                try {
+                    const response = await fetch(LEADERBOARD_API_URL);
+                    if (!response.ok) {
+                        throw new Error(
+                            `Leaderboard GET responded with ${response.status}`,
+                        );
+                    }
+                    const payload = await response.json();
+                    if (!Array.isArray(payload.entries)) {
+                        throw new Error(
+                            "Leaderboard response missing entries array",
+                        );
+                    }
+                    return payload.entries
+                        .map((entry) => ({
+                            name: entry.username || "Anonymous",
+                            time: entry.time ? Number(entry.time) * 1000 : 0, // Convert from DB timestamp to ms
+                        }))
+                        .sort((a, b) => a.time - b.time)
+                        .slice(0, 10);
+                } catch (e) {
+                    console.error("Server fetch error", e);
+                    return null;
                 }
-                const payload = await response.json();
-                if (!Array.isArray(payload.entries)) {
-                    throw new Error("Leaderboard response missing entries array");
-                }
-                return payload.entries
-                    .map((entry) => ({
-                        name: entry.username || "Anonymous",
-                        time: entry.time ? new Date(entry.time).getTime() : 0,
-                    }))
-                    .sort((a, b) => a.time - b.time)
-                    .slice(0, 10);
             }
 
             async function loadLeaderboardEntries() {
@@ -1177,8 +1830,10 @@
                         return;
                     }
                 } catch (error) {
-                    // eslint-disable-next-line no-console
-                    console.warn("Failed to load leaderboard from server", error);
+                    console.warn(
+                        "Failed to load leaderboard from server",
+                        error,
+                    );
                 }
                 if (!window.localStorage) {
                     leaderboardEntries = [];
@@ -1186,10 +1841,11 @@
                     return;
                 }
                 try {
-                    const stored = localStorage.getItem(LEADERBOARD_STORAGE_KEY);
+                    const stored = localStorage.getItem(
+                        LEADERBOARD_STORAGE_KEY,
+                    );
                     leaderboardEntries = stored ? JSON.parse(stored) : [];
                 } catch (error) {
-                    // eslint-disable-next-line no-console
                     console.warn("Failed to read leaderboard", error);
                     leaderboardEntries = [];
                 }
@@ -1235,10 +1891,11 @@
                         }),
                     });
                     if (!response.ok) {
-                        throw new Error(`Leaderboard API responded with ${response.status}`);
+                        throw new Error(
+                            `Leaderboard API responded with ${response.status}`,
+                        );
                     }
                 } catch (error) {
-                    // eslint-disable-next-line no-console
                     console.warn("Leaderboard sync failed", error);
                 }
             }
@@ -1256,6 +1913,7 @@
                     if (leaderboardSummaryEl) {
                         leaderboardSummaryEl.textContent = summaryText;
                     }
+                    leaderboardEntryForm.classList.remove("is-active");
                 }
                 loadLeaderboardEntries();
                 gameEl?.classList.add("is-hidden");
@@ -1267,41 +1925,15 @@
                 gameEl?.classList.remove("is-hidden");
             }
 
-            function promptForLeaderboardEntry(elapsedMs, summaryText) {
-                let username = "Anonymous";
-                if (
-                    typeof window !== "undefined" &&
-                    typeof window.prompt === "function"
-                ) {
-                    const supplied = window.prompt(
-                        "Enter your username for the leaderboard",
-                        "Player",
-                    );
-                    if (supplied !== null) {
-                        const trimmed = supplied.trim();
-                        if (trimmed) {
-                            username = trimmed;
-                        }
-                    }
-                }
-                addLeaderboardEntry(username, elapsedMs);
-                if (leaderboardLastRunEl) {
-                    leaderboardLastRunEl.textContent = `Run time: ${formatDuration(
-                        elapsedMs,
-                    )}`;
-                }
-                if (leaderboardSummaryEl) {
-                    leaderboardSummaryEl.textContent = summaryText;
-                }
-                void submitLeaderboardEntryToServer(username, elapsedMs);
-                showLeaderboardView();
-            }
-
             loadLeaderboardEntries();
-            leaderboardPlayAgainButton?.addEventListener("click", resetGame);
-            leaderboardToggleButton?.addEventListener("click", () =>
-                showLeaderboardView({ preserveLast: false }),
-            );
+            leaderboardPlayAgainButton?.addEventListener("click", () => {
+                vibrate(10);
+                resetGame();
+            });
+            leaderboardToggleButton?.addEventListener("click", () => {
+                vibrate(10);
+                showLeaderboardView({ preserveLast: false });
+            });
             updateLocaleButtons();
             resetGame();
         </script>
