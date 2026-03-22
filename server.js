@@ -60,7 +60,10 @@ app.get("/api/leaderboard", async (req, res) => {
   try {
     const { rows } = await pool.query(
       `
-        SELECT id, username, time
+        SELECT
+          id,
+          username,
+          EXTRACT(EPOCH FROM "time") * 1000 AS time
         FROM ${LEADERBOARD_TABLE}
         ORDER BY time ASC
         LIMIT 10

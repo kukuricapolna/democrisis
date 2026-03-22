@@ -1803,10 +1803,13 @@
                         );
                     }
                     return payload.entries
-                        .map((entry) => ({
-                            name: entry.username || "Anonymous",
-                            time: entry.time ? Number(entry.time) * 1000 : 0, // Convert from DB timestamp to ms
-                        }))
+                        .map((entry) => {
+                            const rawTime = Number(entry.time);
+                            return {
+                                name: entry.username || "Anonymous",
+                                time: Number.isFinite(rawTime) ? rawTime : 0,
+                            };
+                        })
                         .sort((a, b) => a.time - b.time)
                         .slice(0, 10);
                 } catch (e) {
