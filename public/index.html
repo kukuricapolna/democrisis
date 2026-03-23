@@ -82,7 +82,7 @@
                 font-size: 0.65rem;
                 letter-spacing: 0.25em;
                 text-transform: uppercase;
-                z-index: 2;
+                z-index: 6;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             }
 
@@ -518,6 +518,13 @@
                 text-transform: uppercase;
                 color: #111;
                 text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+                position: relative;
+                z-index: 5;
+                padding: 0.2rem 0.8rem;
+                background: rgba(255, 255, 255, 0.92);
+                border-radius: 999px;
+                border: 2px solid rgba(0, 0, 0, 0.2);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             }
 
             #politician-image {
@@ -798,12 +805,12 @@
         <main id="game">
             <div class="scene" id="scene">
                 <div class="portrait-block">
-                    <div class="politician-name" id="politician-name"></div>
                     <img
                         id="politician-image"
                         src=""
                         alt="Politician portrait"
                     />
+                    <div class="politician-name" id="politician-name"></div>
                 </div>
                 <div class="content">
                 <p class="pitch" id="politician-dialog"></p>
@@ -857,25 +864,25 @@
                                     text: "Protect independent media and ensure transparency.",
                                     reaction:
                                         "Independent journalists continue investigating those in power.",
-                                    score: 10,
+                                    score: 12,
                                 },
                                 {
                                     text: "Put media under state control.",
                                     reaction:
                                         "Only government-approved information reaches the public.",
-                                    score: -5,
+                                    score: -8,
                                 },
                                 {
                                     text: "Support public broadcasting but keep it independent.",
                                     reaction:
                                         "Public media remains a watchdog, not a mouthpiece.",
-                                    score: 10,
+                                    score: 8,
                                 },
                                 {
                                     text: "Shut down hostile media outlets.",
                                     reaction:
                                         "Critical voices disappear from the public space.",
-                                    score: -5,
+                                    score: -4,
                                 },
                             ],
                         },
@@ -885,23 +892,23 @@
                                 {
                                     text: "Ochraň nezávislá média.",
                                     reaction: "Novináři dál kontrolují moc.",
-                                    score: 10,
+                                    score: 12,
                                 },
                                 {
                                     text: "Dej média pod kontrolu státu.",
                                     reaction:
                                         "K lidem se dostanou jen schválené informace.",
-                                    score: -5,
+                                    score: -8,
                                 },
                                 {
                                     text: "Podporuj veřejnoprávní média, ale nezávislá.",
                                     reaction: "Média zůstávají kontrolou moci.",
-                                    score: 10,
+                                    score: 8,
                                 },
                                 {
                                     text: "Zavři nepřátelská média.",
                                     reaction: "Kritické hlasy zmizí.",
-                                    score: -5,
+                                    score: -4,
                                 },
                             ],
                         },
@@ -911,23 +918,23 @@
                                 {
                                     text: "Chráň nezávislé médiá.",
                                     reaction: "Novinári kontrolujú moc.",
-                                    score: 10,
+                                    score: 12,
                                 },
                                 {
                                     text: "Daj médiá pod kontrolu štátu.",
                                     reaction:
                                         "K ľuďom sa dostanú len schválené informácie.",
-                                    score: -5,
+                                    score: -8,
                                 },
                                 {
                                     text: "Podpor verejnoprávne médiá, ale nech sú nezávislé.",
                                     reaction: "Médiá zostávajú kontrolou moci.",
-                                    score: 10,
+                                    score: 8,
                                 },
                                 {
                                     text: "Zavri nepriateľské médiá.",
                                     reaction: "Kritické hlasy zmiznú.",
-                                    score: -5,
+                                    score: -4,
                                 },
                             ],
                         },
@@ -944,25 +951,25 @@
                                     text: "Keep culture independent and diverse.",
                                     reaction:
                                         "Artists continue expressing different views.",
-                                    score: 10,
+                                    score: 9,
                                 },
                                 {
                                     text: "Put culture under one state authority.",
                                     reaction:
                                         "Only approved culture is supported.",
-                                    score: -5,
+                                    score: -7,
                                 },
                                 {
                                     text: "Let communities decide cultural funding.",
                                     reaction:
                                         "Different communities keep their voices.",
-                                    score: 10,
+                                    score: 5,
                                 },
                                 {
                                     text: "Cancel projects that criticize the government.",
                                     reaction:
                                         "Artists begin to censor themselves.",
-                                    score: -5,
+                                    score: -3,
                                 },
                             ],
                         },
@@ -972,23 +979,23 @@
                                 {
                                     text: "Nech kulturu nezávislou.",
                                     reaction: "Umělci mohou svobodně tvořit.",
-                                    score: 10,
+                                    score: 9,
                                 },
                                 {
                                     text: "Dej kulturu pod jeden státní úřad.",
                                     reaction:
                                         "Podporu dostane jen schválená kultura.",
-                                    score: -5,
+                                    score: -7,
                                 },
                                 {
                                     text: "O kultuře ať rozhodují komunity.",
                                     reaction: "Různé skupiny mají hlas.",
-                                    score: 10,
+                                    score: 5,
                                 },
                                 {
                                     text: "Zruš projekty kritizující vládu.",
                                     reaction: "Umělci se začnou bát kritiky.",
-                                    score: -5,
+                                    score: -3,
                                 },
                             ],
                         },
@@ -998,23 +1005,23 @@
                                 {
                                     text: "Nech je kultúra nezávislá.",
                                     reaction: "Umelci môžu slobodne tvoriť.",
-                                    score: 10,
+                                    score: 9,
                                 },
                                 {
                                     text: "Daj kultúru pod jeden štátny úrad.",
                                     reaction:
                                         "Podporu dostane len schválená kultúra.",
-                                    score: -5,
+                                    score: -7,
                                 },
                                 {
                                     text: "O kultúre nech rozhodujú komunity.",
                                     reaction: "Komunity majú hlas.",
-                                    score: 10,
+                                    score: 5,
                                 },
                                 {
                                     text: "Zruš projekty kritizujúce vládu.",
                                     reaction: "Umelci sa začnú báť kritiky.",
-                                    score: -5,
+                                    score: -3,
                                 },
                             ],
                         },
@@ -1036,13 +1043,13 @@
                                     text: "Rule by decree.",
                                     reaction:
                                         "Power concentrates in a few hands.",
-                                    score: -5,
+                                    score: -10,
                                 },
                                 {
                                     text: "Allow emergency powers but with limits.",
                                     reaction:
                                         "Emergency powers are controlled.",
-                                    score: 10,
+                                    score: 6,
                                 },
                                 {
                                     text: "Suspend parliament.",
@@ -1063,12 +1070,12 @@
                                 {
                                     text: "Vládnout dekrety.",
                                     reaction: "Moc se soustředí.",
-                                    score: -5,
+                                    score: -10,
                                 },
                                 {
                                     text: "Nouzové pravomoci s kontrolou.",
                                     reaction: "Pravomoci jsou omezené.",
-                                    score: 10,
+                                    score: 6,
                                 },
                                 {
                                     text: "Pozastav parlament.",
@@ -1088,12 +1095,12 @@
                                 {
                                     text: "Vládnuť dekrétmi.",
                                     reaction: "Moc sa sústreďuje.",
-                                    score: -5,
+                                    score: -10,
                                 },
                                 {
                                     text: "Núdzové právomoci s kontrolou.",
                                     reaction: "Právomoci sú obmedzené.",
-                                    score: 10,
+                                    score: 6,
                                 },
                                 {
                                     text: "Zruš parlament.",
@@ -1114,22 +1121,22 @@
                                 {
                                     text: "Keep fair election rules.",
                                     reaction: "Elections remain fair.",
-                                    score: 10,
+                                    score: 15,
                                 },
                                 {
                                     text: "Change rules to weaken opposition.",
                                     reaction: "Elections become unfair.",
-                                    score: -5,
+                                    score: -8,
                                 },
                                 {
                                     text: "Let experts review election laws.",
                                     reaction: "People trust elections.",
-                                    score: 10,
+                                    score: 7,
                                 },
                                 {
                                     text: "Redraw districts to favor the ruling party.",
                                     reaction: "The system favors one side.",
-                                    score: -5,
+                                    score: -4,
                                 },
                             ],
                         },
@@ -1139,22 +1146,22 @@
                                 {
                                     text: "Zachovat férové volby.",
                                     reaction: "Volby jsou spravedlivé.",
-                                    score: 10,
+                                    score: 15,
                                 },
                                 {
                                     text: "Změnit pravidla proti opozici.",
                                     reaction: "Volby nejsou férové.",
-                                    score: -5,
+                                    score: -8,
                                 },
                                 {
                                     text: "Nechat zákony posoudit odborníky.",
                                     reaction: "Lidé důvěřují volbám.",
-                                    score: 10,
+                                    score: 7,
                                 },
                                 {
                                     text: "Překreslit obvody pro vládu.",
                                     reaction: "Systém zvýhodňuje vládu.",
-                                    score: -5,
+                                    score: -4,
                                 },
                             ],
                         },
@@ -1164,22 +1171,22 @@
                                 {
                                     text: "Zachovať férové voľby.",
                                     reaction: "Voľby sú spravodlivé.",
-                                    score: 10,
+                                    score: 15,
                                 },
                                 {
                                     text: "Zmeniť pravidlá proti opozícii.",
                                     reaction: "Voľby nie sú férové.",
-                                    score: -5,
+                                    score: -8,
                                 },
                                 {
                                     text: "Nechať zákony posúdiť odborníkmi.",
                                     reaction: "Ľudia veria voľbám.",
-                                    score: 10,
+                                    score: 7,
                                 },
                                 {
                                     text: "Prekresliť obvody pre vládu.",
                                     reaction: "Systém zvýhodňuje vládu.",
-                                    score: -5,
+                                    score: -4,
                                 },
                             ],
                         },
@@ -1196,24 +1203,24 @@
                                     text: "Protect privacy and teach media literacy instead of policing.",
                                     reaction:
                                         "Parents breathe easier without constant surveillance.",
-                                    score: 10,
+                                    score: 9,
                                 },
                                 {
                                     text: "Deploy morality squads to monitor everyone.",
                                     reaction:
                                         "Neighbors spy on neighbors and trust evaporates.",
-                                    score: -5,
+                                    score: -6,
                                 },
                                 {
                                     text: "Fund community mentors who model respectful behavior.",
                                     reaction: "Communities rediscover trust.",
-                                    score: 10,
+                                    score: 5,
                                 },
                                 {
                                     text: "Shut down shows that offend sensibilities.",
                                     reaction:
                                         "Entertainment becomes grey and fearful.",
-                                    score: -5,
+                                    score: -3,
                                 },
                             ],
                         },
@@ -1224,24 +1231,24 @@
                                     text: "Chraň soukromí a uč mediální gramotnost místo sledování.",
                                     reaction:
                                         "Rodiče si oddechnou bez neustálého dozoru.",
-                                    score: 10,
+                                    score: 9,
                                 },
                                 {
                                     text: "Pošli morální hlídky, co kontrolují každého.",
                                     reaction:
                                         "Lidé si začínají nedůvěřovat a strach roste.",
-                                    score: -5,
+                                    score: -6,
                                 },
                                 {
                                     text: "Podporuj mentory, co ukazují respekt.",
                                     reaction: "Komunity znovu důvěřují.",
-                                    score: 10,
+                                    score: 5,
                                 },
                                 {
                                     text: "Zavři pořady, co urážejí cítění.",
                                     reaction:
                                         "Zábava se proměnila v šedou utahovačku.",
-                                    score: -5,
+                                    score: -3,
                                 },
                             ],
                         },
@@ -1252,25 +1259,25 @@
                                     text: "Chráň súkromie a uč mediálnu gramotnosť namiesto špehovania.",
                                     reaction:
                                         "Rodičia si vydýchnu bez neustáleho dozoru.",
-                                    score: 10,
+                                    score: 9,
                                 },
                                 {
                                     text: "Pošli morálne hliadky, čo kontrolujú každého.",
                                     reaction:
                                         "Ľudia si prestávajú dôverovať a strach rastie.",
-                                    score: -5,
+                                    score: -6,
                                 },
                                 {
                                     text: "Podporuj mentorov, čo ukazujú úctu.",
                                     reaction:
                                         "Komunity znova nadobudli dôveru.",
-                                    score: 10,
+                                    score: 5,
                                 },
                                 {
                                     text: "Zavri relácie, čo urážajú citlivých ľudí.",
                                     reaction:
                                         "Zábava se zmenila na sterilnú šedú.",
-                                    score: -5,
+                                    score: -3,
                                 },
                             ],
                         },
@@ -1287,25 +1294,25 @@
                                     text: "Guarantee journalist access and protect whistleblowers.",
                                     reaction:
                                         "Investigations continue with public trust.",
-                                    score: 10,
+                                    score: 14,
                                 },
                                 {
                                     text: "Fine outlets that publish dissenting views.",
                                     reaction:
                                         "Reporters self-censor and rumors spread.",
-                                    score: -5,
+                                    score: -6,
                                 },
                                 {
                                     text: "Create an independent press council funded by citizens.",
                                     reaction:
                                         "Media feel empowered to reveal corruption.",
-                                    score: 10,
+                                    score: 8,
                                 },
                                 {
                                     text: "Only allow state-approved correspondents in parliament.",
                                     reaction:
                                         "The public hears only rehearsed slogans.",
-                                    score: -5,
+                                    score: -2,
                                 },
                             ],
                         },
@@ -1316,24 +1323,24 @@
                                     text: "Zajisti přístup novinářům a ochranu whistleblowerů.",
                                     reaction:
                                         "Vyšetřování pokračují a lidé věří.",
-                                    score: 10,
+                                    score: 14,
                                 },
                                 {
                                     text: "Pokutuj redakce za odlišné názory.",
                                     reaction:
                                         "Novináři se cenzurují, šíří se fámy.",
-                                    score: -5,
+                                    score: -6,
                                 },
                                 {
                                     text: "Vytvoř nezávislou tiskovou radu financovanou občany.",
                                     reaction: "Média odhalují korupci.",
-                                    score: 10,
+                                    score: 8,
                                 },
                                 {
                                     text: "Povol jen státem schválené zpravodajky v parlamentu.",
                                     reaction:
                                         "Veřejnost slyší jen nahraný text.",
-                                    score: -5,
+                                    score: -2,
                                 },
                             ],
                         },
@@ -1344,24 +1351,24 @@
                                     text: "Zabezpeč prístup novinárom a ochranu oznamovateľov.",
                                     reaction:
                                         "Vyšetrenia pokračujú a ľudia dôverujú.",
-                                    score: 10,
+                                    score: 14,
                                 },
                                 {
                                     text: "Pokutuj redakcie, čo majú odlišné názory.",
                                     reaction:
                                         "Novinári sa autocenzurujú, šíria sa fámy.",
-                                    score: -5,
+                                    score: -6,
                                 },
                                 {
                                     text: "Vytvor nezávislú tlačovú radu financovanú občanmi.",
                                     reaction: "Médiá odhaľujú korupciu.",
-                                    score: 10,
+                                    score: 8,
                                 },
                                 {
                                     text: "Povoľ len štátom schválených spravodajcov v parlamente.",
                                     reaction:
                                         "Verejnosť počuje len precvičené frázy.",
-                                    score: -5,
+                                    score: -2,
                                 },
                             ],
                         },
@@ -1378,25 +1385,25 @@
                                     text: "Use AI to support policymakers with human oversight.",
                                     reaction:
                                         "Decisions stay efficient without losing accountability.",
-                                    score: 10,
+                                    score: 12,
                                 },
                                 {
                                     text: "Let algorithms replace elected officials.",
                                     reaction:
                                         "Voting becomes a checkbox while machines rule.",
-                                    score: -5,
+                                    score: -10,
                                 },
                                 {
                                     text: "Invest in retraining citizens for tech jobs.",
                                     reaction:
                                         "People feel hopeful about the future.",
-                                    score: 10,
+                                    score: 5,
                                 },
                                 {
                                     text: "Automate courts and let algorithms produce rulings.",
                                     reaction:
                                         "Justice runs on cold code with no humanity.",
-                                    score: -5,
+                                    score: -6,
                                 },
                             ],
                         },
