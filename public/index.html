@@ -2239,8 +2239,7 @@
                                 time: Number.isFinite(rawTime) ? rawTime : 0,
                             };
                         })
-                        .sort((a, b) => a.time - b.time)
-                        .slice(0, 10);
+                    .sort((a, b) => a.time - b.time);
                 } catch (e) {
                     console.error("Server fetch error", e);
                     return null;
@@ -2282,7 +2281,6 @@
                     leaderboardEntries = [];
                 }
                 leaderboardEntries.sort((a, b) => a.time - b.time);
-                leaderboardEntries = leaderboardEntries.slice(0, 10);
                 renderLeaderboard();
             }
 
@@ -2299,7 +2297,6 @@
             function addLeaderboardEntry(name, elapsedMs) {
                 leaderboardEntries.push({ name, time: elapsedMs });
                 leaderboardEntries.sort((a, b) => a.time - b.time);
-                leaderboardEntries = leaderboardEntries.slice(0, 10);
                 saveLeaderboardEntries();
                 renderLeaderboard();
             }

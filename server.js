@@ -66,7 +66,6 @@ app.get("/api/leaderboard", async (req, res) => {
           EXTRACT(EPOCH FROM "time") * 1000 AS time
         FROM ${LEADERBOARD_TABLE}
         ORDER BY time ASC
-        LIMIT 10
       `,
     );
     return res.json({ entries: rows });
