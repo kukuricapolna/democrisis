@@ -1572,35 +1572,56 @@
                         "Agora stále hučí debatou. Demokracia dnes vyhráva.",
                     summaryLow:
                         "Rada potrebuje viac spojencov. Pozývaj viac občanov k stolu.",
-                    popularityLabel: "Popularita:",
-                },
-                en: {
-                    politicianLabel: "Politician",
-                    ofText: "of",
+                popularityLabel: "Popularita:",
+                leaderboardTitle: "Poradie",
+                leaderboardDefaultLastRun: "Dokonči beh, aby si sa zapísal do sín.",
+                leaderboardDefaultSummary: "Dosiahni 100 %, aby si nechal stopu.",
+                leaderboardEntryFormLabel: "Zadaj meno:",
+                leaderboardInputPlaceholder: "Tvoje meno",
+                leaderboardSaveButton: "Ulož výsledok",
+                leaderboardToggle: "Rebríčky",
+            },
+            en: {
+                politicianLabel: "Politician",
+                ofText: "of",
                     next: "Next politician",
                     seeTally: "See the tally",
                     playAgain: "Play again",
                     summaryLabel: "Final tally:",
                     summaryHigh:
                         "The agora still hums with debate. Democracy is winning tonight.",
-                    summaryLow:
-                        "The council needs more allies. Keep inviting citizens to the table.",
-                    popularityLabel: "Popularity:",
-                },
-                cz: {
-                    politicianLabel: "Politik",
-                    ofText: "z",
+                summaryLow:
+                    "The council needs more allies. Keep inviting citizens to the table.",
+                popularityLabel: "Popularity:",
+                leaderboardTitle: "Leaderboard",
+                leaderboardDefaultLastRun: "Complete a run to enter the halls.",
+                leaderboardDefaultSummary: "Reach 100% to make your mark.",
+                leaderboardEntryFormLabel: "Enter your name:",
+                leaderboardInputPlaceholder: "Your Name",
+                leaderboardSaveButton: "Save score",
+                leaderboardToggle: "Leaderboards",
+            },
+            cz: {
+                politicianLabel: "Politik",
+                ofText: "z",
                     next: "Další politik",
                     seeTally: "Podívej se na výsledek",
                     playAgain: "Hrát znovu",
                     summaryLabel: "Konečný součet:",
                     summaryHigh:
                         "Agora stále bzučí debatou. Demokracie dnes vítězí.",
-                    summaryLow:
-                        "Radě chybí spojenci. Pozvi více občanů ke stolu.",
-                    popularityLabel: "Popularita:",
-                },
-            };
+                summaryLow:
+                    "Radě chybí spojenci. Pozvi více občanů ke stolu.",
+                popularityLabel: "Popularita:",
+                leaderboardTitle: "Žebříček",
+                leaderboardDefaultLastRun: "Zakonči běh a vstup do síně.",
+                leaderboardDefaultSummary: "Dosáhni 100 % a zanech stopu.",
+                leaderboardEntryFormLabel: "Zadej jméno:",
+                leaderboardInputPlaceholder: "Tvé jméno",
+                leaderboardSaveButton: "Ulož skóre",
+                leaderboardToggle: "Žebříčky",
+            },
+        };
 
             const statementPool = {
                 "Bla-bla-bla-nar": {
@@ -1820,9 +1841,15 @@
                 "leaderboard-entry-form",
             );
             const usernameInput = document.getElementById("username-input");
+            const leaderboardTitleEl = document.querySelector(
+                "#leaderboard-page h2",
+            );
+            const leaderboardEntryLabel =
+                document.querySelector("label[for='username-input']");
+            const leaderboardSaveButton = document.querySelector(
+                "#leaderboard-entry-form button",
+            );
 
-            const DEFAULT_LAST_RUN_TEXT = "Complete a run to enter the halls.";
-            const DEFAULT_SUMMARY_TEXT = "Reach 100% to make your mark.";
             const LEADERBOARD_API_URL = "/api/leaderboard";
             const INITIAL_POPULARITY_PERCENT = 35;
 
@@ -1867,6 +1894,37 @@
                 }
                 const copy = getCopy();
                 popularityLabelTextEl.textContent = copy.popularityLabel;
+            }
+
+            function updateStaticCopy() {
+                const copy = getCopy();
+                if (leaderboardToggleButton) {
+                    leaderboardToggleButton.textContent = copy.leaderboardToggle;
+                }
+                if (leaderboardTitleEl) {
+                    leaderboardTitleEl.textContent = copy.leaderboardTitle;
+                }
+                if (!gameOver) {
+                    if (leaderboardLastRunEl) {
+                        leaderboardLastRunEl.textContent =
+                            copy.leaderboardDefaultLastRun;
+                    }
+                    if (leaderboardSummaryEl) {
+                        leaderboardSummaryEl.textContent =
+                            copy.leaderboardDefaultSummary;
+                    }
+                }
+                if (leaderboardEntryLabel) {
+                    leaderboardEntryLabel.textContent =
+                        copy.leaderboardEntryFormLabel;
+                }
+                if (usernameInput) {
+                    usernameInput.placeholder = copy.leaderboardInputPlaceholder;
+                }
+                if (leaderboardSaveButton) {
+                    leaderboardSaveButton.textContent =
+                        copy.leaderboardSaveButton;
+                }
             }
 
             function updatePopularityMeter() {
@@ -1933,6 +1991,7 @@
                 currentLang = lang;
                 updateLocaleButtons();
                 updatePopularityLabelText();
+                updateStaticCopy();
                 if (gameOver) {
                     showSummary();
                 } else {
@@ -1960,6 +2019,7 @@
 
             function refreshLocalizedScene() {
                 const scene = scenes[currentIndex];
+                const localized = getSceneText(scene);
                 const statementText = getStatementText(scene);
                 dialogEl.textContent = statementText;
                 currentOptionOrder.forEach((baseIdx, idx) => {
@@ -2273,10 +2333,11 @@
             }
 
             function showLeaderboardView(options = {}) {
+                const copy = getCopy();
                 const {
                     preserveLast = true,
-                    lastRunText = DEFAULT_LAST_RUN_TEXT,
-                    summaryText = DEFAULT_SUMMARY_TEXT,
+                    lastRunText = copy.leaderboardDefaultLastRun,
+                    summaryText = copy.leaderboardDefaultSummary,
                 } = options;
                 if (!preserveLast) {
                     if (leaderboardLastRunEl) {
@@ -2307,6 +2368,7 @@
                 showLeaderboardView({ preserveLast: false });
             });
             updateLocaleButtons();
+            updateStaticCopy();
             resetGame();
         </script>
     </body>
