@@ -773,6 +773,7 @@
             <button type="button" data-lang="sk" class="is-active">SK</button>
             <button type="button" data-lang="en">EN</button>
             <button type="button" data-lang="cz">CZ</button>
+            <button type="button" data-lang="hu">HU</button>
         </div>
         <div class="democrisis-banner" id="democrisis-banner">
             <div class="democrisis-banner__info">
@@ -938,6 +939,35 @@
                                 },
                             ],
                         },
+                        hu: {
+                            pitch: "A média hazudik az embereknek, káoszt szít. Az államnak át kell vennie az irányítást.",
+                            options: [
+                                {
+                                    text: "Védjük a független sajtót és biztosítsunk átláthatóságot.",
+                                    reaction:
+                                        "A független újságírók tovább vizsgálják a hatalmon lévőket.",
+                                    score: 12,
+                                },
+                                {
+                                    text: "Állami kontroll alatt tartsuk a médiát.",
+                                    reaction:
+                                        "Csak a kormány által jóváhagyott információ jut el a lakossághoz.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Támogassuk a közszolgálati médiát, de hagyjuk függetlennek.",
+                                    reaction:
+                                        "A közszolgálat továbbra is őrzi a hatalom ellenőrzését.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Zárjuk be a kormánykritikus médiumokat.",
+                                    reaction:
+                                        "A kritikus hangok eltűnnek a nyilvánosságból.",
+                                    score: -4,
+                                },
+                            ],
+                        },
                     },
                 },
                 {
@@ -1021,6 +1051,35 @@
                                 {
                                     text: "Zruš projekty kritizujúce vládu.",
                                     reaction: "Umelci sa začnú báť kritiky.",
+                                    score: -3,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "A kultúrának az államot kell szolgálnia. Túl sok vélemény zavart okoz.",
+                            options: [
+                                {
+                                    text: "Tartsuk függetlennek és sokszínűnek a kultúrát.",
+                                    reaction:
+                                        "A művészek továbbra is változatos nézőpontokat mutatnak be.",
+                                    score: 9,
+                                },
+                                {
+                                    text: "Helyezzük egy állami hatóság alá a kultúrát.",
+                                    reaction:
+                                        "Csak a jóváhagyott művek kapnak támogatást.",
+                                    score: -7,
+                                },
+                                {
+                                    text: "A közösségek döntsenek a támogatásról.",
+                                    reaction:
+                                        "A különböző csoportok továbbra is hallathatják hangjukat.",
+                                    score: 5,
+                                },
+                                {
+                                    text: "Töröljük a kritikát megfogalmazó projekteket.",
+                                    reaction:
+                                        "A művészek öncenzúrát gyakorolnak.",
                                     score: -3,
                                 },
                             ],
@@ -1109,6 +1168,35 @@
                                 },
                             ],
                         },
+                        hu: {
+                            pitch: "A parlament túl lassú. Rendkívüli rendeletekkel kell uralkodnunk.",
+                            options: [
+                                {
+                                    text: "Hagyjuk meg a parlament döntési jogkörét.",
+                                    reaction:
+                                        "A törvények megvitatásra és ellenőrzésre kerülnek.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Rendeletekkel uralkodjunk.",
+                                    reaction:
+                                        "A hatalom néhány kézbe koncentrálódik.",
+                                    score: -10,
+                                },
+                                {
+                                    text: "Engedjük meg a korlátozott rendkívüli hatalmat.",
+                                    reaction:
+                                        "A rendkívüli hatalom ellenőrzött marad.",
+                                    score: 6,
+                                },
+                                {
+                                    text: "Szüneteltessük a parlamentet.",
+                                    reaction:
+                                        "Senki sem ellenőrzi a kormányt.",
+                                    score: -5,
+                                },
+                            ],
+                        },
                     },
                 },
                 {
@@ -1186,6 +1274,31 @@
                                 {
                                     text: "Prekresliť obvody pre vládu.",
                                     reaction: "Systém zvýhodňuje vládu.",
+                                    score: -4,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "A választási szabályokat kell módosítani, hogy az ország stabil legyen.",
+                            options: [
+                                {
+                                    text: "Tartsuk meg a tisztességes választási szabályokat.",
+                                    reaction: "A választások tiszták maradnak.",
+                                    score: 15,
+                                },
+                                {
+                                    text: "Változtassuk meg a szabályokat az ellenzék gyengítésére.",
+                                    reaction: "A választások nem lesznek tisztességesek.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Hagyjuk szakértőknek, hogy felülvizsgálják a törvényeket.",
+                                    reaction: "Az emberek bíznak a választásokban.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Rajzoljunk új körzeteket a kormánynak kedvezve.",
+                                    reaction: "A rendszer az egyik oldalt favorizálja.",
                                     score: -4,
                                 },
                             ],
@@ -1281,6 +1394,35 @@
                                 },
                             ],
                         },
+                        hu: {
+                            pitch: "Az erkölcs omladozik az interneten; csak az állam tudja megvédeni a családokat.",
+                            options: [
+                                {
+                                    text: "Védjük a magánéletet és tanítsuk a médiaértést a megfigyelés helyett.",
+                                    reaction:
+                                        "A szülők megnyugodnak az állandó őrizet nélkül.",
+                                    score: 9,
+                                },
+                                {
+                                    text: "Morálőrséget küldjünk, hogy mindenkire odafigyeljenek.",
+                                    reaction:
+                                        "A szomszédok egymást figyelik, és a bizalom elpárolog.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Támogassuk azokat a mentorokat, akik tisztelettel példát mutatnak.",
+                                    reaction:
+                                        "A közösségek újra bíznak egymásban.",
+                                    score: 5,
+                                },
+                                {
+                                    text: "Zárjuk be a sértő műsorokat.",
+                                    reaction:
+                                        "A szórakozás szürkévé és félelemmel teli lesz.",
+                                    score: -3,
+                                },
+                            ],
+                        },
                     },
                 },
                 {
@@ -1368,6 +1510,35 @@
                                     text: "Povoľ len štátom schválených spravodajcov v parlamente.",
                                     reaction:
                                         "Verejnosť počuje len precvičené frázy.",
+                                    score: -2,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "A narratíva romokban hever; én alakítom a címlapokat, hogy nyugodt maradjon a nép.",
+                            options: [
+                                {
+                                    text: "Biztosítsuk az újságírók hozzáférését és védjük a bejelentőket.",
+                                    reaction:
+                                        "A nyomozások folytatódnak és a közbizalom nő.",
+                                    score: 14,
+                                },
+                                {
+                                    text: "Bírságoljuk a más véleményt közlő szerkesztőségeket.",
+                                    reaction:
+                                        "A riporterök öncenzúráznak, és a pletykák terjednek.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Hozzunk létre független sajtótanácsot polgári finanszírozással.",
+                                    reaction:
+                                        "A média képes leleplezni a korrupciót.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Csak államilag engedélyezett tudósítók léphetnek be a parlamentbe.",
+                                    reaction:
+                                        "A közönség csak begyakorolt szólamokat hall.",
                                     score: -2,
                                 },
                             ],
@@ -1465,6 +1636,35 @@
                                 },
                             ],
                         },
+                        hu: {
+                            pitch: "Az algoritmusaim optimalizálnak minden döntést; az érzelmek csak lassítanak.",
+                            options: [
+                                {
+                                    text: "Használjuk a mesterséges intelligenciát emberi felügyelet mellett.",
+                                    reaction:
+                                        "A döntések hatékonyak, de felelősségteliek maradnak.",
+                                    score: 12,
+                                },
+                                {
+                                    text: "Hagyjuk, hogy algoritmusok váltsák fel a választott tisztségviselőket.",
+                                    reaction:
+                                        "A szavazás csak forma, a gépek uralkodnak.",
+                                    score: -10,
+                                },
+                                {
+                                    text: "Fektessünk be a technológiai átképzésbe.",
+                                    reaction:
+                                        "Az emberek reménykednek a jövőben.",
+                                    score: 5,
+                                },
+                                {
+                                    text: "Automatizáljuk a bíróságokat és bízzuk az algoritmusokra az ítéleteket.",
+                                    reaction:
+                                        "Az igazságszolgáltatás hideg kódon fut, empátia nélkül.",
+                                    score: -6,
+                                },
+                            ],
+                        },
                     },
                 },
                 {
@@ -1552,6 +1752,35 @@
                                     text: "Postav múry a obviňuj cudzincov.",
                                     reaction:
                                         "Izolácia vedie k strachu a drahším veciam.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "A kereskedelmi szelek naponta változnak; zárjuk le a határokat a munkahelyek védelmében.",
+                            options: [
+                                {
+                                    text: "Tárgyaljunk igazságos kereskedelmet és védjük a munkásokat.",
+                                    reaction:
+                                        "Az állampolgárok támogatva érzik magukat és továbbra is exportálnak.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Tiltjuk be az importot.",
+                                    reaction:
+                                        "Az üzletek kiürülnek, a feszültség nő.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Finanszírozzuk a tengerparti kutatásokat a tengerszint-emelkedés miatt.",
+                                    reaction:
+                                        "A tudósok ellenállóvá teszik a közösségeket.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Falakat építünk és minden problémát külföldiekre fogunk.",
+                                    reaction:
+                                        "Az elszigeteltség félelmet és magasabb árakat hoz.",
                                     score: -5,
                                 },
                             ],
@@ -1649,6 +1878,35 @@
                                 },
                             ],
                         },
+                        hu: {
+                            pitch: "Az orosz gáz fűti Pozsonyt, de a Kreml írja a forgatókönyvet.",
+                            options: [
+                                {
+                                    text: "Diversifikáljuk a beszállítókat és fektessünk megújuló energiába.",
+                                    reaction:
+                                        "A hálózattervezők fellélegeznek, az árak stabilak maradnak.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Duplázzuk meg az orosz gázt, hogy olcsó legyen.",
+                                    reaction:
+                                        "Olcsók maradunk, de Moszkva diktálja a beszédünket.",
+                                    score: -7,
+                                },
+                                {
+                                    text: "A tranzitdíjakból modernizáljuk a keleti hálózatot.",
+                                    reaction:
+                                        "Kassa és Eperjes megbízható energiát kap.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Zárjuk le az ukrán tranzitot, hogy a hatalmunkat mutassuk.",
+                                    reaction:
+                                        "A behozatal leáll, a gyárak megszűnnek és a bizalom reped.",
+                                    score: -4,
+                                },
+                            ],
+                        },
                     },
                 },
                 {
@@ -1738,6 +1996,35 @@
                                     text: "Zaveď povinnú službu pre každého absolventa.",
                                     reaction:
                                         "Mladí sa búria namiesto toho, aby získali nové zručnosti.",
+                                    score: -4,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "Az Hron és Torysa menti falvak kiürülnek; egész Szlovákia minden részén digitális kézművességre van szükség.",
+                            options: [
+                                {
+                                    text: "Hozzunk gigabites hálózatot és mikrotámogatást minden járásba.",
+                                    reaction:
+                                        "Besztercebánya és Eperjes között fiatal vállalkozók indítanak új cégeket.",
+                                    score: 11,
+                                },
+                                {
+                                    text: "Zárjunk be gyengélkedő iskolákat és költöztessük a családokat Pozsonyba.",
+                                    reaction:
+                                        "A falvak kihalnak, és a hagyományos mesterségek eltűnnek.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Támogassuk azokat a közösségi társulásokat, amelyek gondozzák az erdőket.",
+                                    reaction:
+                                        "A helyi fa a régiókban marad, és a táj rendezett marad.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Rendelkezzünk kötelező szolgálatot minden végzett fiatal számára.",
+                                    reaction:
+                                        "A fiatalok lázadnak ahelyett, hogy új készségeket tanulnának.",
                                     score: -4,
                                 },
                             ],
@@ -1835,6 +2122,35 @@
                                 },
                             ],
                         },
+                        hu: {
+                            pitch: "Szlovákia csak egy esélyt kap a bürokrácia újraindítására; nincs második.",
+                            options: [
+                                {
+                                    text: "Áramvonalasítsuk az ügyintézést polgári felügyelő panelek segítségével.",
+                                    reaction:
+                                        "Az emberek végre egy héten belül választ kapnak.",
+                                    score: 9,
+                                },
+                                {
+                                    text: "Hajtsunk végre több ezer tisztviselő azonnali kirúgását.",
+                                    reaction:
+                                        "Eltűnnek a sorok, de az önkormányzati tudás is elvész.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Engedjük, hogy a polgármesterek próbálják ki a reformokat, mielőtt országosan bevezetnénk őket.",
+                                    reaction:
+                                        "A régiók kipróbálják a megoldásokat, majd a parlament lemásolja őket.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Adjunk ki sweeping rendeleteket vita nélkül.",
+                                    reaction:
+                                        "A parlamentbe vetett bizalom csökken, és az emberek óvatosak lesznek.",
+                                    score: -7,
+                                },
+                            ],
+                        },
                     },
                 },
                 {
@@ -1924,6 +2240,35 @@
                                     text: "Nasad tajné jednotky na aktivistov.",
                                     reaction:
                                         "Občianska spoločnosť sa schová pod oblak podozrenia.",
+                                    score: -8,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "A félelem jobban elad, mint a remény; minden elővárosnak biztonságot ígérek.",
+                            options: [
+                                {
+                                    text: "Támogassuk a közösségi rendőrséget és az igazságszolgáltatási reformot.",
+                                    reaction:
+                                        "A körzetek biztonságban érzik magukat, mert a bíróságok tisztességesen döntenek.",
+                                    score: 9,
+                                },
+                                {
+                                    text: "Fegyverezzük fel minden járőrt drónokkal és szenzorokkal.",
+                                    reaction:
+                                        "Az ég zúg és a szomszédok könnyebben alszanak.",
+                                    score: 4,
+                                },
+                                {
+                                    text: "Bővítsük a szociális hálót, hogy csökkenjen a kétségbeesés.",
+                                    reaction:
+                                        "A családok visszanyerik a bizalmat, és a bűnözés csökken.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Titkos egységeket küldjünk aktivisták megfigyelésére.",
+                                    reaction:
+                                        "A civil társadalom a gyanú felhőjébe húzódik.",
                                     score: -8,
                                 },
                             ],
@@ -2021,6 +2366,35 @@
                                 },
                             ],
                         },
+                        hu: {
+                            pitch: "A közösségi média pletykái elnyomják a valóságot a szlovák iskolákról.",
+                            options: [
+                                {
+                                    text: "Képezzenek ki tényellenőröket, és tartsanak heti városi közmeghallgatásokat.",
+                                    reaction:
+                                        "Az emberek megtanulják, kinek higgyenek, mielőtt megosztanak valamit.",
+                                    score: 9,
+                                },
+                                {
+                                    text: "Engedélyeztessünk minden influenszert a Kulturális Minisztériummal.",
+                                    reaction:
+                                        "A tartalomgyártók elkerülik a politikát és az igazság eltűnik.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Építsünk médiaműveltséget minden iskolai programba.",
+                                    reaction:
+                                        "A fiatalok megtanulják ellenőrizni az információkat megosztás előtt.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Blokkoljuk azokat a csatornákat, amelyek kritizálják a kormányt.",
+                                    reaction:
+                                        "Az elégedetlenség a felszín alá költözik, és a feszültség nő.",
+                                    score: -7,
+                                },
+                            ],
+                        },
                     },
                 },
             ];
@@ -2086,6 +2460,27 @@
                 leaderboardSaveButton: "Ulož skóre",
                 leaderboardToggle: "Žebříčky",
             },
+            hu: {
+                politicianLabel: "Politikus",
+                ofText: "az",
+                next: "Következő politikus",
+                seeTally: "Eredmény megtekintése",
+                playAgain: "Újrajátszás",
+                summaryLabel: "Végső összegzés:",
+                summaryHigh:
+                    "Az agora még mindig zsong a vitákban. Ma a demokrácia győz.",
+                summaryLow:
+                    "A tanácsnak több szövetségesre van szüksége. Hívd meg több polgárt az asztalhoz.",
+                popularityLabel: "Népszerűség:",
+                leaderboardTitle: "Ranglista",
+                leaderboardDefaultLastRun:
+                    "Fejezd be a futamot, hogy bejuthass a csarnokba.",
+                leaderboardDefaultSummary: "Érd el a 100%-ot, hogy nyomot hagyj.",
+                leaderboardEntryFormLabel: "Add meg a neved:",
+                leaderboardInputPlaceholder: "A te neved",
+                leaderboardSaveButton: "Pont mentése",
+                leaderboardToggle: "Ranglisták",
+            },
         };
 
             const statementPool = {
@@ -2108,6 +2503,12 @@
                         "Verejnoprávne médiá od Žiliny po Prešov musia zostať mimo stranických scénarov.",
                         "Na Slovensku potrebujeme v kampaniach pravdu, nie štátne spinovanie.",
                     ],
+                    hu: [
+                        "A szlovák újságírókat védeni kell, hogy senki se némítsa el a pozsonyi szerkesztőségeket.",
+                        "A Nemzetgyűlés vitáit élőben kell közvetíteni, hogy Kassán is követhessék.",
+                        "A közszolgálati média Pozsonytól Prešovig pártfüggetlen maradjon.",
+                        "A kampányok igazságot hozzanak, ne állami forgatókönydet.",
+                    ],
                 },
                 "Cucaj Pršťok": {
                     en: [
@@ -2127,6 +2528,12 @@
                         "Festivaly v Bratislave, Trnave aj v dedinách potrebujú nezávislých kurátorov.",
                         "Umenie udržiava naše komunity bezpečné tým, že ukazuje rôzne pohľady.",
                         "Podpora kultúry musí zodpovedať mnohým hlasom slovenských regiónov.",
+                    ],
+                    hu: [
+                        "A szlovák népdalok akkor szólnak igazán, ha a művészek szabadon kísérletezhetnek.",
+                        "Pozsony, Trencsén és a vidéki városok független kurátorokat érdemelnek a fesztiválokra.",
+                        "A művészek különböző nézőpontokkal tartják biztonságban közösségeinket.",
+                        "A kulturális támogatás a szlovák régiók sok hangját tükrözze.",
                     ],
                 },
                 "Andrej Granko": {
@@ -2148,6 +2555,12 @@
                         "Silné výbory zabezpečujú vyváženosť slovenských zákonov.",
                         "Transparentnosť v parlamente buduje dôveru v celej krajine.",
                     ],
+                    hu: [
+                        "Pozsonyi Nemzetgyűlésünk akkor virágzik, ha az országgyűlési képviselők meghallgatják a humennei és dunaszerdahelyi embereket.",
+                        "Vita nélküli rendkívüli rendeletek hátrahagyják az eperjesi lakosokat.",
+                        "Az erős bizottsági munka kiegyensúlyozza a törvényeket.",
+                        "Az átláthatóság növeli a bizalmat egész Szlovákiában.",
+                    ],
                 },
                 "Robert Kalibrňák": {
                     en: [
@@ -2167,6 +2580,12 @@
                         "Zmeny obvodov by otriasli dôverou od Žiliny po Košice.",
                         "Naša volebná komisia musí zostať nezávislá, aby každý hlas mal váhu.",
                         "Keď obce dôverujú sčítaniu, slovenská demokracia zostáva silná.",
+                    ],
+                    hu: [
+                        "Az átlátható választási szabályok Pozsonyt és Besztercebányát kötik össze.",
+                        "Bármilyen körzetátalakítás megingatná a bizalmat Zsolnától Kassaig.",
+                        "A Választási Bizottságnak függetlennek kell maradnia, hogy minden szavazat számítson.",
+                        "Ha minden település bízik a szavazásban, Szlovákia demokráciája erős marad.",
                     ],
                 },
                 Pelle: {
@@ -2188,6 +2607,12 @@
                         "Morálka rastie vďaka podpore komunity, nie cenzúre.",
                         "Ochrana súkromia udržiava dôveru v bratislavských štvrťach.",
                     ],
+                    hu: [
+                        "A szlovák családok médiaműveltséget érdemelnek, nem állandó megfigyelést.",
+                        "Falvak mentoraiként mutassuk meg a gyerekeknek a tiszteletet.",
+                        "A morál a közösségi támogatásból nő, nem cenzúrából.",
+                        "A magánélet védelme tartja össze Pozsony negyedeinek bizalmát.",
+                    ],
                 },
                 Reporterka: {
                     en: [
@@ -2207,6 +2632,12 @@
                         "Rozhodnutia musíme vysvetľovať ľuďom v Nitre i Humennom.",
                         "Ochrana oznamovateľov zabráni korupcii schovať sa v Bratislave.",
                         "Nezávislá rada financovaná občanmi udrží príbeh pravdivý.",
+                    ],
+                    hu: [
+                        "Az egész Szlovákiában élők olyan riporterben bíznak, aki félelem nélkül tud nyomozni.",
+                        "Minden döntést meg kell magyarázni a nyitrai és homonnai embereknek.",
+                        "Az informátorok védelme megakadályozza, hogy a korrupció elbújjon Pozsonyban.",
+                        "Egy független tanács, amit az állampolgárok finanszíroznak, tisztán tartja a történetet.",
                     ],
                 },
                 Robo: {
@@ -2228,6 +2659,12 @@
                         "Automatizácia má pomáhať, nie nahrádzať dôveru v súdnu lavicu.",
                         "Každé rozhodnutie ovplyvňujúce občanov potrebuje ľudskú kontrolu.",
                     ],
+                    hu: [
+                        "A szlovák bíróságok okos eszközöket igényelnek, de a döntés maradjon a bíráké.",
+                        "Az algoritmusok feltárhatják a késéseket a pozsonyi büntetőeljárásban.",
+                        "Az automatizálás segítsen, de ne helyettesítse a bizalmat a padsorban.",
+                        "Minden állampolgárt érintő döntést emberek ellenőrizzenek.",
+                    ],
                 },
                 Tuniak: {
                     en: [
@@ -2247,6 +2684,12 @@
                         "Ochrana pracovníkov v Košiciach znamená investíciu do rekvalifikácie.",
                         "Vedci pozdĺž Dunaja pomáhajú prispôsobiť sa stúpajúcej vode.",
                         "Otvorené trhy s ochranou platov udržia rodiny v bezpečí.",
+                    ],
+                    hu: [
+                        "A szlovák exportnak tisztességes megállapodások kellenek, nem falak.",
+                        "A kassai munkásokat átképzéssel kell védeni.",
+                        "A Duna menti tudósok segítik a közösségek alkalmazkodását.",
+                        "A nyitott piacok a bérekkel együtt tartják biztonságban a családokat.",
                     ],
                 },
                 "Boris Rusko": {
@@ -2268,6 +2711,12 @@
                         "Tranzitné poplatky by mali financovať optiku vo východných regiónoch.",
                         "Zastavenie tranzitu cez Ukrajinu by poškodilo farmárov a automobilky.",
                     ],
+                    hu: [
+                        "Nem szabad újra csak egy vezetékre hagyatkozni; Pozsony alternatívákat akar.",
+                        "A szabályozóknak védeniük kell a hálózatot a külföldi nyomás ellen.",
+                        "A tranzitdíjakból a keleti régiók hálózatát modernizáljuk.",
+                        "Az ukrán tranzit leállítása büntetné a gazdákat és az autógyárakat.",
+                    ],
                 },
                 "Dzigal": {
                     en: [
@@ -2287,6 +2736,12 @@
                         "Prázdne stanice pripomínajú, že regióny sme zanedbali.",
                         "Udržateľné drevo udržiava dediny pri živote, keď družstvá fungujú.",
                         "Mladí Slováci potrebujú mentorov skôr, než sa vysťahujú do Bratislavy.",
+                    ],
+                    hu: [
+                        "Az Hron és Torysa menti koridorok optikai hálózatot és kreatív műhelyeket érdemelnek.",
+                        "Az üres vasútállomások emlékeztetnek rá, hogy elhagytuk a régiókat.",
+                        "A fenntartható fa a közösségi szövetkezetek miatt marad a vidéki piacokon.",
+                        "A fiatalok mentorokra vágynak, mielőtt Pozsonyba költöznének.",
                     ],
                 },
                 "Iba Raz": {
@@ -2308,6 +2763,12 @@
                         "Piloty v Žiline a Košiciach vychytajú chyby skôr, než ich nasadíme.",
                         "Občania chcú zodpovednosť ešte pred urýchlenou reformou.",
                     ],
+                    hu: [
+                        "Csak egy esélyünk van a bürokrácia újraindítására.",
+                        "A hirtelen elbocsátások kiszolgáltatottá teszik a városházákat.",
+                        "A Žilina és Kassa környéki pilotok finomítják a reformokat.",
+                        "Az emberek elszámoltathatóságot várnak, mielőtt elsietnénk a változást.",
+                    ],
                 },
                 "Richard Strasi": {
                     en: [
@@ -2328,6 +2789,12 @@
                         "Silnejšia sociálna sieť upokojí zúfalé rodiny.",
                         "Sledovanie bez otvorenosti rodí nedôveru.",
                     ],
+                    hu: [
+                        "Az elővárosok biztonságban érzik magukat, ha az igazságszolgáltatás tisztességes.",
+                        "A drónok azt a benyomást keltik, hogy az ég figyel minket.",
+                        "Egy erősebb szociális háló csillapítja a kétségbeesést.",
+                        "Átláthatóság nélküli megfigyelés csak növeli a gyanút.",
+                    ],
                 },
                 "Tomis Druckson": {
                     en: [
@@ -2347,6 +2814,12 @@
                         "Licencovanie influencerov umlčí odvážné hlasy.",
                         "Školy učia overovať, takže vyrastú ďalší redaktori.",
                         "Blokovanie kritiky len zosilní šepot v Banskej Bystrici.",
+                    ],
+                    hu: [
+                        "A tényellenőrök tisztán tartják pozsonyi vitáinkat.",
+                        "Az influenszer-engedélyek elnémítják a bátor hangokat.",
+                        "Az iskolák, amelyek megtanítják az ellenőrzést, jövőbeli szerkesztőket nevelnek.",
+                        "A kritika blokkolása csak hangosabb suttogást hoz a Besztercebányai városrészekben.",
                     ],
                 },
             };
