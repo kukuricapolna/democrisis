@@ -3056,7 +3056,7 @@
                     image: "cz_politicians/dluzena_hranolkova.png",
                     translations: {
                         en: {
-                            pitch: "Economic stability comes from a state plan; crying about private debts weakens it.",
+                            pitch: "The market only serves the rich — only the state can guarantee that ordinary people eat.",
                             options: [
                                 {
                                     text: "Erase micro consumer debt and feed school kitchens.",
@@ -3065,9 +3065,9 @@
                                     score: 9,
                                 },
                                 {
-                                    text: "Tax imported fries double to balance the books.",
+                                    text: "Cap supermarket profits by decree, no questions asked.",
                                     reaction:
-                                        "Restaurants raise prices and anger simmers.",
+                                        "Shelves thin out and queues grow longer.",
                                     score: -6,
                                 },
                                 {
@@ -3085,7 +3085,7 @@
                             ],
                         },
                         cz: {
-                            pitch: "Ekonomickou stabilitu zajistí státní plán, výkriky o soukromých dluzích ji oslabují.",
+                            pitch: "Trh slouží jen bohatým — jen stát zaručí, že obyčejní lidé se nají.",
                             options: [
                                 {
                                     text: "Odpiš mikro dluhy a nakrm školy.",
@@ -3094,9 +3094,9 @@
                                     score: 9,
                                 },
                                 {
-                                    text: "Dvojitá daň na dovážené hranolky.",
+                                    text: "Zastrop zisky supermarketů dekretem, bez diskuse.",
                                     reaction:
-                                        "Restaurace zvedají ceny a roste hněv.",
+                                        "Police se prázdní a fronty rostou.",
                                     score: -6,
                                 },
                                 {
@@ -3113,7 +3113,7 @@
                             ],
                         },
                         sk: {
-                            pitch: "Ekonomickú stabilitu zabezpečí štátny plán, výkriky o súkromných dlhoch ju oslabujú.",
+                            pitch: "Trh slúži len bohatým — len štát zaručí, že obyčajní ľudia sa najedia.",
                             options: [
                                 {
                                     text: "Odpiš mikro dlhy a nakŕm školy.",
@@ -3121,9 +3121,9 @@
                                     score: 9,
                                 },
                                 {
-                                    text: "Zdvojnásob daň na dovozové hranolky.",
+                                    text: "Zastrop zisky supermarketov dekrétom, bez diskusie.",
                                     reaction:
-                                        "Reštaurácie zvyšujú ceny a hnev rastie.",
+                                        "Police sa vyprázdňujú a rady rastú.",
                                     score: -6,
                                 },
                                 {
@@ -3140,7 +3140,7 @@
                             ],
                         },
                         hu: {
-                            pitch: "A gazdasági stabilitást az állami terv biztosítja; a magánadósságokról szóló kiabálás gyengíti.",
+                            pitch: "A piac csak a gazdagokat szolgálja — csak az állam garantálhatja, hogy a közemberek is jóllakjanak.",
                             options: [
                                 {
                                     text: "Töröljük el a mikro-hiteladóságokat és etessük az iskolai konyhákat.",
@@ -3149,9 +3149,9 @@
                                     score: 9,
                                 },
                                 {
-                                    text: "Duplázott adót rakjunk a behozott hasábburgonyákra.",
+                                    text: "Rendelettel korlátozzuk a szupermarketek nyereségét, kérdések nélkül.",
                                     reaction:
-                                        "Az éttermek emelnek az árakon és nő a harag.",
+                                        "A polcok kiürülnek és a sorok hosszabbodnak.",
                                     score: -6,
                                 },
                                 {
@@ -4810,8 +4810,7 @@
             function updateCountryButtons() {
                 countryDropdownOptions.forEach((button) => {
                     const buttonCountry = button.dataset.country;
-                    const buttonLabel =
-                        COUNTRY_DISPLAY_NAMES[buttonCountry];
+                    const buttonLabel = COUNTRY_DISPLAY_NAMES[buttonCountry];
                     if (buttonLabel) {
                         button.textContent = buttonLabel;
                     }
