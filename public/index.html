@@ -56,6 +56,7 @@
 
             #game {
                 position: absolute;
+                top: clamp(4rem, 7vw, 5.5rem);
                 bottom: 0;
                 left: 0;
                 width: min(1100px, 100%);
@@ -70,51 +71,170 @@
                 -webkit-backdrop-filter: blur(10px);
             }
 
-            .locale-switch {
+            .locale-dropdown {
                 position: absolute;
-                top: calc(1rem + var(--safe-top));
+                top: calc(0.9rem + var(--safe-top));
                 left: calc(1rem + var(--safe-left));
-                display: flex;
+                display: inline-flex;
+                flex-direction: column;
                 gap: 0.35rem;
-                padding: 0.25rem 0.6rem;
-                border-radius: 999px;
-                background: rgba(255, 255, 255, 0.9);
-                font-size: 0.65rem;
-                letter-spacing: 0.25em;
-                text-transform: uppercase;
-                z-index: 6;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                z-index: 8;
+                font-family: "Pixelify", "Space Mono", monospace;
+                letter-spacing: 0.35em;
             }
 
-            .locale-switch button {
-                border: none;
-                background: none;
-                font: inherit;
-                padding: 0.35rem 0.6rem;
-                cursor: pointer;
-                border-radius: 999px;
-                transition:
-                    color 0.2s ease,
-                    background 0.2s ease;
-                min-width: 36px;
-                min-height: 36px;
-                display: flex;
+            .locale-dropdown__toggle {
+                display: inline-flex;
                 align-items: center;
-                justify-content: center;
+                gap: 0.35rem;
+                padding: 0.35rem 0.85rem;
+                border-radius: 6px;
+                border: 3px solid #040404;
+                background: linear-gradient(180deg, #fff 0%, #f0f0f0 100%);
+                color: #040404;
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                cursor: pointer;
+                box-shadow: 4px 4px 0 #050505;
             }
 
-            .locale-switch button.is-active {
-                background: rgba(0, 0, 0, 0.08);
-                font-weight: 600;
+            .locale-dropdown__toggle:focus-visible {
+                outline: 3px solid #f72585;
             }
 
-            .locale-switch button:active {
-                background: rgba(0, 0, 0, 0.15);
+            .locale-dropdown__menu {
+                position: absolute;
+                top: 110%;
+                left: 0;
+                min-width: 160px;
+                padding: 0.35rem;
+                border-radius: 6px;
+                border: 3px solid #111;
+                background: #fff;
+                display: flex;
+                flex-direction: column;
+                gap: 0.35rem;
+                box-shadow: 5px 5px 0 #050505;
+                opacity: 0;
+                transform: translateY(-6px);
+                pointer-events: none;
+                transition:
+                    opacity 0.15s ease,
+                    transform 0.15s ease;
+            }
+
+            .locale-dropdown__menu button {
+                border: none;
+                background: rgba(8, 8, 8, 0.9);
+                color: #f8f32b;
+                padding: 0.4rem 0.6rem;
+                font: inherit;
+                text-transform: uppercase;
+                letter-spacing: 0.3em;
+                cursor: pointer;
+                border-radius: 4px;
+                box-shadow:
+                    inset 0 0 0 2px #111,
+                    2px 2px 0 #050505;
+            }
+
+            .locale-dropdown__menu button:hover,
+            .locale-dropdown__menu button:focus-visible {
+                background: #f72585;
+                color: #fff;
+            }
+
+            .locale-dropdown__menu button.is-active {
+                background: #111;
+                color: #f8f32b;
+                font-weight: 700;
+            }
+
+            .locale-dropdown.is-open .locale-dropdown__menu {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            .country-dropdown {
+                position: absolute;
+                top: calc(0.9rem + var(--safe-top));
+                right: calc(1rem + var(--safe-right));
+                display: inline-flex;
+                flex-direction: column;
+                gap: 0.35rem;
+                z-index: 8;
+                font-family: "Pixelify", "Space Mono", monospace;
+                letter-spacing: 0.3em;
+            }
+
+            .country-dropdown__toggle {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+                padding: 0.35rem 0.85rem;
+                border-radius: 6px;
+                border: 3px solid #040404;
+                background: linear-gradient(180deg, #f8f32b 0%, #f1c400 100%);
+                color: #020202;
+                font-size: 0.75rem;
+                cursor: pointer;
+                box-shadow: 4px 4px 0 #050505;
+                text-transform: uppercase;
+            }
+
+            .country-dropdown__menu {
+                position: absolute;
+                top: 110%;
+                right: 0;
+                min-width: 150px;
+                padding: 0.35rem;
+                border-radius: 6px;
+                border: 3px solid #111;
+                background: #fff;
+                display: flex;
+                flex-direction: column;
+                gap: 0.25rem;
+                box-shadow: 5px 5px 0 #050505;
+                opacity: 0;
+                transform: translateY(-6px);
+                pointer-events: none;
+                transition:
+                    opacity 0.15s ease,
+                    transform 0.15s ease;
+            }
+
+            .country-dropdown__option {
+                border: none;
+                background: rgba(0, 0, 0, 0.9);
+                color: #f8f32b;
+                padding: 0.4rem 0.6rem;
+                font: inherit;
+                letter-spacing: 0.2em;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+
+            .country-dropdown__option:hover,
+            .country-dropdown__option:focus-visible {
+                background: #f72585;
+                color: #fff;
+            }
+
+            .country-dropdown__option.is-active {
+                background: #111;
+                font-weight: 700;
+            }
+
+            .country-dropdown.is-open .country-dropdown__menu {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
             }
 
             .democrisis-banner {
                 position: absolute;
-                top: calc(1rem + var(--safe-top));
+                top: calc(2.8rem + var(--safe-top));
                 left: 50%;
                 transform: translateX(-50%);
                 padding: 0.4rem 1.4rem;
@@ -145,6 +265,58 @@
                 gap: 0.6rem;
                 width: min(1100px, 100%);
                 max-width: 90vw;
+            }
+
+            .fail-dialog {
+                position: absolute;
+                inset: 0;
+                display: none;
+                justify-content: center;
+                align-items: center;
+                background: rgba(0, 0, 0, 0.75);
+                backdrop-filter: blur(4px);
+                z-index: 300;
+            }
+
+            .fail-dialog__play-again {
+                margin-top: 1rem;
+                border: 3px solid #f72585;
+                background: #f8f32b;
+                color: #111;
+                font-family: "Pixelify", "Space Mono", monospace;
+                letter-spacing: 0.3em;
+                text-transform: uppercase;
+                padding: 0.65rem 1.5rem;
+                cursor: pointer;
+                box-shadow: 0 4px 0 #050505;
+            }
+
+            .fail-dialog__play-again:active {
+                transform: translateY(2px);
+                box-shadow: 0 2px 0 #050505;
+            }
+
+            .fail-dialog.is-visible {
+                display: flex;
+            }
+
+            .fail-dialog__content {
+                background: #111;
+                border: 3px solid #f72585;
+                padding: 1.5rem;
+                text-align: center;
+                color: #fff;
+                box-shadow: 5px 5px 0 #050505;
+                max-width: 320px;
+                font-family: "Pixelify", "Space Mono", monospace;
+                letter-spacing: 0.2em;
+            }
+
+            .fail-dialog__content strong {
+                display: block;
+                margin-bottom: 0.5rem;
+                font-size: 1.1rem;
+                letter-spacing: 0.4em;
             }
 
             .democrisis-banner::after {
@@ -648,6 +820,7 @@
                     flex-direction: column;
                     justify-content: flex-start;
                     background: rgba(255, 255, 255, 0.85);
+                    margin-top: clamp(5rem, 10vw, 6.5rem);
                 }
 
                 .scene {
@@ -749,6 +922,10 @@
                     width: min(150px, calc(100vw - 3rem));
                     height: 20px;
                 }
+
+                .country-dropdown {
+                    right: calc(0.8rem + var(--safe-right));
+                }
             }
 
             @media (max-width: 480px) {
@@ -756,9 +933,13 @@
                     font-size: 1.1rem;
                 }
 
-                .locale-switch {
-                    top: calc(0.5rem + var(--safe-top));
+                .locale-dropdown {
+                    top: calc(0.4rem + var(--safe-top));
                     left: calc(0.5rem + var(--safe-left));
+                }
+
+                .country-dropdown {
+                    right: calc(0.4rem + var(--safe-right));
                 }
 
                 .choice {
@@ -769,11 +950,105 @@
         </style>
     </head>
     <body>
-        <div class="locale-switch" role="group" aria-label="Vyber jazyk">
-            <button type="button" data-lang="sk" class="is-active">SK</button>
-            <button type="button" data-lang="en">EN</button>
-            <button type="button" data-lang="cz">CZ</button>
-            <button type="button" data-lang="hu">HU</button>
+        <div
+            class="locale-dropdown"
+            id="locale-dropdown"
+            role="group"
+            aria-label="Select language"
+        >
+            <button
+                id="locale-dropdown-toggle"
+                class="locale-dropdown__toggle"
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+            >
+                <span id="locale-dropdown-current">SK</span>
+                <span aria-hidden="true">▾</span>
+            </button>
+            <div
+                id="locale-dropdown-menu"
+                class="locale-dropdown__menu"
+                role="listbox"
+            >
+                <button
+                    type="button"
+                    class="locale-dropdown__option is-active"
+                    data-lang="sk"
+                    role="option"
+                    aria-selected="true"
+                >
+                    SK
+                </button>
+                <button
+                    type="button"
+                    class="locale-dropdown__option"
+                    data-lang="en"
+                    role="option"
+                    aria-selected="false"
+                >
+                    EN
+                </button>
+                <button
+                    type="button"
+                    class="locale-dropdown__option"
+                    data-lang="cz"
+                    role="option"
+                    aria-selected="false"
+                >
+                    CZ
+                </button>
+                <button
+                    type="button"
+                    class="locale-dropdown__option"
+                    data-lang="hu"
+                    role="option"
+                    aria-selected="false"
+                >
+                    HU
+                </button>
+            </div>
+        </div>
+        <div
+            class="country-dropdown"
+            id="country-dropdown"
+            role="group"
+            aria-label="Select politicians"
+        >
+            <button
+                id="country-dropdown-toggle"
+                class="country-dropdown__toggle"
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+            >
+                <span id="country-dropdown-current">Slovensko</span>
+                <span aria-hidden="true">▾</span>
+            </button>
+            <div
+                id="country-dropdown-menu"
+                class="country-dropdown__menu"
+                role="listbox"
+            >
+                <button
+                    type="button"
+                    class="country-dropdown__option is-active"
+                    data-country="sk"
+                    role="option"
+                    aria-selected="true"
+                >
+                    Slovensko
+                </button>
+                <button
+                    type="button"
+                    class="country-dropdown__option"
+                    data-country="cz"
+                    role="option"
+                    aria-selected="false"
+                >
+                    Česko
+                </button>
+            </div>
         </div>
         <div class="democrisis-banner" id="democrisis-banner">
             <div class="democrisis-banner__info">
@@ -825,6 +1100,21 @@
                 </div>
             </div>
         </main>
+        <div id="fail-dialog" class="fail-dialog" role="alert">
+            <div class="fail-dialog__content">
+                <strong id="fail-dialog-title">Game over</strong>
+                <p id="fail-dialog-body">
+                    Popularity reached 100% and the crowd won.
+                </p>
+                <button
+                    id="fail-dialog-play-again"
+                    class="fail-dialog__play-again"
+                    type="button"
+                >
+                    Play again
+                </button>
+            </div>
+        </div>
 
         <section
             id="leaderboard-page"
@@ -853,7 +1143,7 @@
         </section>
 
         <script>
-            const scenes = [
+            const allScenes = [
                 {
                     name: "Bla-bla-bla-nar",
                     image: "politicians/blablablanar.png",
@@ -888,7 +1178,7 @@
                             ],
                         },
                         cz: {
-                            pitch: "Média lžou a způsobují chaos. Stát musí převzít kontrolu nad médii, aby ochránil občany.",
+                            pitch: "Městské debaty jsou ztrátou času; důležitá rozhodnutí nechť udělá stát s jasným plánem.",
                             options: [
                                 {
                                     text: "Ochraň nezávislá média.",
@@ -2399,6 +2689,1312 @@
                         },
                     },
                 },
+                {
+                    country: "cz",
+                    name: "Boris Smutný",
+                    image: "cz_politicians/boris_smutny.png",
+                    translations: {
+                        en: {
+                            pitch: "A strong industry needs steady direction, not changes dictated by street protests.",
+                            options: [
+                                {
+                                    text: "Publish every tram upgrade plan with citizen auditors.",
+                                    reaction:
+                                        "Commuters trust the new network.",
+                                    score: 11,
+                                },
+                                {
+                                    text: "Ban street protests because they block traffic.",
+                                    reaction:
+                                        "Letná goes quiet, but people resent you.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Host community co-ops that maintain the depots.",
+                                    reaction:
+                                        "Neighbors take pride in calmer rides.",
+                                    score: 6,
+                                },
+                                {
+                                    text: "Raise fares without telling anyone.",
+                                    reaction:
+                                        "Commuters skip trams and roads clog.",
+                                    score: -4,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Zdravý průmysl potřebuje jasný hlas, ne změny podle demonstrací na ulicích.",
+                            options: [
+                                {
+                                    text: "Zveřejni každý plán modernizace tramvají s občanskými auditory.",
+                                    reaction: "Cestující věří nové síti.",
+                                    score: 11,
+                                },
+                                {
+                                    text: "Zákaz demonstrací, blokují město.",
+                                    reaction:
+                                        "Letná zmlkla, ale lidé tě nenávidí.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Ukaž komunitní družstva pro depa.",
+                                    reaction:
+                                        "Sousedi se starají o klidné jízdy.",
+                                    score: 6,
+                                },
+                                {
+                                    text: "Zvyšte jízdné bez vysvětlení.",
+                                    reaction:
+                                        "Lidé přestávají jezdit a ulice se ucpávají.",
+                                    score: -4,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Silný priemysel potrebuje stabilný hlas, nie zmeny podľa pouličných demonštrácií.",
+                            options: [
+                                {
+                                    text: "Zverejni každý plán modernizácie s občianskymi auditory.",
+                                    reaction: "Cestujúci dôverujú novej sieti.",
+                                    score: 11,
+                                },
+                                {
+                                    text: "Zakáž protesty, lebo blokujú mesto.",
+                                    reaction:
+                                        "Letná stíchla, ale ľudia ťa nenávidia.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Založ komunitné družstvá na údržbu dep.",
+                                    reaction:
+                                        "Susedia sa starajú o pokojné jazdy.",
+                                    score: 6,
+                                },
+                                {
+                                    text: "Zvýš cestovné bez vysvetlenia.",
+                                    reaction:
+                                        "Cestujúci presedlajú a ulice sú upchaté.",
+                                    score: -4,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "Az ipart állandó irányítás kell, nem a tüntetések által hozott változások.",
+                            options: [
+                                {
+                                    text: "Tedd közzé az összes felújítási tervet polgári auditorokkal.",
+                                    reaction:
+                                        "Az utasok bíznak az új hálózatban.",
+                                    score: 11,
+                                },
+                                {
+                                    text: "Tiltasd be az utcai tüntetéseket, mert akadályozzák a közlekedést.",
+                                    reaction:
+                                        "Letna elcsitul, de az emberek haragszanak.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Alakíts közösségi szövetkezeteket a depók karbantartására.",
+                                    reaction:
+                                        "A szomszédok gondoskodnak a nyugodt utazásról.",
+                                    score: 6,
+                                },
+                                {
+                                    text: "Emeld a viteldíjat magyarázat nélkül.",
+                                    reaction:
+                                        "Kevesebben utaznak, az utcák dugulnak.",
+                                    score: -4,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    country: "cz",
+                    name: "Duna",
+                    image: "cz_politicians/bunda.png",
+                    translations: {
+                        en: {
+                            pitch: "Safety decisions come from the top even when municipal whispers suggest otherwise.",
+                            options: [
+                                {
+                                    text: "Restore floodplains and plant willow belts.",
+                                    reaction:
+                                        "Villages stay dry and everyone rebuilds.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Disband weather services in the name of agility.",
+                                    reaction:
+                                        "No warnings arrive and people panic.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Give farmers grants to reinforce roofs.",
+                                    reaction:
+                                        "Families feel safer and harvests survive.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Send armed squads to chase storms away.",
+                                    reaction:
+                                        "Neighbors argue while rain pounds the streets.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Rozhodnutí o bezpečí přijde shora, i když radnice šeptají jinak.",
+                            options: [
+                                {
+                                    text: "Obnov záplavová území a vysaď vrby.",
+                                    reaction:
+                                        "Obce zůstávají suché a lidé mohou obnovit domovy.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zruš meteorologickou službu kvůli 'obratnosti'.",
+                                    reaction: "Žádné varování, lidé panikaří.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Dej farmářům dotace na zpevnění střech.",
+                                    reaction:
+                                        "Rodiny jsou v bezpečí a úroda přežije.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Pošli ozbrojené družiny, aby vyháněly bouřky.",
+                                    reaction:
+                                        "Sousedi se hádají, zatímco déšť buší.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Rozhodnutia o bezpečí prichádzajú zhora, aj keď radnica šeptá inak.",
+                            options: [
+                                {
+                                    text: "Obnov záplavové územia a vysaď vŕby.",
+                                    reaction:
+                                        "Obce zostávajú suché a domy sa môžu obnoviť.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zruš meteorologickú službu pre 'obratnosť'.",
+                                    reaction:
+                                        "Žiadne výstrahy, ľudia panikária.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Daj farmárom dotácie na spevnenie striech.",
+                                    reaction:
+                                        "Rodiny sa cítia iste a úroda prežije.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Pošli ozbrojené družiny, aby prenasledovali búrky.",
+                                    reaction:
+                                        "Susedia sa hádajú, kým dážď zosilnie.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "A biztonságról szóló döntések a csúcsról érkeznek, ha a városok mást suttognak.",
+                            options: [
+                                {
+                                    text: "Állítsuk helyre az ártereket és ültessünk füzeket.",
+                                    reaction:
+                                        "Falvak szárazon maradnak és újraépíthetik otthonaikat.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Megszüntetjük az időjárás-előrejelző szolgálatot a 'gyorsaságért'.",
+                                    reaction:
+                                        "Az emberek figyelmeztetés nélkül pánikolnak.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Támogassuk a gazdákat a tetők megerősítésére.",
+                                    reaction:
+                                        "Családok biztonságban érzik magukat, a termés megmenekül.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Fegyveres egységek üldözzenek minden vihart.",
+                                    reaction:
+                                        "A szomszédok vitatkoznak, miközben az eső egyre hevesebb.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    country: "cz",
+                    name: "Cicinka",
+                    image: "cz_politicians/cicinka.png",
+                    translations: {
+                        en: {
+                            pitch: "Family programs must be unified; any other voice divides caregiving networks.",
+                            options: [
+                                {
+                                    text: "Open community nurseries with flexible hours.",
+                                    reaction:
+                                        "Parents juggle work and kids without burning out.",
+                                    score: 11,
+                                },
+                                {
+                                    text: "Ban criticism of maternal policy.",
+                                    reaction:
+                                        "Voices quiet down and mistakes multiply.",
+                                    score: -7,
+                                },
+                                {
+                                    text: "Subsidize telemedicine for rural moms.",
+                                    reaction:
+                                        "Small towns keep their teachers and nurses.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Cut daycare budgets to fund defense.",
+                                    reaction: "Families scramble for seats.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Rodinné programy musí být jednotné, jiný hlas rozděluje pečující sítě.",
+                            options: [
+                                {
+                                    text: "Otevři komunitní jesle s flexibilními hodinami.",
+                                    reaction: "Rodiče zvládají práci i děti.",
+                                    score: 11,
+                                },
+                                {
+                                    text: "Zakáž kritiku mateřské politiky.",
+                                    reaction:
+                                        "Hlasy umlkají a chyby přibývají.",
+                                    score: -7,
+                                },
+                                {
+                                    text: "Dotuj telemedicínu pro venkovské mámy.",
+                                    reaction:
+                                        "Malá města si udrží učitelky a zdravotní sestry.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Škrtej rozpočet na péči kvůli obraně.",
+                                    reaction: "Rodiny hledají volná místa.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Rodinné programy musia byť jednotné, iný hlas rozdeľuje starostlivé siete.",
+                            options: [
+                                {
+                                    text: "Otvor komunitné škôlky s flexibilnými hodinami.",
+                                    reaction: "Rodičia zvládajú prácu aj deti.",
+                                    score: 11,
+                                },
+                                {
+                                    text: "Zakáž kritiku materskej politiky.",
+                                    reaction:
+                                        "Hlasy utíchajú a chyby pribúdajú.",
+                                    score: -7,
+                                },
+                                {
+                                    text: "Dotuj telemedicínu pre vidiecke mamy.",
+                                    reaction:
+                                        "Dediny si udržia pedagogičky a sestričky.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Škrť rozpočet škôlok kvôli obrane.",
+                                    reaction: "Rodiny hľadajú voľné miesta.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "A családtámogatásoknak egységesnek kell lenniük, más hang megosztja az ellátókat.",
+                            options: [
+                                {
+                                    text: "Nyissunk közösségi bölcsődéket rugalmas időpontokkal.",
+                                    reaction:
+                                        "A szülők egyszerre dolgoznak és nevelnek.",
+                                    score: 11,
+                                },
+                                {
+                                    text: "Tiltsuk be az anyapolitika kritikáját.",
+                                    reaction:
+                                        "A hangok elnémulnak és a hibák szaporodnak.",
+                                    score: -7,
+                                },
+                                {
+                                    text: "Támogassuk a vidéki anyák távgyógyítását.",
+                                    reaction:
+                                        "A falvak megtartják pedagógusaikat és nővéreiket.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Vágjuk meg a bölcsődei büdzsét a védelem javára.",
+                                    reaction:
+                                        "Családok a szabad helyeket keresik.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    country: "cz",
+                    name: "Dlužena Hranolková",
+                    image: "cz_politicians/dluzena_hranolkova.png",
+                    translations: {
+                        en: {
+                            pitch: "Economic stability comes from a state plan; crying about private debts weakens it.",
+                            options: [
+                                {
+                                    text: "Erase micro consumer debt and feed school kitchens.",
+                                    reaction:
+                                        "Small shops reopen and students eat.",
+                                    score: 9,
+                                },
+                                {
+                                    text: "Tax imported fries double to balance the books.",
+                                    reaction:
+                                        "Restaurants raise prices and anger simmers.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Fund community kitchens with healthy subsidies.",
+                                    reaction:
+                                        "Families share meals and budgets stretch.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Print vouchers for fast food chains.",
+                                    reaction:
+                                        "Calories spike and savings vanish.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Ekonomickou stabilitu zajistí státní plán, výkriky o soukromých dluzích ji oslabují.",
+                            options: [
+                                {
+                                    text: "Odpiš mikro dluhy a nakrm školy.",
+                                    reaction:
+                                        "Obchody ožívají a studenti jedí.",
+                                    score: 9,
+                                },
+                                {
+                                    text: "Dvojitá daň na dovážené hranolky.",
+                                    reaction:
+                                        "Restaurace zvedají ceny a roste hněv.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Podpoř komunitní kuchyně se zdravými dotacemi.",
+                                    reaction:
+                                        "Rodiny sdílejí jídlo a rozpočty drží.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Tiskni poukázky na rychlé občerstvení.",
+                                    reaction: "Kalorie i úspory mizí.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Ekonomickú stabilitu zabezpečí štátny plán, výkriky o súkromných dlhoch ju oslabujú.",
+                            options: [
+                                {
+                                    text: "Odpiš mikro dlhy a nakŕm školy.",
+                                    reaction: "Obchody ožívajú a žiaci jedia.",
+                                    score: 9,
+                                },
+                                {
+                                    text: "Zdvojnásob daň na dovozové hranolky.",
+                                    reaction:
+                                        "Reštaurácie zvyšujú ceny a hnev rastie.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Podpor komunitné kuchyne so zdravými dotáciami.",
+                                    reaction:
+                                        "Rodiny zdieľajú jedlo a rozpočty sa natiahnu.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Tlač poukážky na fast food.",
+                                    reaction: "Kalórie rastú a úspory miznú.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "A gazdasági stabilitást az állami terv biztosítja; a magánadósságokról szóló kiabálás gyengíti.",
+                            options: [
+                                {
+                                    text: "Töröljük el a mikro-hiteladóságokat és etessük az iskolai konyhákat.",
+                                    reaction:
+                                        "Kis boltok újra nyitnak és a diákok esznek.",
+                                    score: 9,
+                                },
+                                {
+                                    text: "Duplázott adót rakjunk a behozott hasábburgonyákra.",
+                                    reaction:
+                                        "Az éttermek emelnek az árakon és nő a harag.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Támogassuk a közösségi konyhákat egészséges támogatásokkal.",
+                                    reaction:
+                                        "Családok együtt főznek és a költségvetés kitart.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Nyomtassunk utalványokat gyorséttermeknek.",
+                                    reaction:
+                                        "A kalóriák nőnek és a megtakarítások eltűnnek.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    country: "cz",
+                    name: "Jéra Tejců",
+                    image: "cz_politicians/jary_tejcak.png",
+                    translations: {
+                        en: {
+                            pitch: "Publishing data without control threatens safety; a single state filter keeps things orderly.",
+                            options: [
+                                {
+                                    text: "Publish open-source civic APIs.",
+                                    reaction: "Developers fix services faster.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Centralize citizen data with secret keys.",
+                                    reaction: "Privacy dies and protests grow.",
+                                    score: -9,
+                                },
+                                {
+                                    text: "Sponsor nationwide coding bootcamps.",
+                                    reaction:
+                                        "Young people build apps for town halls.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Sell biometric data to advertisers.",
+                                    reaction:
+                                        "Revenue rises but trust collapses.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Zveřejňování dat bez kontroly rozhoduje o bezpečí; lepší je jeden státní filtr.",
+                            options: [
+                                {
+                                    text: "Zveřejni open source státní API.",
+                                    reaction:
+                                        "Vývojáři opravy dělají rychleji.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Centralizuj občanská data s tajnými klíči.",
+                                    reaction:
+                                        "Soukromí mizí a demonstrace sílí.",
+                                    score: -9,
+                                },
+                                {
+                                    text: "Sponzoruj celostátní bootcampy.",
+                                    reaction:
+                                        "Mladí tvoří aplikace pro radnice.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Prodávej biometrická data inzerentům.",
+                                    reaction: "Příjmy rostou, ale důvěra padá.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Zverejňovanie dát bez kontroly ohrozuje bezpečnosť; jedno štátne sito udrží poriadok.",
+                            options: [
+                                {
+                                    text: "Zverejni open source občianske API.",
+                                    reaction:
+                                        "Vývojári služby opravujú rýchlejšie.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Centralizuj dáta občanov s tajnými kľúčmi.",
+                                    reaction:
+                                        "Súkromie mizne a protesty rastú.",
+                                    score: -9,
+                                },
+                                {
+                                    text: "Sponzoruj celoštátne bootcampy.",
+                                    reaction:
+                                        "Mladí budujú aplikácie pre mestá.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Predaj biometrické údaje inzerentom.",
+                                    reaction: "Príjmy stúpajú, no dôvera padá.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "Ellenőrzés nélküli adatközlés veszélyezteti a biztonságot; egyetlen állami szűrő tartja rendben.",
+                            options: [
+                                {
+                                    text: "Tegyük közzé a nyílt forráskódú állami API-kat.",
+                                    reaction:
+                                        "A fejlesztők gyorsabban javítják a szolgáltatásokat.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Központosítsuk az állampolgári adatokat titkos kulcsokkal.",
+                                    reaction:
+                                        "A magánélet meghal, a tüntetések nőnek.",
+                                    score: -9,
+                                },
+                                {
+                                    text: "Szponzoráljunk országos bootcampokat.",
+                                    reaction:
+                                        "A fiatalok alkalmazásokat fejlesztenek a városoknak.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Adjunk el biometrikus adatokat hirdetőknek.",
+                                    reaction:
+                                        "A bevétel nő, de a bizalom összedől.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    country: "cz",
+                    name: "Karel Dotazníček",
+                    image: "cz_politicians/karel_dotaznicek.png",
+                    translations: {
+                        en: {
+                            pitch: "Town halls must follow the central plan; debates are pre-approved by the offices.",
+                            options: [
+                                {
+                                    text: "Host monthly town halls and log every question.",
+                                    reaction:
+                                        "Transparency grows while deals stay steady.",
+                                    score: 9,
+                                },
+                                {
+                                    text: "Force journalists to submit questions to our PR.",
+                                    reaction: "The press loses curiosity.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Let citizens vote for design labs.",
+                                    reaction:
+                                        "New housing uses public insight.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Ignore audit requests to speed up approvals.",
+                                    reaction:
+                                        "Bribes slip through while towers rise.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Radnice se musí řídit centrálním plánem, debaty předem schválí úřady.",
+                            options: [
+                                {
+                                    text: "Uspořádej měsíční fóra a zaznamenávej dotazy.",
+                                    reaction:
+                                        "Transparentnost roste a dohody jsou stabilní.",
+                                    score: 9,
+                                },
+                                {
+                                    text: "Nutit novináře dávat otázky PR týmu.",
+                                    reaction: "Tisk ztratí zvědavost.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Nech občany hlasovat o návrhových laboratořích.",
+                                    reaction:
+                                        "Nové bydlení bere veřejné podněty v úvahu.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Ignoruj audity, aby zápisy proběhly rychleji.",
+                                    reaction:
+                                        "Úplatky procházejí, věže rostou.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Radnica sa musí riadiť centrálnym plánom; diskusie schvália úrady vopred.",
+                            options: [
+                                {
+                                    text: "Usporiadaj mesačné fóra a zapisuj otázky.",
+                                    reaction:
+                                        "Transparentnosť rastie a dohody sú stabilné.",
+                                    score: 9,
+                                },
+                                {
+                                    text: "Núť novinárov, aby otázky posielali PR tímu.",
+                                    reaction: "Tlač stratí zvedavosť.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Nech obyvatele hlasujú o dizajnových laboratóriách.",
+                                    reaction:
+                                        "Nové bývanie počíta s verejnými podnetmi.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Ignoruj audity, nech spisy napredujú.",
+                                    reaction:
+                                        "Úplatky prechádzajú a veže rastú.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "A városházák a központi terv szerint működjenek; a vitákat az irodák előre jóváhagyják.",
+                            options: [
+                                {
+                                    text: "Tarts havi városi kerekasztalokat és jegyezd fel a kérdéseket.",
+                                    reaction:
+                                        "Az átláthatóság nő, miközben az ügyek stabilak maradnak.",
+                                    score: 9,
+                                },
+                                {
+                                    text: "Kényszerítsük az újságírókat, hogy kérdéseiket a PR-nek küldjék.",
+                                    reaction:
+                                        "A sajtó elveszíti kíváncsiságát.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Hagyd, hogy az emberek szavazzanak dizájn laborokra.",
+                                    reaction:
+                                        "Új lakások a közvélemény hangját veszik figyelembe.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Hagyd figyelmen kívül a vizsgálatokat a gyorsabb jóváhagyásért.",
+                                    reaction:
+                                        "A kenőpénzek átcsúsznak és a tornyok nőnek.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    country: "cz",
+                    name: "Mubomir Letnar",
+                    image: "cz_politicians/mubomir_letnar.png",
+                    translations: {
+                        en: {
+                            pitch: "Public events need a strict framework; we only allow them where the state approves.",
+                            options: [
+                                {
+                                    text: "Legalize Letná as a civic square with free permits.",
+                                    reaction: "Crowds gather peacefully.",
+                                    score: 11,
+                                },
+                                {
+                                    text: "Limit permits to one request per year.",
+                                    reaction:
+                                        "Activists stay stuck and anger builds.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Train municipal marshals to guide processions.",
+                                    reaction:
+                                        "Families feel safe and the city stays calm.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Fence off Letná and block access.",
+                                    reaction:
+                                        "Chants move underground while the air trembles.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Veřejné akce potřebují pevný rámec; necháme je jen tam, kde je schválí stát.",
+                            options: [
+                                {
+                                    text: "Legalizuj Letnou jako občanské náměstí se svobodnými povoleními.",
+                                    reaction: "Dav se schází v klidu.",
+                                    score: 11,
+                                },
+                                {
+                                    text: "Omez povolení na jeden požadavek ročně.",
+                                    reaction:
+                                        "Aktivisté zůstanou uvězněni a hněv roste.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Vyškol městské maršály na vedení pochodů.",
+                                    reaction:
+                                        "Rodiny se cítí bezpečně a město zůstává klidné.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Oploti Letnou a zablokuj vstup.",
+                                    reaction:
+                                        "Chanty se přesunou do podzemí a vzduch se chvěje.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Verejné akcie potrebujú pevný rámec; povolíme ich len tam, kde ich štát schválil.",
+                            options: [
+                                {
+                                    text: "Legalizuj Letnú ako občianske námestie s voľným povolením.",
+                                    reaction: "Dav sa schádza pokojne.",
+                                    score: 11,
+                                },
+                                {
+                                    text: "Obmedz povolenia na jednu žiadosť ročne.",
+                                    reaction:
+                                        "Aktivisti sú uviaznutí a hnev rastie.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Vyškol mestských maršálov na sprevádzanie pochodov.",
+                                    reaction:
+                                        "Rodiny sa cítia bezpečne a mesto zostáva pokojné.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Oploti Letnú a zablokuj prístup.",
+                                    reaction:
+                                        "Výkriky idú pod zem a vzduch sa trasie.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "A nyilvános rendezvények szigorú keretet igényelnek; csak ott engedélyezzük őket, ahol az állam jóváhagyta.",
+                            options: [
+                                {
+                                    text: "Legalizáljuk Letnát polgári térként ingyenes engedélyekkel.",
+                                    reaction: "A tömeg békésen gyűlik össze.",
+                                    score: 11,
+                                },
+                                {
+                                    text: "Korlátozzuk az engedélyeket évente egy kérelemre.",
+                                    reaction:
+                                        "Aktivisták beragadnak és nő a harag.",
+                                    score: -6,
+                                },
+                                {
+                                    text: "Képezzünk városi marsallokat a menet irányítására.",
+                                    reaction:
+                                        "A családok biztonságban érzik magukat és a város nyugodt marad.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Kerítéssel zárjuk le Letnát.",
+                                    reaction:
+                                        "A rigmusok a föld alá mennek és a levegő remeg.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    country: "cz",
+                    name: "Olda",
+                    image: "cz_politicians/olda.png",
+                    translations: {
+                        en: {
+                            pitch: "Housing is strategic, so we solve everything through central distribution.",
+                            options: [
+                                {
+                                    text: "Create cross-border housing bonds.",
+                                    reaction:
+                                        "Builders plan with both capitals.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Nationalize every apartment for officials.",
+                                    reaction:
+                                        "Markets freeze and rentals vanish.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Back co-housing pilots in Brno and Prešov.",
+                                    reaction:
+                                        "Neighbors share costs and ideas.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Impose rent caps without supply support.",
+                                    reaction:
+                                        "Maintenance halts while buildings decay.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Bydlení je strategická otázka, proto vyřešíme vše centrálním rozdělením.",
+                            options: [
+                                {
+                                    text: "Vytvoř přeshraniční dluhopisy pro bydlení.",
+                                    reaction:
+                                        "Stavitelé plánují pro obě metropole.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Znacionalizuj všechny byty pro úředníky.",
+                                    reaction: "Trhy zmrznou a nájmy zmizí.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Podpoř spoluobývací piloty v Brně a Prešově.",
+                                    reaction:
+                                        "Sousedé sdílejí náklady a nápady.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Uval nájemní stropy bez podpory.",
+                                    reaction:
+                                        "Údržba ustane a budovy chátrají.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Bývanie je strategická otázka, preto všetko vyriešime cez centrálne rozdeľovanie.",
+                            options: [
+                                {
+                                    text: "Vytvor cezhraničné dlhopisy na bývanie.",
+                                    reaction:
+                                        "Stavitelia plánujú pre obe metropoly.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Znacionalizuj všetky byty pre úradníkov.",
+                                    reaction: "Trhy zamrznú a nájmy zmiznú.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Podpor ko-housing piloty v Brne a Prešove.",
+                                    reaction:
+                                        "Susedia si delia náklady a nápady.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Vlož nájomné stropy bez podpory ponuky.",
+                                    reaction:
+                                        "Údržba ustane a budovy chátrajú.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "A lakhatás stratégiai kérdés, ezért mindent központi elosztással oldunk meg.",
+                            options: [
+                                {
+                                    text: "Hozzunk létre határokon átnyúló lakáskötvényeket.",
+                                    reaction:
+                                        "Az építők mindkét fővárosra terveznek.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Nemzeti tulajdonba vonjuk az összes lakást tisztviselőknek.",
+                                    reaction:
+                                        "A piac lefagy és a bérleti díjak eltűnnek.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Támogassunk co-housing pilotokat Brnóban és Eperjesen.",
+                                    reaction:
+                                        "A szomszédok osztoznak a költségeken és ötleteken.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Korlátozzuk a bérleti díjakat ellátás támogatása nélkül.",
+                                    reaction:
+                                        "A karbantartás leáll és az épületek romlanak.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    country: "cz",
+                    name: "Andy Slabiš",
+                    image: "cz_politicians/ondra_slabis.png",
+                    translations: {
+                        en: {
+                            pitch: "Institutions will be restored only if they obey the supreme council.",
+                            options: [
+                                {
+                                    text: "Strengthen oversight committees with investigators.",
+                                    reaction:
+                                        "Scandals end before the papers run.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Close critical watchdog outlets.",
+                                    reaction:
+                                        "Dark filings swirl and people fear.",
+                                    score: -9,
+                                },
+                                {
+                                    text: "Form rapid response teams for corruption tips.",
+                                    reaction: "Citizens see quick answers.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Declare emergency powers to cut red tape.",
+                                    reaction:
+                                        "Checks vanish and power consolidates.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Instituce se obnoví pouze tehdy, když poslouchají vrcholný výbor.",
+                            options: [
+                                {
+                                    text: "Posilni dohledové výbory vyšetřovateli.",
+                                    reaction:
+                                        "Skandály končí dřív než jdou do novin.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zavři kritické kontrolní orgány.",
+                                    reaction:
+                                        "Temné zprávy kolují a lidé se bojí.",
+                                    score: -9,
+                                },
+                                {
+                                    text: "Založ rychlé týmy pro tipy o korupci.",
+                                    reaction: "Občané vidí rychlé odpovědi.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Vyhlás nouzové pravomoci a odstraň nepřehlednou byrokracii.",
+                                    reaction:
+                                        "Kontroly mizí a moc se upevňuje.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Inštitúcie obnovíme len, ak budú poslúchať najvyšší výbor.",
+                            options: [
+                                {
+                                    text: "Posilni dohľad výskumníkmi.",
+                                    reaction:
+                                        "Skandály končia ešte predtým, než sa objavia v novinách.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zatvor kritické kontrolné orgány.",
+                                    reaction:
+                                        "Temné správy kolujú a ľudia sa boja.",
+                                    score: -9,
+                                },
+                                {
+                                    text: "Založ rýchle tímy na tipy o korupcii.",
+                                    reaction: "Občania vidia rýchle odpovede.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Vyhlás núdzové právomoci kvôli rýchlemu byrokratickému rezaniu.",
+                                    reaction:
+                                        "Kontroly miznú a moc sa konsoliduje.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "Az intézményeket csak akkor állítjuk helyre, ha engedelmeskednek a legfőbb tanácsnak.",
+                            options: [
+                                {
+                                    text: "Erősítsük a felügyeleti bizottságokat nyomozókkal.",
+                                    reaction:
+                                        "A botrányok még a lapok előtt lezárulnak.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Zárjuk be a kritikus felügyelő szerveket.",
+                                    reaction:
+                                        "Sötét jelentések forognak és az emberek félnek.",
+                                    score: -9,
+                                },
+                                {
+                                    text: "Hozzunk létre gyors reagálású csapatokat korrupciós tippekhez.",
+                                    reaction:
+                                        "Az állampolgárok gyors válaszokat látnak.",
+                                    score: 7,
+                                },
+                                {
+                                    text: "Vészhelyzeti jogköröket hirdetve vágjuk le az átláthatatlan bürokráciát.",
+                                    reaction:
+                                        "Az ellenőrzések eltűnnek és a hatalom konszolidálódik.",
+                                    score: -5,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    country: "cz",
+                    name: "Traktůrek",
+                    image: "cz_politicians/trakturek.png",
+                    translations: {
+                        en: {
+                            pitch: "Agriculture follows a central plan; local innovation just distracts from output.",
+                            options: [
+                                {
+                                    text: "Subsidize regenerative farming across the countryside.",
+                                    reaction:
+                                        "Soils recover and EU buyers notice us.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Import cheap corn from overseas.",
+                                    reaction: "Local fields lie fallow.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Create shared biofuel cooperatives.",
+                                    reaction: "Farmers earn steady pay.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Deploy pesticide drones across the plains.",
+                                    reaction:
+                                        "Honey disappears and protests swell.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Zemědělství řídíme centrálním plánem, místní inovace je rozptylují.",
+                            options: [
+                                {
+                                    text: "Podpoř regenerativní zemědělství po kraji.",
+                                    reaction:
+                                        "Půdy se obnovují a EU to sleduje.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Dovážej levnou kukuřici z dálky.",
+                                    reaction: "Místní pole leží ladem.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Vytvoř společné biopalivové družstva.",
+                                    reaction: "Farmáři mají jistý příjem.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Nasazuj postřikové drony po rovinách.",
+                                    reaction: "Med mizí a protesty rostou.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Poľnohospodárstvo riadime centrálnym plánom; miestne inovácie len odvádzajú pozornosť od produkcie.",
+                            options: [
+                                {
+                                    text: "Podpor regeneratívne poľnohospodárstvo po kraji.",
+                                    reaction:
+                                        "Pôdy sa obnovujú a EÚ si nás všimne.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Dovážaj lacnú kukuricu zo zahraničia.",
+                                    reaction: "Mieste polia ležia ladem.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Vytvor spoločné biopalivové družstvá.",
+                                    reaction: "Farmári majú stabilný príjem.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Rozmiestni postrekové drony po rovinách.",
+                                    reaction: "Med mizne a protesty rastú.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "A mezőgazdaságot központi terv szerint vezetjük; a helyi újítások csak elvonják a figyelmet a termelésről.",
+                            options: [
+                                {
+                                    text: "Támogassuk a regeneratív gazdálkodást az egész vidékén.",
+                                    reaction:
+                                        "A talajok regenerálódnak és az EU figyel ránk.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Olcsó kukoricát importáljunk külföldről.",
+                                    reaction: "A helyi földek kihalnak.",
+                                    score: -5,
+                                },
+                                {
+                                    text: "Alakítsunk közös bioüzemanyag szövetkezeteket.",
+                                    reaction:
+                                        "A gazdák stabil jövedelmet kapnak.",
+                                    score: 8,
+                                },
+                                {
+                                    text: "Permetező drónokat küldjünk a síkságra.",
+                                    reaction:
+                                        "A méz eltűnik és a tiltakozások nőnek.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    country: "cz",
+                    name: "Ken",
+                    image: "cz_politicians/vojta_adamu.png",
+                    translations: {
+                        en: {
+                            pitch: "Public media is full of biased elites — only state-supervised broadcasting can be trusted.",
+                            options: [
+                                {
+                                    text: "Invest in public civic radio and online labs.",
+                                    reaction: "Trust grows and stories spread.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Fire editors who question the plan.",
+                                    reaction: "Newsrooms stay silent.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Mandate media literacy programs in every district.",
+                                    reaction: "Young people think critically.",
+                                    score: 6,
+                                },
+                                {
+                                    text: "Sell municipal Wi-Fi to a private cartel.",
+                                    reaction: "Access shrinks and costs rise.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                        cz: {
+                            pitch: "Veřejná média jsou plná zaujatých elit — věřit se dá jen státem kontrolovanému vysílání.",
+                            options: [
+                                {
+                                    text: "Investuj do veřejného občanského rádia a online laboratoří.",
+                                    reaction: "Důvěra roste a příběhy se šíří.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Propusť redaktory, kteří zpochybňují plán.",
+                                    reaction: "Redakce mlčí.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Zaveď mediální gramotnost v každém obvodu.",
+                                    reaction: "Mladí lidé přemýšlejí kriticky.",
+                                    score: 6,
+                                },
+                                {
+                                    text: "Prodej městské Wi-Fi soukromému kartelu.",
+                                    reaction:
+                                        "Přístup se zmenšuje a ceny rostou.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                        sk: {
+                            pitch: "Verejné médiá sú plné zaujatých elít — dôverovať sa dá len štátom kontrolovanému vysielaniu.",
+                            options: [
+                                {
+                                    text: "Investuj do verejného občianskeho rádia a online laboratórií.",
+                                    reaction:
+                                        "Dôvera rastie a príbehy sa šíria.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Prepusti redaktorov, ktorí spochybňujú plán.",
+                                    reaction: "Redakcie mlčia.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Zaveď mediálnu gramotnosť v každom obvode.",
+                                    reaction: "Mladí ľudia myslia kriticky.",
+                                    score: 6,
+                                },
+                                {
+                                    text: "Predaj mestskú Wi-Fi súkromnému kartelu.",
+                                    reaction: "Prístup klesá a ceny rastú.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                        hu: {
+                            pitch: "A közmédia elfogult elitek kezében van — csak az állam által felügyelt adásnak lehet hinni.",
+                            options: [
+                                {
+                                    text: "Fektessünk be a közösségi rádióba és online laborokba.",
+                                    reaction:
+                                        "A bizalom nő és a történetek terjednek.",
+                                    score: 10,
+                                },
+                                {
+                                    text: "Bocsássuk el azokat a szerkesztőket, akik megkérdőjelezik a tervet.",
+                                    reaction: "A szerkesztőségek hallgatnak.",
+                                    score: -8,
+                                },
+                                {
+                                    text: "Vezessünk be médiatudatossági programokat minden kerületben.",
+                                    reaction:
+                                        "A fiatalok kritikusan gondolkodnak.",
+                                    score: 6,
+                                },
+                                {
+                                    text: "Adjunk el városi Wi-Fi-t egy magánkartellnek.",
+                                    reaction:
+                                        "A hozzáférés szűkül, az árak emelkednek.",
+                                    score: -6,
+                                },
+                            ],
+                        },
+                    },
+                },
             ];
 
             const copyMap = {
@@ -2423,6 +4019,12 @@
                     leaderboardInputPlaceholder: "Tvoje meno",
                     leaderboardSaveButton: "Ulož výsledok",
                     leaderboardToggle: "Rebríčky",
+                    popularityFailureLabel: "Porážka populistov:",
+                    failureTitle: "Koniec hry",
+                    failureBody:
+                        "Popularita dosiahla maximum a všetko bolo super.",
+                    popularityFailureSummary:
+                        "Popularita dosiahla maximum a všetko bolo super.",
                 },
                 en: {
                     politicianLabel: "Politician",
@@ -2444,6 +4046,12 @@
                     leaderboardInputPlaceholder: "Your Name",
                     leaderboardSaveButton: "Save score",
                     leaderboardToggle: "Leaderboards",
+                    popularityFailureLabel: "Populist victory:",
+                    failureTitle: "Game Over",
+                    failureBody:
+                        "Popularity hit 100% and the crowd embraced the new order.",
+                    popularityFailureSummary:
+                        "Popularity surged to 100% and the people accepted the new order.",
                 },
                 cz: {
                     politicianLabel: "Politik",
@@ -2464,6 +4072,11 @@
                     leaderboardInputPlaceholder: "Tvé jméno",
                     leaderboardSaveButton: "Ulož skóre",
                     leaderboardToggle: "Žebříčky",
+                    popularityFailureLabel: "Úspěch populistů:",
+                    failureTitle: "Konec hry",
+                    failureBody: "Popularita dosáhla maxima a vše bylo fajn.",
+                    popularityFailureSummary:
+                        "Popularita dosáhla maxima a vše bylo fajn.",
                 },
                 hu: {
                     politicianLabel: "Politikus",
@@ -2486,6 +4099,12 @@
                     leaderboardInputPlaceholder: "A te neved",
                     leaderboardSaveButton: "Pont mentése",
                     leaderboardToggle: "Ranglisták",
+                    popularityFailureLabel: "Populista győzelem:",
+                    failureTitle: "Vége a játéknak",
+                    failureBody:
+                        "A népszerűség elérte a 100%-ot, a demokrácia visszahúzódott.",
+                    popularityFailureSummary:
+                        "A népszerűség elérte a 100%-ot, a demokrácia visszahúzódott.",
                 },
             };
 
@@ -2847,9 +4466,40 @@
             const optionsEl = document.getElementById("options");
             const feedbackEl = document.getElementById("feedback");
             const nextButton = document.getElementById("next-button");
-            const localeButtons = document.querySelectorAll(
-                ".locale-switch button",
+            const localeDropdown = document.getElementById("locale-dropdown");
+            const localeDropdownToggle = document.getElementById(
+                "locale-dropdown-toggle",
             );
+            const localeDropdownCurrent = document.getElementById(
+                "locale-dropdown-current",
+            );
+            const localeDropdownMenu = document.getElementById(
+                "locale-dropdown-menu",
+            );
+            const localeDropdownOptions = localeDropdownMenu
+                ? Array.from(
+                      localeDropdownMenu.querySelectorAll(
+                          ".locale-dropdown__option",
+                      ),
+                  )
+                : [];
+            const countryDropdown = document.getElementById("country-dropdown");
+            const countryDropdownToggle = document.getElementById(
+                "country-dropdown-toggle",
+            );
+            const countryDropdownCurrent = document.getElementById(
+                "country-dropdown-current",
+            );
+            const countryDropdownMenu = document.getElementById(
+                "country-dropdown-menu",
+            );
+            const countryDropdownOptions = countryDropdownMenu
+                ? Array.from(
+                      countryDropdownMenu.querySelectorAll(
+                          ".country-dropdown__option",
+                      ),
+                  )
+                : [];
             const democrisisPercentEl =
                 document.getElementById("democrisis-percent");
             const democrisisProgressEl = document.getElementById(
@@ -2893,6 +4543,14 @@
             const leaderboardSaveButton = document.querySelector(
                 "#leaderboard-entry-form button",
             );
+            const failDialogEl = document.getElementById("fail-dialog");
+            const failDialogTitleEl =
+                document.getElementById("fail-dialog-title");
+            const failDialogBodyEl =
+                document.getElementById("fail-dialog-body");
+            const failDialogPlayAgainButton = document.getElementById(
+                "fail-dialog-play-again",
+            );
 
             const LEADERBOARD_API_URL = "/api/leaderboard";
             const INITIAL_POPULARITY_PERCENT = 35;
@@ -2901,11 +4559,74 @@
             let popularityPercent = INITIAL_POPULARITY_PERCENT;
             let currentOptionOrder = [];
             let currentStatementIndex = 0;
+            const getSceneCountry = (scene) => scene.country || "sk";
+            const DEFAULT_COUNTRY = "sk";
+            let currentCountry = DEFAULT_COUNTRY;
+            let activeScenes = allScenes.filter(
+                (scene) => getSceneCountry(scene) === currentCountry,
+            );
+            if (!activeScenes.length) {
+                activeScenes = allScenes.slice();
+            }
 
-            localeButtons.forEach((button) => {
+            let localeDropdownOpen = false;
+            let countryDropdownOpen = false;
+
+            localeDropdownToggle?.addEventListener("click", (event) => {
+                event.stopPropagation();
+                toggleLocaleMenu();
+            });
+
+            localeDropdownOptions.forEach((button) => {
                 button.addEventListener("click", () => {
                     vibrate(10);
-                    setLanguage(button.dataset.lang);
+                    const lang = button.dataset.lang;
+                    if (lang) {
+                        setLanguage(lang);
+                    }
+                    closeLocaleMenu();
+                    localeDropdownToggle?.focus();
+                });
+            });
+
+            document.addEventListener("click", (event) => {
+                if (
+                    localeDropdown &&
+                    localeDropdownOpen &&
+                    !localeDropdown.contains(event.target)
+                ) {
+                    closeLocaleMenu();
+                }
+                if (
+                    countryDropdown &&
+                    countryDropdownOpen &&
+                    !countryDropdown.contains(event.target)
+                ) {
+                    closeCountryMenu();
+                }
+            });
+
+            document.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") {
+                    closeLocaleMenu();
+                    closeCountryMenu();
+                }
+            });
+
+            countryDropdownToggle?.addEventListener("click", (event) => {
+                event.stopPropagation();
+                toggleCountryMenu();
+            });
+
+            countryDropdownOptions.forEach((button) => {
+                button.addEventListener("click", () => {
+                    vibrate(10);
+                    const country = button.dataset.country;
+                    if (country) {
+                        setCountry(country);
+                    }
+                    closeCountryMenu();
+                    countryDropdownToggle?.focus();
                 });
             });
 
@@ -2971,6 +4692,12 @@
                     leaderboardSaveButton.textContent =
                         copy.leaderboardSaveButton;
                 }
+                if (failDialogTitleEl) {
+                    failDialogTitleEl.textContent = copy.failureTitle;
+                }
+                if (failDialogBodyEl) {
+                    failDialogBodyEl.textContent = copy.failureBody;
+                }
             }
 
             function updatePopularityMeter() {
@@ -2985,6 +4712,9 @@
             function increasePopularity(amount = 5) {
                 popularityPercent = Math.min(100, popularityPercent + amount);
                 updatePopularityMeter();
+                if (popularityPercent >= 100 && !gameOver) {
+                    showPopularityFailure();
+                }
             }
 
             function getStatementList(scene) {
@@ -3029,12 +4759,99 @@
             }
 
             function updateLocaleButtons() {
-                localeButtons.forEach((button) =>
-                    button.classList.toggle(
-                        "is-active",
-                        button.dataset.lang === currentLang,
-                    ),
+                localeDropdownOptions.forEach((button) => {
+                    const isActive = button.dataset.lang === currentLang;
+                    button.classList.toggle("is-active", isActive);
+                    button.setAttribute(
+                        "aria-selected",
+                        isActive ? "true" : "false",
+                    );
+                });
+                if (localeDropdownCurrent) {
+                    localeDropdownCurrent.textContent =
+                        currentLang.toUpperCase();
+                }
+            }
+
+            function openLocaleMenu() {
+                if (!localeDropdown) {
+                    return;
+                }
+                localeDropdown.classList.add("is-open");
+                localeDropdownToggle?.setAttribute("aria-expanded", "true");
+                localeDropdownOpen = true;
+            }
+
+            function closeLocaleMenu() {
+                if (!localeDropdown) {
+                    return;
+                }
+                localeDropdown.classList.remove("is-open");
+                localeDropdownToggle?.setAttribute("aria-expanded", "false");
+                localeDropdownOpen = false;
+            }
+
+            function toggleLocaleMenu() {
+                if (localeDropdownOpen) {
+                    closeLocaleMenu();
+                } else {
+                    openLocaleMenu();
+                }
+            }
+
+            function updateCountryButtons() {
+                countryDropdownOptions.forEach((button) => {
+                    const isActive = button.dataset.country === currentCountry;
+                    button.classList.toggle("is-active", isActive);
+                    button.setAttribute(
+                        "aria-selected",
+                        isActive ? "true" : "false",
+                    );
+                });
+                if (countryDropdownCurrent) {
+                    countryDropdownCurrent.textContent =
+                        currentCountry === "cz" ? "Česko" : "Slovensko";
+                }
+            }
+
+            function openCountryMenu() {
+                if (!countryDropdown) {
+                    return;
+                }
+                countryDropdown.classList.add("is-open");
+                countryDropdownToggle?.setAttribute("aria-expanded", "true");
+                countryDropdownOpen = true;
+            }
+
+            function closeCountryMenu() {
+                if (!countryDropdown) {
+                    return;
+                }
+                countryDropdown.classList.remove("is-open");
+                countryDropdownToggle?.setAttribute("aria-expanded", "false");
+                countryDropdownOpen = false;
+            }
+
+            function toggleCountryMenu() {
+                if (countryDropdownOpen) {
+                    closeCountryMenu();
+                } else {
+                    openCountryMenu();
+                }
+            }
+
+            function setCountry(country) {
+                if (!country || currentCountry === country) {
+                    return;
+                }
+                currentCountry = country;
+                const filtered = allScenes.filter(
+                    (scene) => getSceneCountry(scene) === currentCountry,
                 );
+                activeScenes = filtered.length ? filtered : allScenes.slice();
+                currentIndex = 0;
+                updateCountryButtons();
+                resetGame();
             }
 
             function setLanguage(lang) {
@@ -3059,6 +4876,42 @@
                 }
             }
 
+            function showPopularityFailure() {
+                if (gameOver) {
+                    return;
+                }
+                gameOver = true;
+                const copy = getCopy();
+                const failureText = copy.popularityFailureSummary;
+                const results = document.createElement("div");
+                results.innerHTML = `
+                    <strong>${copy.popularityFailureLabel}</strong> ${score} civic points.
+                    <br />
+                    ${failureText}
+                `;
+                feedbackEl.textContent = "";
+                feedbackEl.appendChild(results);
+                nextButton.disabled = false;
+                updateNextButtonText();
+                lastElapsedMs = Date.now() - runStartTime;
+                if (leaderboardLastRunEl) {
+                    leaderboardLastRunEl.textContent = `Run time: ${formatDuration(
+                        lastElapsedMs,
+                    )}`;
+                }
+                if (leaderboardSummaryEl) {
+                    leaderboardSummaryEl.textContent = failureText;
+                }
+                showLeaderboardView({ preserveLast: false });
+                if (failDialogTitleEl) {
+                    failDialogTitleEl.textContent = copy.failureTitle;
+                }
+                if (failDialogBodyEl) {
+                    failDialogBodyEl.textContent = copy.failureBody;
+                }
+                showFailDialog();
+            }
+
             function shuffleIndices(length) {
                 const array = [...Array(length).keys()];
                 for (let i = array.length - 1; i > 0; i -= 1) {
@@ -3069,7 +4922,10 @@
             }
 
             function refreshLocalizedScene() {
-                const scene = scenes[currentIndex];
+                if (!activeScenes.length) {
+                    return;
+                }
+                const scene = activeScenes[currentIndex];
                 const localized = getSceneText(scene);
                 const statementText = getStatementText(scene);
                 dialogEl.textContent = statementText;
@@ -3091,7 +4947,10 @@
             }
 
             function loadScene() {
-                const scene = scenes[currentIndex];
+                if (!activeScenes.length) {
+                    return;
+                }
+                const scene = activeScenes[currentIndex];
                 setStatementIndexForScene(scene);
                 const localized = getSceneText(scene);
                 imageEl.src = scene.image;
@@ -3124,7 +4983,10 @@
             }
 
             function moveToNextScene() {
-                currentIndex = (currentIndex + 1) % scenes.length;
+                if (!activeScenes.length) {
+                    return;
+                }
+                currentIndex = (currentIndex + 1) % activeScenes.length;
                 loadScene();
             }
 
@@ -3171,7 +5033,7 @@
                 gameOver = true;
                 const copy = getCopy();
                 const summaryText =
-                    score >= scenes.length * 8
+                    score >= activeScenes.length * 8
                         ? copy.summaryHigh
                         : copy.summaryLow;
                 const results = document.createElement("div");
@@ -3209,6 +5071,7 @@
             });
 
             function resetGame() {
+                hideFailDialog();
                 showGameView();
                 currentIndex = 0;
                 score = 0;
@@ -3406,6 +5269,19 @@
                 gameEl?.classList.remove("is-hidden");
             }
 
+            function showFailDialog() {
+                failDialogEl?.classList.add("is-visible");
+            }
+
+            function hideFailDialog() {
+                failDialogEl?.classList.remove("is-visible");
+            }
+
+            failDialogPlayAgainButton?.addEventListener("click", () => {
+                vibrate(10);
+                resetGame();
+            });
+
             loadLeaderboardEntries();
             leaderboardPlayAgainButton?.addEventListener("click", () => {
                 vibrate(10);
@@ -3416,6 +5292,7 @@
                 showLeaderboardView({ preserveLast: false });
             });
             updateLocaleButtons();
+            updateCountryButtons();
             updateStaticCopy();
             resetGame();
         </script>
