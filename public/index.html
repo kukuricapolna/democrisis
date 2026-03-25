@@ -1022,7 +1022,7 @@
                 aria-haspopup="listbox"
                 aria-expanded="false"
             >
-                <span id="country-dropdown-current">Slovensko</span>
+                <span id="country-dropdown-current">slovakistán</span>
                 <span aria-hidden="true">▾</span>
             </button>
             <div
@@ -1037,7 +1037,7 @@
                     role="option"
                     aria-selected="true"
                 >
-                    Slovensko
+                    slovakistán
                 </button>
                 <button
                     type="button"
@@ -1046,7 +1046,7 @@
                     role="option"
                     aria-selected="false"
                 >
-                    Česko
+                    Českovice
                 </button>
             </div>
         </div>
@@ -4561,6 +4561,14 @@
             let currentStatementIndex = 0;
             const getSceneCountry = (scene) => scene.country || "sk";
             const DEFAULT_COUNTRY = "sk";
+            const COUNTRY_DISPLAY_NAMES = {
+                sk: "slovakistán",
+                cz: "Českovice",
+            };
+            const COUNTRY_BACKGROUND_IMAGES = {
+                sk: "politicians/slovakistan.png",
+                cz: "ceskovice.png",
+            };
             let currentCountry = DEFAULT_COUNTRY;
             let activeScenes = allScenes.filter(
                 (scene) => getSceneCountry(scene) === currentCountry,
@@ -4801,7 +4809,13 @@
 
             function updateCountryButtons() {
                 countryDropdownOptions.forEach((button) => {
-                    const isActive = button.dataset.country === currentCountry;
+                    const buttonCountry = button.dataset.country;
+                    const buttonLabel =
+                        COUNTRY_DISPLAY_NAMES[buttonCountry];
+                    if (buttonLabel) {
+                        button.textContent = buttonLabel;
+                    }
+                    const isActive = buttonCountry === currentCountry;
                     button.classList.toggle("is-active", isActive);
                     button.setAttribute(
                         "aria-selected",
@@ -4810,8 +4824,20 @@
                 });
                 if (countryDropdownCurrent) {
                     countryDropdownCurrent.textContent =
-                        currentCountry === "cz" ? "Česko" : "Slovensko";
+                        COUNTRY_DISPLAY_NAMES[currentCountry] ||
+                        COUNTRY_DISPLAY_NAMES[DEFAULT_COUNTRY];
                 }
+            }
+
+            function updateBodyBackground() {
+                const body = document.body;
+                if (!body) {
+                    return;
+                }
+                const background =
+                    COUNTRY_BACKGROUND_IMAGES[currentCountry] ||
+                    COUNTRY_BACKGROUND_IMAGES[DEFAULT_COUNTRY];
+                body.style.backgroundImage = `url("${background}")`;
             }
 
             function openCountryMenu() {
@@ -4851,6 +4877,7 @@
                 activeScenes = filtered.length ? filtered : allScenes.slice();
                 currentIndex = 0;
                 updateCountryButtons();
+                updateBodyBackground();
                 resetGame();
             }
 
@@ -5293,6 +5320,7 @@
             });
             updateLocaleButtons();
             updateCountryButtons();
+            updateBodyBackground();
             updateStaticCopy();
             resetGame();
         </script>
